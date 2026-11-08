@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="mr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>MPSC Rajyaseva (Civil Services) Hub | StudySphere</title>
+  <meta name="theme-color" content="#d97706">
+  <meta name="description" content="MPSC Rajyaseva Civil Services Preparation Hub: Prelims GS, CSAT, Mains Papers 1 to 7, and 26 Optional Subjects with Live AI Notes & Practice Arena.">
+
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="alternate icon" href="./favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script type="module" src="./assets/js/common.js"></script>
+  <script type="module" src="./ai-engine/core/gatekeeper-engine.js"></script>
+  <script type="module" src="./assets/js/firebase-sync-engine.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Mukta"', 'system-ui', 'sans-serif'],
+            marathi: ['"Mukta"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .crystal-canvas {
+      background-color: #f8fafc;
+      background-image: radial-gradient(rgba(203, 213, 225, 0.7) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark .crystal-canvas {
+      background-color: #070b14;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .crystal-panel {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+    }
+    .dark .crystal-panel {
+      background: rgba(8, 13, 25, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-spring {
+      transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-spring:active:not(:disabled) {
+      transform: scale(0.97) translateY(1px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+    .pill-active {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: #78350f !important;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      font-weight: 800;
+    }
+    .dark .pill-active {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: #fcd34d !important;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    
+    .pill-inactive {
+      background-color: transparent;
+      color: #475569;
+      border: 1px solid transparent;
+    }
+    .dark .pill-inactive {
+      color: #94a3b8;
+    }
+    .pill-inactive:hover {
+      color: #0f172a;
+    }
+    .dark .pill-inactive:hover {
+      color: #f8fafc;
+    }
+
+    .solid-modal-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.22);
+    }
+    .dark .solid-modal-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.97) translateY(8px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: popIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="crystal-canvas text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
+
+  <!-- 1. HEADER CONTAINER -->
+  <div id="headerPlaceholder"></div>
+
+  <!-- 2. MAIN BODY CONTENT -->
+  <main class="max-w-3xl mx-auto w-full px-3 sm:px-4 py-4 flex-1 flex flex-col gap-4">
+
+    <!-- BREADCRUMB & HUB TITLE ROW -->
+    <section class="flex items-center justify-between gap-2 px-1">
+      <div class="flex items-center gap-2 min-w-0">
+        <a href="./index.html" class="w-8 h-8 rounded-xl bg-slate-200/60 dark:bg-white/5 border border-slate-300/60 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white btn-spring no-underline shrink-0 text-xs">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">MPSC RAJYASEVA</span>
+            <span class="text-slate-300 dark:text-slate-700">•</span>
+            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Class 1 & 2 Portal</span>
+          </div>
+          <h1 class="text-base sm:text-lg font-black text-slate-900 dark:text-white leading-tight truncate">
+            Rajyaseva Curriculum & Practice Arena
+          </h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <span class="px-2 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[9.5px] font-black uppercase tracking-tight">
+          2026 Aligned
+        </span>
+      </div>
+    </section>
+
+    <!-- PROGRESS BAR -->
+    <section class="p-3.5 rounded-2xl bg-emerald-500/[0.08] dark:bg-emerald-500/[0.06] border border-emerald-500/25 dark:border-emerald-500/20 flex flex-col gap-2 shadow-2xs">
+      <div class="flex items-center justify-between text-xs font-bold">
+        <div class="flex items-center gap-1.5 text-emerald-900 dark:text-emerald-300">
+          <i class="fa-solid fa-chart-pie text-emerald-600 dark:text-emerald-400 text-xs"></i>
+          <span>Preparation Tracker</span>
+        </div>
+        <span id="hubProgressPercentText" class="font-mono text-emerald-700 dark:text-emerald-400 font-bold">0% Complete</span>
+      </div>
+      <div class="w-full h-2 rounded-full bg-emerald-950/10 dark:bg-slate-800 overflow-hidden">
+        <div id="hubProgressBar" class="h-full bg-emerald-500 rounded-full transition-all duration-300" style="width: 0%;"></div>
+      </div>
+    </section>
+
+    <!-- PRACTICE MODE TOGGLE -->
+    <section class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-slate-200/60 dark:bg-slate-950/60 border border-slate-300/80 dark:border-white/10 text-xs font-bold">
+      <button 
+        type="button" 
+        id="modeBtn_subjectwise" 
+        onclick="switchPracticeMode('subjectwise')" 
+        class="py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs"
+      >
+        <i class="fa-solid fa-book text-[11px]"></i>
+        <span>Subjectwise Hub</span>
+      </button>
+
+      <button 
+        type="button" 
+        id="modeBtn_combined" 
+        onclick="switchPracticeMode('combined')" 
+        class="py-2 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-1.5 cursor-pointer btn-spring border border-transparent"
+      >
+        <i class="fa-solid fa-trophy text-[11px]"></i>
+        <span>Full Mock Tests</span>
+      </button>
+    </section>
+
+    <!-- STAGE TABS -->
+    <section id="stageTabsContainer" class="grid grid-cols-3 gap-1.5 text-xs font-bold">
+      <button type="button" id="tabBtn_prelims" onclick="switchActiveCatalogStage('prelims')" class="py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs">
+        <span>Prelims GS</span>
+      </button>
+      <button type="button" id="tabBtn_mains" onclick="switchActiveCatalogStage('mains')" class="py-2 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer btn-spring">
+        <span>Mains (Descriptive)</span>
+      </button>
+      <button type="button" id="tabBtn_optionals" onclick="switchActiveCatalogStage('optionals')" class="py-2 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer btn-spring">
+        <span>Optionals</span>
+      </button>
+    </section>
+
+    <!-- OPTIONALS DISCONTINUED NOTICE -->
+    <div id="optionalsDiscontinuedNotice" class="hidden flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 shadow-2xs">
+      <div class="flex items-start gap-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0 border border-rose-200 dark:border-rose-500/30">
+          <i class="fa-solid fa-triangle-exclamation text-xs"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-black text-rose-800 dark:text-rose-400 uppercase tracking-wide truncate">MPSC Update: Optionals Discontinued</h4>
+          <p class="text-[10px] text-rose-600 dark:text-rose-400/80 font-medium leading-relaxed mt-0.5">
+            This section is currently discontinued by MPSC. If you still want this material for UPSC or other exams, please write to us!
+          </p>
+        </div>
+      </div>
+      <button type="button" onclick="openDedicatedFeedbackModal('[Optional Subjects Request] I still want to use Optionals!')" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs btn-spring shrink-0 shadow-xs cursor-pointer">
+        <i class="fa-solid fa-envelope mr-1"></i> Write Us
+      </button>
+    </div>
+
+    <!-- STATIC OPTIONALS LIST BOX -->
+    <div id="optionalsListContainer" class="hidden flex-col gap-3 mt-1 p-4 rounded-2xl crystal-panel border border-slate-200 dark:border-slate-800 shadow-2xs">
+       <h4 class="text-xs font-black text-slate-800 dark:text-slate-200 uppercase border-b border-slate-200 dark:border-slate-800 pb-2">List of 26 Optional Subjects</h4>
+       <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-[11px] font-bold text-slate-600 dark:text-slate-400">
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Agriculture</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Animal Husbandry & Vet Science</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Anthropology</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Botany</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Chemistry</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Civil Engineering</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Commerce and Accountancy</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Economics</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Electrical Engineering</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Geography</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Geology</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> History</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Law</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Marathi Literature</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Management</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Mathematics</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Mechanical Engineering</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Medical Science</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Philosophy</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Physics</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Political Science & IR</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Psychology</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Public Administration</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Sociology</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Statistics</div>
+         <div class="flex items-center gap-1.5"><i class="fa-solid fa-minus text-slate-300 dark:text-slate-600"></i> Zoology</div>
+       </div>
+    </div>
+
+    <!-- HEADER STATUS BAR -->
+    <div id="catalogHeaderBar" class="flex items-center justify-between px-1 text-xs">
+      <span id="catalogStageTitle" class="font-black uppercase tracking-wider text-slate-900 dark:text-white">Prelims Subject Catalog</span>
+      <span id="catalogItemsCountBadge" class="font-bold text-slate-400">Loading...</span>
+    </div>
+
+    <!-- FULL MOCK TESTS SECTION -->
+    <section id="combinedMockSection" class="hidden space-y-3">
+      <div class="px-1 flex items-center justify-between">
+        <span class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Rajyaseva Prelims Full Mocks</span>
+        <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Official Commission Blueprint</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+        <!-- Mock 1: Prelims GS Paper 1 -->
+        <div class="crystal-panel p-3.5 rounded-2xl border-slate-300 dark:border-white/10 flex flex-col justify-between gap-3 shadow-2xs">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-slate-300 text-[8.5px] font-black uppercase">Paper I (Compulsory)</span>
+              <span class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">100 Qs • 200 M</span>
+            </div>
+            <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-tight">General Studies Paper 1 Full Mock</h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">100 Questions • 120 Mins • -0.50 (1/4th Rule) Negative Marking. Covers all 7 syllabus domains.</p>
+          </div>
+          <button type="button" onclick="openFullMockLaunchModal('rajyaseva_pre_mock', 'Prelims GS Paper 1 Full Mock', 'paper_1', 100, 200, 0.50, 120)" class="w-full py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs btn-spring cursor-pointer flex items-center justify-center gap-1.5 shadow-xs">
+            <i class="fa-solid fa-stopwatch text-[11px]"></i><span>Launch Paper 1 Simulator</span>
+          </button>
+        </div>
+
+        <!-- Mock 2: Prelims CSAT Paper 2 -->
+        <div class="crystal-panel p-3.5 rounded-2xl border-slate-300 dark:border-white/10 flex flex-col justify-between gap-3 shadow-2xs">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-800 dark:text-amber-300 text-[8.5px] font-black uppercase">Paper II (Qualifying 33%)</span>
+              <span class="text-[9px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">80 Qs • 200 M</span>
+            </div>
+            <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-tight">CSAT Paper 2 Exam Simulator</h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">80 Questions • 120 Mins • -0.625 Negative Marking (No negative marking for Decision Making questions).</p>
+          </div>
+          <button type="button" onclick="openFullMockLaunchModal('rajyaseva_csat_mock', 'Prelims CSAT Paper 2 Simulator', 'paper_2', 80, 200, 0.625, 120)" class="w-full py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/30 font-black text-xs btn-spring cursor-pointer flex items-center justify-center gap-1.5 shadow-xs">
+            <i class="fa-solid fa-brain text-[11px]"></i><span>Launch CSAT Simulator</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBJECT CATALOG LIST CONTAINER -->
+    <section id="subjectsCatalogContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-8">
+      <!-- Injected Dynamically -->
+    </section>
+
+  </main>
+
+  <!-- 3. SLIDE-OVER CHAPTER SHEET / DRAWER -->
+  <div id="chaptersSlideDrawer" class="fixed inset-0 z-[60] bg-slate-950/70 backdrop-blur-sm flex justify-end select-none opacity-0 pointer-events-none transition-all duration-300 translate-x-full" onclick="if(event.target === this){closeChaptersDrawer();}">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-md h-full shadow-2xl border-l border-slate-300 dark:border-slate-800 flex flex-col justify-between overflow-hidden">
+      <!-- Top Bar -->
+      <div class="p-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 shrink-0 bg-white/95 dark:bg-slate-900/95">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <button type="button" onclick="closeChaptersDrawer()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center text-xs font-black cursor-pointer btn-spring shrink-0">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <div class="min-w-0">
+            <span id="drawerSubjectMeta" class="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider block truncate">General Studies</span>
+            <h3 id="drawerSubjectTitle" class="text-sm font-black text-slate-900 dark:text-white truncate mt-0.5">Subject Name</h3>
+          </div>
+        </div>
+        <button type="button" onclick="closeChaptersDrawer()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center text-xs font-black cursor-pointer btn-spring shrink-0">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Optional Paper Tabs -->
+      <div id="drawerOptionalPaperTabs" class="hidden p-1.5 bg-slate-100 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <div class="grid grid-cols-2 gap-1.5 text-xs font-bold">
+          <button type="button" id="tabOptionalPaper1" onclick="switchOptionalPaperDrawerTab(1)" class="active bg-amber-500/10 text-amber-900 dark:text-amber-300 border border-amber-500/30 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 cursor-pointer btn-spring">
+            <i class="fa-solid fa-file-lines text-[10px]"></i><span>Paper 1</span>
+          </button>
+          <button type="button" id="tabOptionalPaper2" onclick="switchOptionalPaperDrawerTab(2)" class="py-1.5 px-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center justify-center gap-1 cursor-pointer btn-spring border border-transparent">
+            <i class="fa-solid fa-map-location-dot text-[10px]"></i><span>Paper 2</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Multi-Select Action Strip (Only shown for Objective / Prelims) -->
+      <div id="drawerMultiSelectStrip" class="px-3.5 py-2 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 shrink-0">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Chapters Index</span>
+          <button type="button" id="btnMixedQuizHistory" onclick="openMixedQuizHistoryForSubject()" class="hidden px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-[9.5px] font-bold btn-spring cursor-pointer flex items-center gap-1">
+            <i class="fa-solid fa-layer-group text-[9px] text-amber-500"></i>
+            <span id="mixedQuizHistoryBadgeText">Mixed Quiz (0)</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-1.5" id="multiSelectButtonsGroup">
+          <button type="button" id="btnSelectAllChapters" onclick="toggleSelectAllChapters()" class="hidden px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[9.5px] font-bold btn-spring cursor-pointer border border-slate-300 dark:border-slate-700">Select All</button>
+          <button type="button" id="btnToggleMultiSelect" onclick="handleMultiSelectMainButton()" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-amber-500/20 text-slate-700 dark:text-slate-200 hover:text-amber-600 text-[10px] font-bold btn-spring flex items-center gap-1 cursor-pointer border border-slate-300 dark:border-slate-700 transition-colors">
+            <i class="fa-solid fa-layer-group text-[9px] text-amber-500"></i><span>+ Select Multiple</span>
+          </button>
+          <button type="button" id="btnCancelMultiSelect" onclick="cancelMultiSelectMode()" class="hidden px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-rose-600 dark:text-rose-400 text-[9.5px] font-bold btn-spring cursor-pointer border border-slate-300 dark:border-slate-700">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Selected Count Toolbar -->
+      <div id="multiChapterActionToolbar" class="hidden px-3.5 py-2 bg-amber-500/15 border-b border-amber-500/30 flex items-center justify-between gap-2 shrink-0">
+        <div class="flex items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-300">
+          <i class="fa-solid fa-layer-group text-amber-600 dark:text-amber-400"></i>
+          <span id="multiChapterCountText">0 Chapters Selected</span>
+        </div>
+      </div>
+
+      <!-- Drawer Chapters Content -->
+      <div id="drawerChaptersListContent" class="p-3 space-y-2.5 overflow-y-auto flex-1 custom-scrollbar"></div>
+    </div>
+  </div>
+
+  <!-- 4. STANDARD QUIZ LAUNCH CONFIRMATION MODAL -->
+  <div 
+    id="quizLaunchConfirmModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 select-none overflow-hidden"
+    onclick="if(event.target === this){closeQuizConfirmModal();}"
+  >
+    <div class="relative w-full max-w-xs sm:max-w-sm rounded-3xl solid-modal-card p-4 text-slate-800 dark:text-slate-100 flex flex-col gap-3 animate-pop-in">
+      
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 shrink-0">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-amber-500 text-sm"></i>
+          <div>
+            <h3 class="text-sm font-black text-slate-900 dark:text-white">Practice Arena</h3>
+            <p class="text-[9px] text-slate-500 dark:text-slate-400 uppercase tracking-wide">MPSC Exam Simulator</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeQuizConfirmModal()" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center cursor-pointer btn-spring">
+          <i class="fa-solid fa-xmark text-xs font-black"></i>
+        </button>
+      </div>
+
+      <div class="space-y-1">
+        <span class="text-[9.5px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-tight" id="modalSubjectBadge">Subject Name</span>
+        <h4 id="modalChapterTitle" class="text-xs font-black text-slate-900 dark:text-white leading-snug line-clamp-2">Chapter Title</h4>
+        <p id="modalMarkingRuleBadge" class="text-[9px] text-rose-600 dark:text-rose-400 font-bold">MPSC 1/4th Rule (-0.50 Mark) enforced.</p>
+      </div>
+
+      <!-- Settings -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-bold text-slate-500">Language:</span>
+          <div class="flex items-center gap-1">
+            <button type="button" id="langBtn_mr" onclick="setQuizLanguage('mr')" class="pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer">मराठी</button>
+            <button type="button" id="langBtn_en" onclick="setQuizLanguage('en')" class="pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer">English</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-bold text-slate-500">Difficulty:</span>
+          <div class="flex items-center gap-1">
+            <button type="button" id="diffBtn_medium" onclick="setQuizDifficulty('medium')" class="pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer">Medium</button>
+            <button type="button" id="diffBtn_hard" onclick="setQuizDifficulty('hard')" class="pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer">Hard (Traps)</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-[10px] font-bold text-slate-500">Questions:</span>
+          <div id="quizQuantityGrid" class="flex items-center gap-1">
+            <button type="button" id="countBtn_15" onclick="setQuizCount(15)" class="pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer">15 Qs</button>
+            <button type="button" id="countBtn_25" onclick="setQuizCount(25)" class="pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer">25 Qs</button>
+          </div>
+          <div id="quizMultiQuantityInputContainer" class="hidden items-center gap-1">
+            <input type="text" inputmode="numeric" pattern="[0-9]*" id="inputMultiChapterQuestionsCount" value="25" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onblur="validateMultiChapterCount(this)" class="w-12 h-6 text-center text-[10px] font-black rounded border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:border-amber-500" />
+            <span class="text-[9px] font-bold text-slate-400">Qs (15-50)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Prompt Ready -->
+      <div class="flex items-center justify-between bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-1.5 mt-1">
+        <span class="text-[9.5px] font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+          <i class="fa-solid fa-shield-halved text-emerald-600 dark:text-emerald-400"></i>
+          Data-Grounded MPSC Prompt
+        </span>
+        <button type="button" onclick="copyMpscQuizMasterPrompt()" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 text-[9px] font-bold btn-spring cursor-pointer flex items-center gap-1"><i class="fa-regular fa-clipboard"></i> Copy</button>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+        <button type="button" onclick="closeQuizConfirmModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs btn-spring cursor-pointer">Cancel</button>
+        <button type="button" onclick="executeQuizLaunchConfirmed()" class="flex-[1.5] py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs btn-spring shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"><i class="fa-solid fa-bolt"></i><span>Start Practice</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. FULL MOCK LAUNCH MODAL (INDEPENDENT) -->
+  <div 
+    id="fullMockLaunchModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[130] bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-3 select-none overflow-hidden"
+    onclick="if(event.target === this){closeFullMockModal();}"
+  >
+    <div class="relative w-full max-w-xs sm:max-w-sm rounded-3xl solid-modal-card p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-4 animate-pop-in">
+      <div class="flex flex-col items-center text-center gap-2 pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="w-12 h-12 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-500 border border-rose-500/20"><i class="fa-solid fa-stopwatch text-xl"></i></div>
+        <div>
+          <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white" id="fullMockModalTitle">Prelims GS Full Mock</h3>
+          <span class="text-[10px] font-bold text-rose-500 uppercase tracking-wider" id="fullMockModalSub">Official Exam Simulator</span>
+        </div>
+      </div>
+      <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-200 dark:border-slate-700 flex flex-col gap-2 text-xs">
+        <div class="flex items-center justify-between font-bold"><span class="text-slate-500">Total Questions:</span><span id="fullMockModalQuestions" class="text-slate-900 dark:text-white">100</span></div>
+        <div class="flex items-center justify-between font-bold"><span class="text-slate-500">Time Limit:</span><span id="fullMockModalTime" class="text-slate-900 dark:text-white">120 Minutes</span></div>
+        <div class="flex items-center justify-between font-bold"><span class="text-slate-500">Total Marks:</span><span id="fullMockModalMarks" class="text-slate-900 dark:text-white">200 Marks</span></div>
+        <div class="flex items-center justify-between font-bold text-rose-600 dark:text-rose-400"><span>Negative Marking:</span><span id="fullMockModalNegative">-0.50 (1/4th Rule)</span></div>
+      </div>
+      <div class="text-[10px] font-medium text-slate-500 dark:text-slate-400 text-center leading-relaxed">The AI Prompt is strictly engineered with official MPSC syllabus guidelines and question standards.</div>
+      <div class="flex items-center gap-2 pt-1">
+        <button type="button" onclick="closeFullMockModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs btn-spring cursor-pointer">Cancel</button>
+        <button type="button" onclick="executeQuizLaunchConfirmed()" class="flex-[1.5] py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs btn-spring shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"><i class="fa-solid fa-play text-[10px]"></i> <span>Start Exam Timer</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. CLEAN & PROFESSIONAL NOTES LAUNCH MODAL -->
+  <div 
+    id="notesLaunchModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 select-none overflow-hidden"
+    onclick="if(event.target === this){closeNotesModal();}"
+  >
+    <div class="relative w-full max-w-sm sm:max-w-md rounded-3xl solid-modal-card p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-3.5 animate-pop-in overflow-hidden box-border">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5 shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-slate-200/60 dark:bg-white/10 text-amber-600 dark:text-amber-400 border border-slate-300/60 dark:border-white/15 flex items-center justify-center text-xs font-black shrink-0">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-black text-slate-900 dark:text-white">MPSC Study Notes</h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Textbook Synthesis & Conceptual Depth</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeNotesModal()" class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center cursor-pointer transition-colors btn-spring">
+          <i class="fa-solid fa-xmark text-xs font-black"></i>
+        </button>
+      </div>
+
+      <!-- Topic Information -->
+      <div class="p-3 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 space-y-1">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span id="notesModalSubjectTag" class="text-[9.5px] font-bold text-slate-600 dark:text-slate-400 uppercase">General Studies</span>
+          <span class="text-slate-300 dark:text-slate-700">•</span>
+          <span id="notesModalPaperTag" class="text-[9.5px] font-bold text-amber-600 dark:text-amber-400 uppercase">Paper 1</span>
+        </div>
+        <h4 id="notesModalChapterTitle" class="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-snug line-clamp-2">Chapter Name</h4>
+      </div>
+
+      <!-- Offline Cache Status Banner -->
+      <div id="notesCacheStatusBanner" class="hidden p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-start gap-2.5">
+        <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 text-xs"></i>
+        <div class="min-w-0">
+          <p class="text-xs font-bold text-emerald-700 dark:text-emerald-400">Offline Notes Available</p>
+          <p class="text-[10px] text-emerald-600/90 dark:text-emerald-400/90 leading-tight mt-0.5">या घटकाच्या नोट्स डिव्हाइसवर सेव्ह आहेत. त्या तात्काळ उघडतील.</p>
+        </div>
+      </div>
+
+      <!-- Primary Action Buttons -->
+      <div class="space-y-2">
+        <button type="button" id="btnExecuteInAppNotes" onclick="executeInAppNotesLaunch(false)" class="w-full py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all">
+          <i class="fa-solid fa-bolt text-xs"></i>
+          <span id="btnExecuteInAppNotesText">Read Notes (In-App)</span>
+        </button>
+
+        <button type="button" id="btnRegenerateNotesAction" onclick="executeInAppNotesLaunch(true)" class="hidden w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 font-bold text-xs btn-spring cursor-pointer flex items-center justify-center gap-1.5 transition-all">
+          <i class="fa-solid fa-rotate-right text-[11px] text-amber-500"></i>
+          <span>Regenerate Fresh Notes</span>
+        </button>
+      </div>
+
+      <!-- External AI Models Option -->
+      <div class="space-y-1.5 pt-2 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Launch in External AI</span>
+          <button type="button" onclick="copyMpscAcademicPrompt()" class="text-[9.5px] font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+            <i class="fa-regular fa-clipboard"></i> Copy Prompt
+          </button>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="launchExternalAiModel('gemini')" class="py-2.5 px-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200 font-bold text-[10.5px] btn-spring flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs">
+            <i class="fa-solid fa-sparkles text-blue-500"></i>
+            <span>Gemini</span>
+          </button>
+          <button type="button" onclick="launchExternalAiModel('chatgpt')" class="py-2.5 px-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200 font-bold text-[10.5px] btn-spring flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs">
+            <div class="w-3.5 h-3.5 rounded-full bg-[#10a37f] flex items-center justify-center text-white text-[8px] font-black">AI</div>
+            <span>ChatGPT</span>
+          </button>
+          <button type="button" onclick="launchExternalAiModel('perplexity')" class="py-2.5 px-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200 font-bold text-[10.5px] btn-spring flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs">
+            <i class="fa-solid fa-asterisk text-teal-500"></i>
+            <span>Perplexity</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 7. QUIZ HISTORY REVIEW MODAL -->
+  <div 
+    id="quizHistoryModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[130] bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-3 select-none overflow-hidden"
+    onclick="if(event.target === this){closeQuizHistoryModal();}"
+  >
+    <div class="relative w-full max-w-2xl rounded-3xl solid-modal-card p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col h-[85vh] animate-pop-in">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-2xl bg-sky-500/10 text-sky-500 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-chart-line text-sm"></i>
+          </div>
+          <div class="min-w-0">
+            <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white truncate">Previous Quiz Review</h3>
+            <p id="quizHistoryChapterTitle" class="text-xs font-bold text-slate-500 dark:text-slate-400 truncate">Chapter Name</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeQuizHistoryModal()" class="w-7 h-7 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 flex items-center justify-center text-xs btn-spring cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Scoreboard Strip -->
+      <div class="p-3 my-2 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between shrink-0">
+        <div>
+          <span class="text-[9.5px] font-black uppercase text-slate-400 tracking-wider">Attempted Score</span>
+          <div class="flex items-baseline gap-1 mt-0.5">
+            <span id="qhScoreMarks" class="text-2xl font-black text-slate-900 dark:text-white">0</span>
+            <span id="qhTotalMarks" class="text-xs font-bold text-slate-500">/ 0</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div id="qhAttemptSelectorContainer" class="hidden">
+            <select id="qhAttemptSelect" onchange="switchQuizAttempt(this.value)" class="text-[11px] font-bold py-1 px-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none">
+            </select>
+          </div>
+          <div class="px-3.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30">
+            <span id="qhPercentageBadge" class="text-base sm:text-lg font-black text-amber-600 dark:text-amber-400">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions List -->
+      <div id="quizHistoryContent" class="flex-1 overflow-y-auto p-1 space-y-2.5 custom-scrollbar"></div>
+    </div>
+  </div>
+
+  <!-- 8. DEDICATED FEEDBACK / WRITE US MODAL -->
+  <div 
+    id="dedicatedFeedbackModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[140] bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-3 select-none overflow-hidden"
+    onclick="if(event.target === this){closeDedicatedFeedbackModal();}"
+  >
+    <div class="relative w-full max-w-sm sm:max-w-md rounded-3xl solid-modal-card p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-3.5 animate-pop-in">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5 shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-500 flex items-center justify-center text-xs font-black shrink-0">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="min-w-0">
+            <h3 class="text-sm font-black text-slate-900 dark:text-white truncate">Write to StudySphere Team</h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">Feedback & Subject Material Requests</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeDedicatedFeedbackModal()" class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center cursor-pointer transition-colors btn-spring shrink-0 border border-slate-200 dark:border-slate-700">
+          <i class="fa-solid fa-xmark text-xs font-black"></i>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Subject / Context</label>
+          <input type="text" id="feedbackSubjectInput" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-800 dark:text-slate-100 text-xs focus:outline-none focus:border-amber-500" />
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Your Message / Request</label>
+          <textarea id="feedbackMessageInput" rows="4" placeholder="तुम्हाला कोणती सामग्री हवी आहे किंवा तुमचा अभिप्राय येथे लिहा..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-xs focus:outline-none focus:border-amber-500 resize-none"></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+        <button type="button" onclick="closeDedicatedFeedbackModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs btn-spring cursor-pointer">Cancel</button>
+        <button type="button" onclick="submitDedicatedFeedback()" class="flex-[1.5] py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs btn-spring shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-paper-plane text-[10px]"></i>
+          <span>Send Message</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalsPlaceholder"></div>
+  <div id="footerPlaceholder"></div>
+  
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-6 right-4 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 z-[200] transform translate-y-10 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-slate-800 px-4 py-2 rounded-2xl shadow-xl flex items-center gap-2 text-xs font-bold pointer-events-none border border-slate-700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toastMessage">Done!</span>
+  </div>
+
+  <script type="module">
+    import { mpscMasterEngine } from './database/master-database.js';
+    import { MpscPromptForge } from './ai-engine/core/prompt-forge.js';
+
+    window.__HUB_SUBJECTS_MAP__ = {};
+    window.__CHAPTER_QUIZ_CACHE__ = {};
+    let currentStage = 'prelims';
+    let currentPracticeMode = 'subjectwise';
+    let currentSubjectsList = [];
+    let activeDrawerSubject = null;
+    let activeOptionalPaper = 1;
+    let isMultiSelectMode = false;
+    let selectedChapterIndices = new Set();
+    let pendingQuizTarget = null;
+    let pendingNotesTarget = null;
+    let selectedQuizLang = 'mr';
+    let selectedQuizCount = 15;
+    let selectedQuizDifficulty = 'medium';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      loadComponents();
+      renderCatalogStage(currentStage);
+      updateDashboardProgressMetrics();
+    });
+
+    // 🛑 BFCache Ghost Modal Fix: Clean all modals and restore page state on back navigation
+    window.addEventListener('pageshow', () => {
+      if (typeof closeNotesModal === 'function') closeNotesModal();
+      if (typeof closeQuizConfirmModal === 'function') closeQuizConfirmModal();
+      if (typeof closeFullMockModal === 'function') closeFullMockModal();
+      if (typeof closeQuizHistoryModal === 'function') closeQuizHistoryModal();
+      if (typeof closeDedicatedFeedbackModal === 'function') closeDedicatedFeedbackModal();
+      if (typeof closeChaptersDrawer === 'function') closeChaptersDrawer();
+      document.body.classList.remove('overflow-hidden');
+    });
+
+    // 🛑 Escape Key Global Guard for Drawer and All Modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (typeof closeNotesModal === 'function') closeNotesModal();
+        if (typeof closeQuizConfirmModal === 'function') closeQuizConfirmModal();
+        if (typeof closeFullMockModal === 'function') closeFullMockModal();
+        if (typeof closeQuizHistoryModal === 'function') closeQuizHistoryModal();
+        if (typeof closeDedicatedFeedbackModal === 'function') closeDedicatedFeedbackModal();
+        if (typeof closeChaptersDrawer === 'function') closeChaptersDrawer();
+      }
+    });
+
+    function initTheme() {
+      if (localStorage.getItem('qq_theme') === 'dark') document.documentElement.classList.add('dark');
+    }
+
+    async function loadComponents() {
+      async function injectHtml(url, targetId) {
+        try {
+          const res = await fetch(url + '?v=' + Date.now());
+          if (res.ok) {
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              const htmlContent = await res.text();
+              targetEl.innerHTML = htmlContent;
+
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = htmlContent;
+              const scripts = tempDiv.querySelectorAll('script');
+              scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                if (script.src) newScript.src = script.src;
+                else newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+              });
+            }
+          }
+        } catch (e) {
+          console.warn(`[Component Load Warning] ${url}:`, e);
+        }
+      }
+
+      await injectHtml('./components/header.html', 'headerPlaceholder');
+      await injectHtml('./components/footer.html', 'footerPlaceholder');
+
+      // Trigger immediate header evaluation if available
+      if (typeof window.refreshHeaderAiStatus === 'function') {
+        window.refreshHeaderAiStatus();
+      }
+
+      const modalUrls = [
+        './modals/api-key-modal.html',
+        './modals/policies-modal.html',
+        './modals/donation-modal.html',
+        './modals/feedback-modal.html',
+        './modals/install-modal.html'
+      ];
+
+      const modalsContainer = document.getElementById('modalsPlaceholder');
+      if (modalsContainer) {
+        for (const url of modalUrls) {
+          try {
+            const res = await fetch(url);
+            if (res.ok) {
+              const htmlContent = await res.text();
+              modalsContainer.insertAdjacentHTML('beforeend', htmlContent);
+              
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = htmlContent;
+              const scripts = tempDiv.querySelectorAll('script');
+              scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                if (script.src) newScript.src = script.src;
+                else newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+              });
+            }
+          } catch (e) {
+            console.warn(`[Modal Load Warning] ${url}:`, e);
+          }
+        }
+      }
+
+      if (window.GatekeeperEngine && typeof window.GatekeeperEngine.init === 'function') {
+        window.GatekeeperEngine.init();
+      }
+      if (window.StudySphereCommon && typeof window.StudySphereCommon.init === 'function') {
+        window.StudySphereCommon.init();
+      }
+    }
+
+    function executeComponentScripts(container) {
+      if (!container) return;
+      const scripts = Array.from(container.querySelectorAll('script'));
+      scripts.forEach(oldScript => {
+        try {
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+          });
+          
+          if (oldScript.src) {
+            newScript.src = oldScript.src;
+            oldScript.parentNode?.replaceChild(newScript, oldScript);
+          } else {
+            const rawContent = oldScript.textContent || oldScript.innerText || '';
+            if (rawContent.trim().length > 0) {
+              newScript.text = rawContent;
+              oldScript.parentNode?.replaceChild(newScript, oldScript);
+            }
+          }
+        } catch (e) {
+          console.warn("[Handled Component Script Warning]:", e);
+        }
+      });
+    }
+
+    window.updateDashboardProgressMetrics = function() {
+      try {
+        const completedMap = JSON.parse(localStorage.getItem('qq_completed_chapters') || '{}');
+        const completedCount = Object.keys(completedMap).length;
+        let totalCount = 0;
+        
+        ['prelims', 'mains'].forEach(st => {
+            const papers = mpscMasterEngine.getPapers('rajyaseva', st) || [];
+            papers.forEach(p => {
+                const subs = mpscMasterEngine.getSubjects('rajyaseva', st, p.id) || [];
+                subs.forEach(s => totalCount += (mpscMasterEngine.getChapters('rajyaseva', st, p.id, s.id) || []).length);
+            });
+        });
+
+        const effectiveTotal = totalCount > 0 ? totalCount : 100;
+        const percent = Math.min(100, Math.round((completedCount / effectiveTotal) * 100));
+        const bar = document.getElementById('hubProgressBar');
+        const text = document.getElementById('hubProgressPercentText');
+        if (bar) bar.style.width = `${percent}%`;
+        if (text) text.textContent = `${percent}% Complete (${completedCount} chapters)`;
+      } catch (e) {}
+    };
+
+    window.switchPracticeMode = function(mode) {
+      currentPracticeMode = mode;
+      const subBtn = document.getElementById('modeBtn_subjectwise');
+      const combBtn = document.getElementById('modeBtn_combined');
+      const tabs = document.getElementById('stageTabsContainer');
+      const catCont = document.getElementById('subjectsCatalogContainer');
+      const headBar = document.getElementById('catalogHeaderBar');
+      const mockSec = document.getElementById('combinedMockSection');
+
+      if (mode === 'combined') {
+        combBtn.className = "py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs";
+        subBtn.className = "py-2 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-1.5 cursor-pointer btn-spring border border-transparent";
+        tabs?.classList.add('hidden');
+        headBar?.classList.add('hidden');
+        catCont?.classList.add('hidden');
+        
+        document.getElementById('optionalsDiscontinuedNotice')?.classList.add('hidden');
+        document.getElementById('optionalsDiscontinuedNotice')?.classList.remove('sm:flex');
+        document.getElementById('optionalsListContainer')?.classList.add('hidden');
+        document.getElementById('optionalsListContainer')?.classList.remove('flex');
+        mockSec?.classList.remove('hidden');
+      } else {
+        subBtn.className = "py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs";
+        combBtn.className = "py-2 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center gap-1.5 cursor-pointer btn-spring border border-transparent";
+        tabs?.classList.remove('hidden');
+        mockSec?.classList.add('hidden');
+        
+        if (currentStage === 'optionals') {
+          const notice = document.getElementById('optionalsDiscontinuedNotice');
+          const optList = document.getElementById('optionalsListContainer');
+          if (notice) { notice.classList.remove('hidden'); notice.classList.add('sm:flex'); }
+          if (optList) { optList.classList.remove('hidden'); optList.classList.add('flex'); }
+          headBar?.classList.add('hidden');
+          catCont?.classList.add('hidden');
+        } else {
+          headBar?.classList.remove('hidden');
+          catCont?.classList.remove('hidden');
+        }
+      }
+    };
+
+    window.switchActiveCatalogStage = function(stage) {
+      currentStage = stage;
+      if (currentPracticeMode === 'combined') switchPracticeMode('subjectwise');
+
+      ['prelims', 'mains', 'optionals'].forEach(s => {
+        const b = document.getElementById(`tabBtn_${s}`);
+        if(b) b.className = s === stage ? "py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs" : "py-2 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-1.5 cursor-pointer btn-spring";
+      });
+      
+      const optNotice = document.getElementById('optionalsDiscontinuedNotice');
+      const optList = document.getElementById('optionalsListContainer');
+      const headBar = document.getElementById('catalogHeaderBar');
+      const catCont = document.getElementById('subjectsCatalogContainer');
+
+      if (stage === 'optionals') {
+        if (optNotice) { optNotice.classList.remove('hidden'); optNotice.classList.add('sm:flex'); }
+        if (optList) { optList.classList.remove('hidden'); optList.classList.add('flex'); }
+        if (headBar) headBar.classList.add('hidden');
+        if (catCont) catCont.classList.add('hidden');
+      } else {
+        if (optNotice) { optNotice.classList.add('hidden'); optNotice.classList.remove('sm:flex'); }
+        if (optList) { optList.classList.add('hidden'); optList.classList.remove('flex'); }
+        if (headBar) headBar.classList.remove('hidden');
+        if (catCont) catCont.classList.remove('hidden');
+        renderCatalogStage(stage);
+      }
+    };
+
+    function renderCatalogStage(stage) {
+      if (stage === 'optionals') return;
+
+      const container = document.getElementById('subjectsCatalogContainer');
+      const title = document.getElementById('catalogStageTitle');
+      const badge = document.getElementById('catalogItemsCountBadge');
+      if (!container) return;
+
+      let allSubs = [];
+      if (stage === 'prelims' || stage === 'mains') {
+        title.textContent = stage === 'prelims' ? "Prelims Subject Catalog" : "Mains Papers Catalog (Descriptive)";
+        const papers = mpscMasterEngine.getPapers('rajyaseva', stage) || [];
+        papers.forEach(p => {
+          (mpscMasterEngine.getSubjects('rajyaseva', stage, p.id) || []).forEach(s => allSubs.push({ ...s, paperId: p.id, paperNameMr: p.nameMr, stage: stage }));
+        });
+      }
+      
+      currentSubjectsList = allSubs;
+      badge.textContent = `${allSubs.length} ${stage === 'prelims' ? 'Subjects' : 'Papers / Modules'}`;
+      currentSubjectsList.forEach(s => window.__HUB_SUBJECTS_MAP__[s.id || s.code] = s);
+      renderSubjectCards(currentSubjectsList);
+    }
+
+    function renderSubjectCards(list) {
+      const container = document.getElementById('subjectsCatalogContainer');
+      if (!container) return;
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div class="col-span-2 p-6 text-center text-xs text-slate-400 font-bold crystal-panel rounded-2xl">No subjects found.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map((sub, idx) => {
+        let count = 0;
+        if (currentStage === 'optionals' || sub.paper1) {
+            count = ((sub.paper1?.units || []).length) + ((sub.paper2?.units || []).length);
+        } else {
+            count = (mpscMasterEngine.getChapters('rajyaseva', currentStage, sub.paperId, sub.id) || []).length;
+        }
+
+        const safeSubId = sub.id || sub.code || `sub_${idx}`;
+        return `
+          <div onclick="openChaptersSlideDrawer('${safeSubId}')" class="crystal-panel p-3.5 sm:p-4 rounded-2xl flex items-center justify-between gap-3 hover:border-amber-400 btn-spring cursor-pointer group shadow-2xs">
+            <div class="flex items-center gap-3 min-w-0 flex-1">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black group-hover:scale-105 transition-transform shrink-0 shadow-2xs bg-slate-100 dark:bg-slate-800 text-amber-600 dark:text-amber-400 border border-slate-200 dark:border-slate-700">
+                ${sub.icon || '<i class="fa-solid fa-book"></i>'}
+              </div>
+              <div class="min-w-0">
+                <span class="text-[9.5px] font-bold text-slate-500 dark:text-slate-400 uppercase truncate block">${sub.paperNameMr || 'General Studies'} • ${count} Chapters</span>
+                <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate mt-0.5">${sub.nameMr || sub.name || sub.nameEn || 'Subject'}</h3>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-amber-500 group-hover:text-slate-950 text-slate-400 flex items-center justify-center text-xs transition-colors shrink-0">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // MULTI-SELECT LOGIC FOR PRELIMS PRACTICE
+    window.handleMultiSelectMainButton = function() {
+      if (!isMultiSelectMode) {
+        isMultiSelectMode = true;
+        document.getElementById('btnSelectAllChapters')?.classList.remove('hidden');
+        document.getElementById('btnCancelMultiSelect')?.classList.remove('hidden');
+        const t = document.getElementById('btnToggleMultiSelect');
+        if (t) {
+            t.className = "px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-bold btn-spring flex items-center gap-1 cursor-pointer border border-amber-500 shadow-xs transition-colors text-[10px]";
+            t.innerHTML = `<i class="fa-solid fa-bolt text-[9px]"></i><span>Start Combined Quiz</span>`;
+        }
+        renderDrawerChaptersList(activeDrawerSubject);
+      } else {
+        if (selectedChapterIndices.size === 0) {
+          showToast("Please select at least one chapter.");
+          return;
+        }
+        launchMultiChapterQuiz();
+      }
+    };
+
+    window.cancelMultiSelectMode = function() {
+      isMultiSelectMode = false;
+      selectedChapterIndices.clear();
+      document.getElementById('btnSelectAllChapters')?.classList.add('hidden');
+      document.getElementById('btnCancelMultiSelect')?.classList.add('hidden');
+      const t = document.getElementById('btnToggleMultiSelect');
+      if (t) {
+          t.className = "px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-amber-500/20 text-slate-700 dark:text-slate-200 hover:text-amber-600 text-[10px] font-bold btn-spring flex items-center gap-1 cursor-pointer border border-slate-300 dark:border-slate-700 transition-colors";
+          t.innerHTML = `<i class="fa-solid fa-layer-group text-[9px] text-amber-500"></i><span>+ Select Multiple</span>`;
+      }
+      if (document.getElementById('btnSelectAllChapters')) document.getElementById('btnSelectAllChapters').textContent = "Select All";
+      updateMultiChapterToolbar();
+      renderDrawerChaptersList(activeDrawerSubject);
+    };
+
+    window.toggleSelectAllChapters = function() {
+      let chs = [];
+      const isOpt = currentStage === 'optionals' || activeDrawerSubject.paper1;
+      if (isOpt) {
+          const pd = activeOptionalPaper === 1 ? activeDrawerSubject.paper1 : activeDrawerSubject.paper2;
+          chs = pd.units || [];
+      } else {
+          chs = mpscMasterEngine.getChapters('rajyaseva', currentStage, activeDrawerSubject.paperId, activeDrawerSubject.id) || [];
+      }
+      const b = document.getElementById('btnSelectAllChapters');
+      if (selectedChapterIndices.size === chs.length) {
+        selectedChapterIndices.clear();
+        if(b) b.textContent = "Select All";
+      } else {
+        chs.forEach((_, i) => selectedChapterIndices.add(i));
+        if(b) b.textContent = "Clear All";
+      }
+      updateMultiChapterToolbar();
+      renderDrawerChaptersList(activeDrawerSubject);
+    };
+
+    function updateMultiChapterToolbar() {
+      const tb = document.getElementById('multiChapterActionToolbar');
+      const txt = document.getElementById('multiChapterCountText');
+      const btnTog = document.getElementById('btnToggleMultiSelect');
+      if (!isMultiSelectMode) { tb?.classList.add('hidden'); return; }
+      const sz = selectedChapterIndices.size;
+      if (sz > 0) {
+        tb?.classList.remove('hidden'); tb?.classList.add('flex');
+        if (txt) txt.textContent = `${sz} Chapter${sz>1?'s':''} Selected`;
+        if (btnTog) btnTog.innerHTML = `<i class="fa-solid fa-bolt text-[9px]"></i> <span>Start Combined Quiz (${sz})</span>`;
+      } else {
+        tb?.classList.add('hidden'); tb?.classList.remove('flex');
+        if (btnTog) btnTog.innerHTML = `<i class="fa-solid fa-bolt text-[9px]"></i> <span>Start Combined Quiz</span>`;
+      }
+    }
+
+    window.toggleChapterSelection = function(idx) {
+      if(selectedChapterIndices.has(idx)) selectedChapterIndices.delete(idx);
+      else selectedChapterIndices.add(idx);
+      
+      let len = 0;
+      const isOpt = currentStage === 'optionals' || activeDrawerSubject.paper1;
+      if (isOpt) len = ((activeOptionalPaper === 1 ? activeDrawerSubject.paper1 : activeDrawerSubject.paper2).units || []).length;
+      else len = (mpscMasterEngine.getChapters('rajyaseva', currentStage, activeDrawerSubject.paperId, activeDrawerSubject.id) || []).length;
+
+      const btnAll = document.getElementById('btnSelectAllChapters');
+      if (btnAll) btnAll.textContent = selectedChapterIndices.size === len ? "Clear All" : "Select All";
+      updateMultiChapterToolbar();
+      renderDrawerChaptersList(activeDrawerSubject);
+    };
+
+    window.switchOptionalPaperDrawerTab = function(paperNum) {
+      activeOptionalPaper = paperNum;
+      const tab1 = document.getElementById('tabOptionalPaper1');
+      const tab2 = document.getElementById('tabOptionalPaper2');
+      if (paperNum === 1) {
+        tab1.className = "active bg-amber-500/10 text-amber-900 dark:text-amber-300 border border-amber-500/30 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 cursor-pointer btn-spring";
+        tab2.className = "py-1.5 px-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center justify-center gap-1 cursor-pointer btn-spring border border-transparent";
+      } else {
+        tab2.className = "active bg-amber-500/10 text-amber-900 dark:text-amber-300 border border-amber-500/30 py-1.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 cursor-pointer btn-spring";
+        tab1.className = "py-1.5 px-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center justify-center gap-1 cursor-pointer btn-spring border border-transparent";
+      }
+      cancelMultiSelectMode();
+      renderDrawerChaptersList(activeDrawerSubject);
+    };
+
+    window.openChaptersSlideDrawer = function(subId) {
+      activeDrawerSubject = window.__HUB_SUBJECTS_MAP__[subId];
+      if (!activeDrawerSubject) return;
+      
+      const titleEl = document.getElementById('drawerSubjectTitle');
+      const metaEl = document.getElementById('drawerSubjectMeta');
+      if (titleEl) titleEl.textContent = activeDrawerSubject.nameMr || activeDrawerSubject.name;
+      
+      const isOpt = currentStage === 'optionals' || activeDrawerSubject.paper1;
+      if (metaEl) metaEl.textContent = activeDrawerSubject.paperNameMr || (isOpt ? 'वैकल्पिक विषय' : (currentStage === 'mains' ? 'Mains Descriptive' : 'General Studies'));
+      
+      const optTabs = document.getElementById('drawerOptionalPaperTabs');
+      if (isOpt && activeDrawerSubject.paper1 && activeDrawerSubject.paper2) {
+          optTabs?.classList.remove('hidden');
+          window.switchOptionalPaperDrawerTab(1);
+      } else {
+          optTabs?.classList.add('hidden');
+      }
+
+      const multiStrip = document.getElementById('drawerMultiSelectStrip');
+      if (currentStage === 'mains') {
+        multiStrip?.classList.add('hidden');
+      } else {
+        multiStrip?.classList.remove('hidden');
+        checkAndShowMixedQuizButton(activeDrawerSubject.id || activeDrawerSubject.code);
+      }
+
+      cancelMultiSelectMode();
+      renderDrawerChaptersList(activeDrawerSubject);
+      
+      const drawer = document.getElementById('chaptersSlideDrawer');
+      if (drawer) {
+        drawer.classList.remove('opacity-0', 'pointer-events-none', 'translate-x-full');
+      }
+      document.body.classList.add('overflow-hidden');
+    };
+
+    function checkAndShowMixedQuizButton(subId) {
+      const btn = document.getElementById('btnMixedQuizHistory');
+      const txt = document.getElementById('mixedQuizHistoryBadgeText');
+      if (!btn) return;
+
+      const cleanSubId = (subId || '').trim().toLowerCase();
+      const mixedKey = `quiz_mixed_rajyaseva_${currentStage}_${cleanSubId}`;
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem(mixedKey) || '[]');
+      } catch (e) { list = []; }
+
+      if (Array.isArray(list) && list.length > 0) {
+        btn.classList.remove('hidden');
+        if (txt) txt.textContent = `Mixed Quiz (${list.length})`;
+      } else {
+        btn.classList.add('hidden');
+      }
+    }
+
+    window.openMixedQuizHistoryForSubject = function() {
+      if (!activeDrawerSubject) return;
+      const cleanSubId = (activeDrawerSubject.id || activeDrawerSubject.code || '').trim().toLowerCase();
+      const mixedKey = `quiz_mixed_rajyaseva_${currentStage}_${cleanSubId}`;
+      let list = [];
+      try {
+        list = JSON.parse(localStorage.getItem(mixedKey) || '[]');
+      } catch (e) { list = []; }
+
+      if (!Array.isArray(list) || list.length === 0) {
+        showToast("No mixed quiz attempts found for this subject.");
+        return;
+      }
+
+      window.__ACTIVE_REVIEW_RECORD__ = {
+        isCollection: true,
+        attempts: list,
+        primary: list[list.length - 1]
+      };
+
+      document.getElementById('quizHistoryChapterTitle').textContent = `${activeDrawerSubject.nameMr || activeDrawerSubject.name} (Combined Tests)`;
+
+      const selectorContainer = document.getElementById('qhAttemptSelectorContainer');
+      const selectEl = document.getElementById('qhAttemptSelect');
+      if (selectorContainer && selectEl) {
+        selectorContainer.classList.remove('hidden');
+        selectEl.innerHTML = list.map((att, idx) => {
+          const score = att.score ?? att.correctCount ?? 0;
+          const total = att.total ?? att.totalQuestions ?? 25;
+          const dateStr = att.completedAt ? new Date(att.completedAt).toLocaleDateString() : `Test ${idx + 1}`;
+          const qCount = att.questions ? att.questions.length : total;
+          return `<option value="${idx}">Mixed Quiz ${idx + 1}: ${score}/${total} (${qCount} Qs • ${dateStr})</option>`;
+        }).join('');
+        selectEl.value = (list.length - 1).toString();
+      }
+
+      renderAttemptDetails(list[list.length - 1]);
+      const modal = document.getElementById('quizHistoryModal');
+      modal?.classList.remove('hidden');
+      modal?.classList.add('flex');
+    };
+
+    window.closeChaptersDrawer = function() {
+      const drawer = document.getElementById('chaptersSlideDrawer');
+      if (drawer) {
+        drawer.classList.add('opacity-0', 'pointer-events-none', 'translate-x-full');
+      }
+      document.body.classList.remove('overflow-hidden');
+      cancelMultiSelectMode();
+    };
+
+    function findQuizHistoryRecord(stage, subId, chIdx, chName) {
+      try {
+        const cleanChName = (chName || '').trim().toLowerCase();
+        const cleanSubId = (subId || '').trim().toLowerCase();
+        const matchesWithQuestions = [];
+        const matchesSummaryOnly = [];
+
+        const hasQuestions = (obj) => {
+          if (!obj) return false;
+          const qList = obj.questions || obj.attemptedQuestions || obj.quizQuestions || obj.questionList || obj.items || [];
+          return Array.isArray(qList) && qList.length > 0;
+        };
+
+        const directKeys = [
+          `quiz_history_rajyaseva_${stage}_${cleanSubId}_${chIdx}`,
+          `qq_quiz_history_${stage}_${cleanSubId}_${chIdx}`,
+          `quiz_record_${stage}_${cleanSubId}_${chIdx}`,
+          `quiz_result_${cleanSubId}_${chIdx}`,
+          `quiz_${cleanSubId}_${chIdx}`
+        ];
+
+        for (const k of directKeys) {
+          const val = localStorage.getItem(k);
+          if (val) {
+            try {
+              const parsed = JSON.parse(val);
+              if (parsed) {
+                if (hasQuestions(parsed)) matchesWithQuestions.push(parsed);
+                else matchesSummaryOnly.push(parsed);
+              }
+            } catch (e) {}
+          }
+        }
+
+        const arrayStorageKeys = ['qq_quiz_history', 'quiz_history', 'qq_completed_quizzes', 'mpsc_quiz_history', 'qq_quiz_attempts', 'user_quiz_attempts'];
+        for (const arrKey of arrayStorageKeys) {
+          const rawArr = localStorage.getItem(arrKey);
+          if (rawArr) {
+            try {
+              const list = JSON.parse(rawArr);
+              if (Array.isArray(list)) {
+                list.forEach(item => {
+                  if (!item) return;
+                  const itemCh = (item.topicTitleMr || item.chapterName || item.topic || item.chapterTitle || item.name || '').trim().toLowerCase();
+                  const itemIdx = item.selectedQuizChapterIndices ? item.selectedQuizChapterIndices[0] : (item.chapterIndex ?? item.chIdx);
+                  const itemSub = (item.subjectId || item.subject || '').trim().toLowerCase();
+                  
+                  const isIdxMatch = (itemIdx !== undefined && Number(itemIdx) === Number(chIdx)) && (!itemSub || itemSub.includes(cleanSubId) || cleanSubId.includes(itemSub));
+                  const isNameMatch = cleanChName && itemCh && (itemCh === cleanChName || itemCh.includes(cleanChName) || cleanChName.includes(itemCh));
+                  
+                  if (isIdxMatch || isNameMatch) {
+                    if (hasQuestions(item)) matchesWithQuestions.push(item);
+                    else matchesSummaryOnly.push(item);
+                  }
+                });
+              }
+            } catch (e) {}
+          }
+        }
+
+        for (let i = 0; i < localStorage.length; i++) {
+          const lk = localStorage.key(i);
+          if (lk && (lk.startsWith('quiz_') || lk.startsWith('qq_') || lk.includes('attempt') || lk.includes('result'))) {
+            try {
+              const item = JSON.parse(localStorage.getItem(lk));
+              if (item && typeof item === 'object') {
+                const title = (item.topicTitleMr || item.chapterTitle || item.title || item.chapterName || '').trim().toLowerCase();
+                const itemIdx = item.selectedQuizChapterIndices ? item.selectedQuizChapterIndices[0] : (item.chapterIndex ?? item.chIdx);
+                
+                const matchTitle = cleanChName && title && (title === cleanChName || cleanChName.includes(title) || title.includes(cleanChName));
+                const matchIdx = itemIdx !== undefined && Number(itemIdx) === Number(chIdx);
+
+                if (matchTitle || matchIdx) {
+                  if (hasQuestions(item)) matchesWithQuestions.push(item);
+                  else if (!matchesSummaryOnly.includes(item)) matchesSummaryOnly.push(item);
+                }
+              }
+            } catch (e) {}
+          }
+        }
+
+        if (matchesWithQuestions.length > 0) {
+          return {
+            isCollection: true,
+            attempts: matchesWithQuestions,
+            primary: matchesWithQuestions[matchesWithQuestions.length - 1]
+          };
+        }
+
+        if (matchesSummaryOnly.length > 0) {
+          return {
+            isCollection: true,
+            attempts: matchesSummaryOnly,
+            primary: matchesSummaryOnly[matchesSummaryOnly.length - 1]
+          };
+        }
+      } catch (e) {
+        console.warn("[findQuizHistoryRecord error]", e);
+      }
+      return null;
+    }
+
+    function renderDrawerChaptersList(sub) {
+      const cont = document.getElementById('drawerChaptersListContent');
+      let chs = [];
+      const isOpt = currentStage === 'optionals' || sub.paper1;
+      if (isOpt && sub.paper1 && sub.paper2) {
+          const pd = activeOptionalPaper === 1 ? sub.paper1 : sub.paper2;
+          chs = Array.isArray(pd.chapters) ? pd.chapters : (pd.units || []).map((u, i) => ({ id: `unit_${i+1}`, nameMr: u, name: u }));
+      } else {
+          chs = mpscMasterEngine.getChapters('rajyaseva', currentStage, sub.paperId, sub.id) || [];
+      }
+
+      const completedMap = JSON.parse(localStorage.getItem('qq_completed_chapters') || '{}');
+      if (chs.length === 0) {
+        cont.innerHTML = `<div class="p-6 text-center text-xs font-bold text-slate-400">Chapters syncing...</div>`;
+        return;
+      }
+
+      const isMainsStage = (currentStage === 'mains');
+
+      cont.innerHTML = chs.map((ch, idx) => {
+        const trackKey = `${currentStage}_${sub.id || sub.code}_ch${idx}`;
+        const isDone = Boolean(completedMap[trackKey]);
+        const isSel = selectedChapterIndices.has(idx);
+        
+        const cardClickAttr = (isMultiSelectMode && !isMainsStage) ? `onclick="toggleChapterSelection(${idx})"` : '';
+        const btnClass = isMultiSelectMode ? 'opacity-20 pointer-events-none cursor-not-allowed' : 'btn-spring cursor-pointer hover:bg-slate-200 dark:hover:bg-white/10';
+        const paperEff = sub.paperId || (isOpt ? `optional_p${activeOptionalPaper}` : 'paper_1');
+        const subIdEff = sub.id || sub.code;
+
+        const notesCacheKey = `notes_rajyaseva_${currentStage}_${subIdEff}_ch${idx}`;
+        const hasOfflineNotes = localStorage.getItem(`${notesCacheKey}_c1`) !== null;
+
+        const historyData = !isMainsStage ? findQuizHistoryRecord(currentStage, subIdEff, idx, ch.nameMr || ch.name) : null;
+        let quizHistoryBadge = '';
+
+        if (historyData) {
+          try {
+            window.__CHAPTER_QUIZ_CACHE__[trackKey] = historyData;
+
+            const primaryRecord = historyData.primary || historyData;
+            const scoreVal = primaryRecord.score ?? primaryRecord.correctCount ?? primaryRecord.correct ?? primaryRecord.marks ?? 0;
+            const totalVal = primaryRecord.total ?? primaryRecord.totalQuestions ?? primaryRecord.questionsCount ?? primaryRecord.totalMarks ?? 15;
+            const pctVal = primaryRecord.percentage ?? (totalVal > 0 ? Math.round((scoreVal / totalVal) * 100) : 0);
+            const attemptsCount = historyData.attempts ? historyData.attempts.length : 1;
+            const safeChTitle = (ch.nameMr || ch.name).replace(/'/g, "\\'");
+
+            const reviewDisabledClass = isMultiSelectMode ? 'opacity-30 pointer-events-none cursor-not-allowed' : 'btn-spring cursor-pointer hover:bg-amber-500/20';
+
+            quizHistoryBadge = `
+              <div class="w-full mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between gap-2 ${isMultiSelectMode ? 'opacity-40' : ''}">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25 text-[10px] font-black">
+                  <i class="fa-solid fa-trophy text-amber-500"></i> Score: ${scoreVal}/${totalVal} (${pctVal}%)
+                  ${attemptsCount > 1 ? `<span class="text-[8.5px] font-bold text-slate-400">(${attemptsCount} attempts)</span>` : ''}
+                </span>
+                <button type="button" ${isMultiSelectMode ? 'disabled' : ''} onclick="event.stopPropagation(); viewQuizHistory('${trackKey}', '${safeChTitle}')" class="px-2 py-0.5 rounded-md bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-600 text-[10px] font-bold border border-slate-300 dark:border-slate-700 flex items-center gap-1 ${reviewDisabledClass}">
+                  <span>Review</span> <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                </button>
+              </div>
+            `;
+          } catch(e) {}
+        }
+
+        return `
+          <div ${cardClickAttr} class="p-3 rounded-xl border ${isSel ? 'border-amber-500 bg-amber-500/10' : (isDone && !isMultiSelectMode ? 'border-emerald-500/40 bg-emerald-500/5' : 'bg-slate-50/50 dark:bg-white/[0.02] border-slate-200 dark:border-white/10')} flex flex-col gap-2 transition-colors ${isMultiSelectMode && !isMainsStage ? 'cursor-pointer' : ''}">
+            <div class="flex items-start gap-2 min-w-0">
+              ${isMultiSelectMode && !isMainsStage ? `
+                <div class="mt-1 w-4 h-4 rounded border flex items-center justify-center shrink-0 ${isSel ? 'bg-amber-500 border-amber-500' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600'}">
+                  ${isSel ? '<i class="fa-solid fa-check text-[10px] text-slate-950"></i>' : ''}
+                </div>
+              ` : `
+                <button type="button" onclick="toggleChapterDoneState('${trackKey}')" class="mt-0.5 shrink-0 btn-spring cursor-pointer">
+                  <i class="${isDone ? 'fa-solid fa-circle-check text-emerald-500' : 'fa-regular fa-circle text-slate-300 dark:text-slate-600'}"></i>
+                </button>
+              `}
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider">Chapter ${idx + 1}</span>
+                  ${hasOfflineNotes ? `<span class="px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[8.5px] font-black uppercase"><i class="fa-solid fa-cloud-arrow-down mr-0.5"></i>Offline</span>` : ''}
+                </div>
+                <h4 class="text-xs font-black text-slate-900 dark:text-white leading-snug mt-0.5">${ch.nameMr || ch.name}</h4>
+              </div>
+            </div>
+
+            <!-- Action Strip: Practice is hidden for Mains -->
+            <div class="flex items-center gap-1.5 pt-1 mt-1 border-t border-slate-200/80 dark:border-slate-800">
+              ${!isMainsStage ? `
+                <button type="button" ${isMultiSelectMode?'disabled':`onclick="launchSingleQuiz('${paperEff}', '${subIdEff}', ${idx}, '${(ch.nameMr || ch.name).replace(/'/g, "\\'")}')"`} class="flex-1 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 text-[10px] font-bold text-amber-600 dark:text-amber-400 flex items-center justify-center gap-1 ${btnClass}">
+                  <i class="fa-solid fa-bolt text-[9px]"></i> <span>Practice</span>
+                </button>
+              ` : ''}
+              <button type="button" ${isMultiSelectMode?'disabled':`onclick="launchNotes('${paperEff}', '${subIdEff}', ${idx}, '${(ch.nameMr || ch.name).replace(/'/g, "\\'")}')"`} class="${isMainsStage ? 'w-full py-2 bg-amber-500/15 text-amber-900 dark:text-amber-300 border-amber-500/30' : 'flex-1 py-1.5 text-slate-600 dark:text-slate-300 bg-white/50 dark:bg-white/5 border-slate-200 dark:border-white/10'} rounded-lg border text-[10px] font-bold flex items-center justify-center gap-1 ${btnClass}">
+                <i class="fa-solid fa-book-open text-[9px]"></i> <span>Study Notes</span>
+              </button>
+            </div>
+            
+            ${!isMainsStage ? quizHistoryBadge : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.toggleChapterDoneState = function(trackKey) {
+      if(isMultiSelectMode) return;
+      const completedMap = JSON.parse(localStorage.getItem('qq_completed_chapters') || '{}');
+      if (completedMap[trackKey]) delete completedMap[trackKey];
+      else completedMap[trackKey] = { completedAt: new Date().toISOString() };
+      localStorage.setItem('qq_completed_chapters', JSON.stringify(completedMap));
+      updateDashboardProgressMetrics();
+      renderDrawerChaptersList(activeDrawerSubject);
+    };
+
+    window.launchSingleQuiz = function(paperId, subId, chIdx, chName) {
+      if (isMultiSelectMode) return;
+
+      const chapters = mpscMasterEngine.getChapters('rajyaseva', currentStage, paperId, subId) || [];
+      const subtopics = chapters[chIdx]?.subtopics || [];
+
+      pendingQuizTarget = { 
+        examId: 'rajyaseva', stageId: currentStage, paperId: paperId, subjectId: subId, 
+        subjectNameMr: activeDrawerSubject.nameMr || activeDrawerSubject.name, 
+        topicTitleMr: chName, selectedQuizChapterIndices: [chIdx], 
+        selectedNotesSubtopics: subtopics,
+        isMultiChapter: false, isFullSyllabusMock: false, sourceHub: 'rajyaseva.html' 
+      };
+      document.getElementById('modalSubjectBadge').textContent = pendingQuizTarget.subjectNameMr;
+      document.getElementById('modalChapterTitle').textContent = chName;
+      document.getElementById('modalMarkingRuleBadge').textContent = "MPSC 1/4th Rule (-0.50 Mark) enforced.";
+      document.getElementById('quizQuantityGrid').classList.remove('hidden'); document.getElementById('quizQuantityGrid').classList.add('flex');
+      document.getElementById('quizMultiQuantityInputContainer').classList.add('hidden'); document.getElementById('quizMultiQuantityInputContainer').classList.remove('flex');
+      setQuizCount(15); setQuizDifficulty('medium'); setQuizLanguage('mr');
+      const modal = document.getElementById('quizLaunchConfirmModal');
+      modal.classList.remove('hidden'); modal.classList.add('flex');
+    };
+
+    window.launchMultiChapterQuiz = function() {
+      if (selectedChapterIndices.size === 0) return;
+      const indices = Array.from(selectedChapterIndices).sort((a,b)=>a-b);
+      let chs = [];
+      const isOpt = currentStage === 'optionals' || activeDrawerSubject.paper1;
+      if (isOpt) chs = ((activeOptionalPaper === 1 ? activeDrawerSubject.paper1 : activeDrawerSubject.paper2).units || []).map(u => ({ nameMr: u }));
+      else chs = mpscMasterEngine.getChapters('rajyaseva', currentStage, activeDrawerSubject.paperId, activeDrawerSubject.id) || [];
+      
+      const realNames = indices.map(i => chs[i]?.nameMr || chs[i]?.name || `Chapter ${i+1}`);
+      pendingQuizTarget = {
+        examId: 'rajyaseva', stageId: currentStage, paperId: activeDrawerSubject.paperId || (isOpt ? `optional_p${activeOptionalPaper}` : 'paper_1'),
+        subjectId: activeDrawerSubject.id || activeDrawerSubject.code, subjectNameMr: activeDrawerSubject.nameMr || activeDrawerSubject.name,
+        topicTitleMr: `${indices.length} Chapters Combined Quiz`, selectedQuizChapterIndices: indices, selectedChapterTitlesList: realNames,
+        isMultiChapter: true, isFullSyllabusMock: false, sourceHub: 'rajyaseva.html'
+      };
+
+      document.getElementById('modalSubjectBadge').textContent = `${indices.length} Chapters Selected`;
+      document.getElementById('modalChapterTitle').textContent = realNames.join(' • ');
+      document.getElementById('modalMarkingRuleBadge').textContent = "MPSC 1/4th Rule (-0.50 Mark) enforced.";
+      document.getElementById('quizQuantityGrid').classList.add('hidden'); document.getElementById('quizQuantityGrid').classList.remove('flex');
+      document.getElementById('quizMultiQuantityInputContainer').classList.remove('hidden'); document.getElementById('quizMultiQuantityInputContainer').classList.add('flex');
+      
+      let defCnt = Math.max(15, Math.min(50, indices.length * 10));
+      document.getElementById('inputMultiChapterQuestionsCount').value = defCnt;
+      selectedQuizCount = defCnt;
+      setQuizDifficulty('medium'); setQuizLanguage('mr');
+      const m = document.getElementById('quizLaunchConfirmModal');
+      m.classList.remove('hidden'); m.classList.add('flex');
+    };
+
+    window.validateMultiChapterCount = function(el) {
+      let v = parseInt(el.value, 10);
+      if (isNaN(v)) v = 15;
+      v = Math.max(15, Math.min(50, v));
+      el.value = v; selectedQuizCount = v;
+    };
+
+    window.setQuizLanguage = function(l) {
+      selectedQuizLang = l;
+      document.getElementById('langBtn_mr').className = l === 'mr' ? 'pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer' : 'pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer';
+      document.getElementById('langBtn_en').className = l === 'en' ? 'pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer' : 'pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer';
+    };
+    
+    window.setQuizDifficulty = function(d) {
+      selectedQuizDifficulty = d;
+      document.getElementById('diffBtn_medium').className = d === 'medium' ? 'pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer' : 'pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer';
+      document.getElementById('diffBtn_hard').className = d === 'hard' ? 'pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer' : 'pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer';
+    };
+
+    window.setQuizCount = function(c) {
+      selectedQuizCount = c;
+      document.getElementById('countBtn_15').className = c === 15 ? 'pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer' : 'pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer';
+      document.getElementById('countBtn_25').className = c === 25 ? 'pill-active px-2.5 py-0.5 rounded-full text-[10px] btn-spring cursor-pointer' : 'pill-inactive px-2.5 py-0.5 rounded-full text-[10px] font-bold btn-spring cursor-pointer';
+    };
+
+    window.closeQuizConfirmModal = function() {
+      const m = document.getElementById('quizLaunchConfirmModal');
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      }
+    };
+
+    window.executeQuizLaunchConfirmed = function() {
+      if (!pendingQuizTarget) return;
+
+      // 🛑 API Key Guard: Ensure Gemini API key is valid before navigating to quiz.html
+      const key = (
+        localStorage.getItem('qq_gemini_key') || 
+        localStorage.getItem('gemini_api_key') || 
+        localStorage.getItem('mpsc_api_key') || 
+        ''
+      ).trim();
+
+      if (!key || key.length < 15) {
+        closeQuizConfirmModal();
+        closeFullMockModal();
+        if (typeof window.openApiKeyModal === 'function') {
+          window.openApiKeyModal();
+        } else if (typeof window.openKeyModal === 'function') {
+          window.openKeyModal();
+        } else {
+          const keyModal = document.getElementById('apiKeySetupModal') || document.getElementById('apiKeyModal');
+          if (keyModal) {
+            keyModal.classList.remove('hidden');
+            keyModal.classList.add('flex');
+          }
+        }
+        showToast("कृपया सराव चाचणीसाठी आधी तुमची मोफत Gemini API Key जोडा.");
+        return;
+      }
+
+      if (!pendingQuizTarget.isFullSyllabusMock) {
+        pendingQuizTarget.language = selectedQuizLang;
+        pendingQuizTarget.difficulty = selectedQuizDifficulty;
+        pendingQuizTarget.questionsCount = selectedQuizCount;
+      }
+      pendingQuizTarget.startedAt = new Date().toISOString();
+
+      closeQuizConfirmModal();
+      closeFullMockModal();
+      document.body.classList.remove('overflow-hidden');
+
+      localStorage.setItem('qq_active_topic_target', JSON.stringify(pendingQuizTarget));
+      window.location.assign('./quiz.html');
+    };
+
+    window.openFullMockLaunchModal = function(mockId, titleMr, paperId, qCount, marks, neg, mins) {
+      pendingQuizTarget = {
+        examId: 'rajyaseva', stageId: 'prelims', paperId: paperId,
+        subjectId: 'full_mock', topicTitleMr: titleMr, isFullSyllabusMock: true, mockId: mockId,
+        totalQuestions: qCount, totalMarks: marks, negativeMarking: neg, sourceHub: 'rajyaseva.html'
+      };
+      document.getElementById('fullMockModalTitle').textContent = titleMr;
+      document.getElementById('fullMockModalSub').textContent = `Official ${qCount} Qs Simulator`;
+      document.getElementById('fullMockModalQuestions').textContent = qCount;
+      document.getElementById('fullMockModalTime').textContent = `${mins} Minutes`;
+      document.getElementById('fullMockModalMarks').textContent = `${marks} Marks`;
+      document.getElementById('fullMockModalNegative').textContent = `-${neg} (1/4th Rule)`;
+      
+      const m = document.getElementById('fullMockLaunchModal');
+      m.classList.remove('hidden'); m.classList.add('flex');
+    };
+    
+    window.closeFullMockModal = function() {
+      const m = document.getElementById('fullMockLaunchModal');
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      }
+    };
+
+    window.buildMpscQuizMasterPrompt = function() {
+      if (!pendingQuizTarget) return "";
+      
+      let refBooks = [];
+      try {
+        const subjects = mpscMasterEngine.getSubjects(pendingQuizTarget.examId, pendingQuizTarget.stageId, pendingQuizTarget.paperId);
+        const subj = subjects?.find(s => (s.id === pendingQuizTarget.subjectId || s.code === pendingQuizTarget.subjectId));
+        if (subj && subj.referenceBooks) {
+           refBooks = subj.referenceBooks.map(b => typeof b === 'string' ? b : (b.name || b.title));
+        }
+      } catch(e) {}
+
+      const config = {
+        examId: pendingQuizTarget.examId,
+        stageId: pendingQuizTarget.stageId,
+        paperId: pendingQuizTarget.paperId,
+        subjectName: pendingQuizTarget.subjectNameMr,
+        chapterName: pendingQuizTarget.topicTitleMr,
+        qCount: selectedQuizCount,
+        language: selectedQuizLang,
+        difficulty: selectedQuizDifficulty,
+        chaptersList: pendingQuizTarget.selectedChapterTitlesList || [],
+        subtopics: pendingQuizTarget.selectedNotesSubtopics || [],
+        referenceBooks: refBooks
+      };
+
+      if (pendingQuizTarget.isFullSyllabusMock) {
+        return MpscPromptForge.getFullMockPrompt(config);
+      }
+      if (pendingQuizTarget.isMultiChapter) {
+        return MpscPromptForge.getMixedChapterQuizPrompt(config);
+      }
+      
+      return MpscPromptForge.getChapterQuizPrompt(config);
+    };
+
+    window.copyMpscQuizMasterPrompt = function() {
+      const p = window.buildMpscQuizMasterPrompt();
+      const ta = document.createElement('textarea');
+      ta.value = p; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+      showToast("Prompt Copied to Clipboard!");
+    };
+
+    // CLEAN NOTES MODAL & OFFLINE PERSISTENCE
+    window.launchNotes = function(paperId, subId, chIdx, chName) {
+      if (isMultiSelectMode) return;
+
+      const chapters = mpscMasterEngine.getChapters('rajyaseva', currentStage, paperId, subId) || [];
+      const subtopics = chapters[chIdx]?.subtopics || [];
+
+      pendingNotesTarget = {
+        examId: 'rajyaseva', stageId: currentStage, paperId: paperId, subjectId: subId,
+        subjectNameMr: activeDrawerSubject.nameMr || activeDrawerSubject.name, selectedNotesChapterIndex: chIdx,
+        topicTitleMr: chName, sourceHub: 'rajyaseva.html',
+        selectedNotesSubtopics: subtopics
+      };
+
+      document.getElementById('notesModalSubjectTag').textContent = pendingNotesTarget.subjectNameMr;
+      document.getElementById('notesModalPaperTag').textContent = currentStage === 'optionals' ? 'वैकल्पिक विषय' : (currentStage === 'mains' ? 'Mains Paper' : 'GS Paper');
+      document.getElementById('notesModalChapterTitle').textContent = chName;
+
+      // Check Offline Cache
+      const cacheKey = `notes_rajyaseva_${currentStage}_${subId}_ch${chIdx}`;
+      const hasCache = localStorage.getItem(`${cacheKey}_c1`) !== null;
+
+      const banner = document.getElementById('notesCacheStatusBanner');
+      const btnRegen = document.getElementById('btnRegenerateNotesAction');
+      const btnReadText = document.getElementById('btnExecuteInAppNotesText');
+
+      if (hasCache) {
+        banner.classList.remove('hidden');
+        btnRegen.classList.remove('hidden');
+        btnReadText.textContent = "Open Saved Notes (Instant)";
+      } else {
+        banner.classList.add('hidden');
+        btnRegen.classList.add('hidden');
+        btnReadText.textContent = "Generate Notes (In-App)";
+      }
+
+      const m = document.getElementById('notesLaunchModal');
+      m.classList.remove('hidden'); m.classList.add('flex');
+    };
+
+    window.closeNotesModal = function() {
+      const m = document.getElementById('notesLaunchModal');
+      if (m) {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      }
+      pendingNotesTarget = null;
+    };
+
+    window.executeInAppNotesLaunch = function(regenerate = false) {
+      if (!pendingNotesTarget) return;
+
+      // 🛑 API Key Guard: Ensure Gemini API key is valid before navigating to notes.html
+      const key = (
+        localStorage.getItem('qq_gemini_key') || 
+        localStorage.getItem('gemini_api_key') || 
+        localStorage.getItem('mpsc_api_key') || 
+        ''
+      ).trim();
+
+      if (!key || key.length < 15) {
+        closeNotesModal();
+        if (typeof window.openApiKeyModal === 'function') {
+          window.openApiKeyModal();
+        } else if (typeof window.openKeyModal === 'function') {
+          window.openKeyModal();
+        } else {
+          const keyModal = document.getElementById('apiKeySetupModal') || document.getElementById('apiKeyModal');
+          if (keyModal) {
+            keyModal.classList.remove('hidden');
+            keyModal.classList.add('flex');
+          }
+        }
+        showToast("कृपया नोट्स वाचण्यासाठी आधी तुमची मोफत Gemini API Key जोडा.");
+        return;
+      }
+
+      if (regenerate) {
+        const cacheKey = `notes_rajyaseva_${pendingNotesTarget.stageId}_${pendingNotesTarget.subjectId}_ch${pendingNotesTarget.selectedNotesChapterIndex}`;
+        [1, 2, 3, 4, 5, 6].forEach(i => localStorage.removeItem(`${cacheKey}_c${i}`));
+      }
+
+      const launchPayload = { ...pendingNotesTarget };
+      closeNotesModal();
+      document.body.classList.remove('overflow-hidden');
+
+      localStorage.setItem('qq_active_notes_target', JSON.stringify(launchPayload));
+      window.location.assign('./notes.html');
+    };
+
+    function buildSubjectTailoredMpscPrompt(target) {
+      let refBooks = [];
+      try {
+        const subjects = mpscMasterEngine.getSubjects(target?.examId || 'rajyaseva', target?.stageId || 'prelims', target?.paperId);
+        const subj = subjects?.find(s => (s.id === target?.subjectId || s.code === target?.subjectId));
+        if (subj && subj.referenceBooks) {
+           refBooks = subj.referenceBooks.map(b => typeof b === 'string' ? b : (b.name || b.title));
+        }
+      } catch(e) {}
+
+      const config = {
+        examId: target?.examId || 'rajyaseva',
+        stageId: target?.stageId || 'prelims',
+        subjectName: target?.subjectNameMr || 'सामान्य अध्ययन',
+        chapterName: target?.topicTitleMr || 'अभ्यास घटक',
+        subtopics: target?.selectedNotesSubtopics || [],
+        referenceBooks: refBooks
+      };
+      
+      return MpscPromptForge.getChapterNotesPrompt(config);
+    }
+
+    window.copyMpscAcademicPrompt = function() {
+      if (!pendingNotesTarget) return;
+      const promptText = buildSubjectTailoredMpscPrompt(pendingNotesTarget);
+      const ta = document.createElement('textarea');
+      ta.value = promptText; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+      showToast("Smart Notes Prompt Copied!");
+    };
+
+    window.launchExternalAiModel = function(platform) {
+      if (!pendingNotesTarget) return;
+      const promptText = buildSubjectTailoredMpscPrompt(pendingNotesTarget);
+      
+      const ta = document.createElement('textarea');
+      ta.value = promptText; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+
+      let targetUrl = "";
+      if (platform === 'gemini') { targetUrl = "https://gemini.google.com/app"; } 
+      else if (platform === 'chatgpt') { targetUrl = `https://chatgpt.com/?q=${encodeURIComponent(promptText.substring(0, 1800))}`; } 
+      else if (platform === 'perplexity') { targetUrl = `https://www.perplexity.ai/search?q=${encodeURIComponent(promptText.substring(0, 1800))}`; }
+      
+      showToast(`Prompt Copied! Opening ${platform}...`);
+      setTimeout(() => window.open(targetUrl, '_blank', 'noopener,noreferrer'), 400);
+    };
+
+    // QUIZ HISTORY REVIEW MODAL LOGIC (Instant zero-latency review)
+    window.__ACTIVE_REVIEW_RECORD__ = null;
+
+    window.viewQuizHistory = function(trackKey, chapterName) {
+      const modal = document.getElementById('quizHistoryModal');
+      
+      let rawData = window.__CHAPTER_QUIZ_CACHE__[trackKey];
+      if (!rawData) {
+        showToast("No record found in storage.");
+        return;
+      }
+
+      window.__ACTIVE_REVIEW_RECORD__ = rawData;
+      document.getElementById('quizHistoryChapterTitle').textContent = chapterName;
+
+      // Setup Attempts Dropdown if multiple attempts exist
+      const attempts = rawData.attempts || [rawData.primary || rawData];
+      const selectorContainer = document.getElementById('qhAttemptSelectorContainer');
+      const selectEl = document.getElementById('qhAttemptSelect');
+
+      if (attempts.length > 1 && selectEl && selectorContainer) {
+        selectorContainer.classList.remove('hidden');
+        selectEl.innerHTML = attempts.map((att, idx) => {
+          const score = att.score ?? att.correctCount ?? att.marks ?? 0;
+          const total = att.total ?? att.totalQuestions ?? 15;
+          const dateStr = att.completedAt || att.startedAt ? new Date(att.completedAt || att.startedAt).toLocaleDateString() : `Test ${idx + 1}`;
+          return `<option value="${idx}">Attempt ${idx + 1}: ${score}/${total} (${dateStr})</option>`;
+        }).join('');
+        selectEl.value = (attempts.length - 1).toString();
+      } else if (selectorContainer) {
+        selectorContainer.classList.add('hidden');
+      }
+
+      // Render the latest attempt initially
+      renderAttemptDetails(attempts[attempts.length - 1]);
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+
+    window.switchQuizAttempt = function(attemptIndex) {
+      if (!window.__ACTIVE_REVIEW_RECORD__) return;
+      const attempts = window.__ACTIVE_REVIEW_RECORD__.attempts || [window.__ACTIVE_REVIEW_RECORD__.primary || window.__ACTIVE_REVIEW_RECORD__];
+      const selected = attempts[parseInt(attemptIndex, 10)] || attempts[0];
+      renderAttemptDetails(selected);
+    };
+
+    function renderAttemptDetails(hData) {
+      const contentEl = document.getElementById('quizHistoryContent');
+      if (!hData || !contentEl) return;
+
+      const score = hData.score ?? hData.correctCount ?? hData.correct ?? hData.marks ?? 0;
+      const total = hData.total ?? hData.totalQuestions ?? hData.questionsCount ?? 15;
+      document.getElementById('qhScoreMarks').textContent = score;
+      document.getElementById('qhTotalMarks').textContent = `/ ${total}`;
+      const pct = hData.percentage ?? (total > 0 ? Math.round((score / total) * 100) : 0);
+      document.getElementById('qhPercentageBadge').textContent = `${pct}%`;
+
+      let questionsList = hData.questions || hData.attemptedQuestions || hData.quizQuestions || hData.questionList || hData.items || [];
+      const userAnswersMap = hData.userAnswers || hData.selectedAnswers || {};
+
+      if (Array.isArray(questionsList) && questionsList.length > 0) {
+        let html = '';
+        questionsList.forEach((q, idx) => {
+          const userAns = q.userAnswer || q.userSelected || userAnswersMap[q.id || idx] || 'अनुत्तरित (Skipped)';
+          const correctAns = q.correctAnswer || q.correct || q.answer || 'उपलब्ध नाही';
+          const isSkipped = q.isSkipped || userAns.includes('Skipped') || userAns === 'अनुत्तरित';
+          
+          let isCorrect = q.isCorrect;
+          if (isCorrect === undefined) {
+            isCorrect = !isSkipped && (String(userAns).trim().toLowerCase() === String(correctAns).trim().toLowerCase());
+          }
+
+          let borderColor = isCorrect ? 'border-emerald-500/30' : 'border-rose-500/30';
+          let bgColor = isCorrect ? 'bg-emerald-500/5' : 'bg-rose-500/5';
+          let statusIcon = isCorrect 
+            ? '<i class="fa-solid fa-circle-check text-emerald-500"></i>' 
+            : '<i class="fa-solid fa-circle-xmark text-rose-500"></i>';
+
+          if (isSkipped) {
+            borderColor = 'border-slate-300 dark:border-slate-700';
+            bgColor = 'bg-slate-100/50 dark:bg-white/[0.02]';
+            statusIcon = '<i class="fa-solid fa-circle-minus text-slate-400"></i>';
+          }
+
+          const questionText = q.question || q.questionText || q.qText || q.title || `प्रश्न ${idx + 1}`;
+          const explanationText = q.explanation || q.exp || q.rationale || 'या प्रश्नाचे संदर्भ स्पष्टीकरण उपलब्ध नाही.';
+
+          let optionsHtml = '';
+          const options = q.options || q.choices || [];
+          if (Array.isArray(options) && options.length > 0) {
+            optionsHtml = `
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 my-2">
+                ${options.map((opt, oIdx) => {
+                  const optText = typeof opt === 'string' ? opt : (opt.text || opt.title || `पर्याय ${oIdx + 1}`);
+                  const isUserPick = !isSkipped && (String(optText).trim().toLowerCase() === String(userAns).trim().toLowerCase());
+                  const isRealCorrect = String(optText).trim().toLowerCase() === String(correctAns).trim().toLowerCase();
+                  
+                  let optStyle = 'bg-white/60 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300';
+                  if (isRealCorrect) optStyle = 'bg-emerald-500/15 border-emerald-500/40 text-emerald-800 dark:text-emerald-300 font-bold';
+                  else if (isUserPick && !isCorrect) optStyle = 'bg-rose-500/15 border-rose-500/40 text-rose-800 dark:text-rose-300 line-through';
+
+                  return `<div class="p-2 rounded-xl border text-[11px] flex items-center gap-1.5 ${optStyle}">
+                    <span class="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black border ${isRealCorrect?'bg-emerald-500 text-white border-emerald-600':(isUserPick?'bg-rose-500 text-white border-rose-600':'bg-slate-200 dark:bg-slate-700 border-slate-300')}">${oIdx + 1}</span>
+                    <span class="leading-tight">${optText}</span>
+                  </div>`;
+                }).join('')}
+              </div>
+            `;
+          }
+
+          html += `
+            <div class="p-3.5 rounded-2xl border ${borderColor} ${bgColor} flex flex-col gap-2">
+              <div class="flex items-start gap-2 text-xs font-bold text-slate-900 dark:text-slate-100">
+                <span class="mt-0.5 shrink-0">${statusIcon}</span>
+                <p class="leading-snug">${idx + 1}. ${questionText}</p>
+              </div>
+
+              ${optionsHtml}
+
+              <div class="pl-5 space-y-0.5 text-[11px] pt-1">
+                <p class="text-slate-500 dark:text-slate-400">तुमचे उत्तर: <span class="${isCorrect?'text-emerald-600 dark:text-emerald-400':(isSkipped?'text-slate-500 dark:text-slate-400 font-bold':'text-rose-600 dark:text-rose-400')} font-black">${userAns}</span></p>
+                <p class="text-slate-500 dark:text-slate-400">आयोगाचे अचूक उत्तर: <span class="text-emerald-600 dark:text-emerald-400 font-black">${correctAns}</span></p>
+              </div>
+
+              <div class="mt-1 p-2.5 bg-white dark:bg-slate-900 rounded-xl text-[10.5px] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 leading-relaxed">
+                <span class="font-black text-amber-600 dark:text-amber-400 uppercase tracking-tight mr-1"><i class="fa-solid fa-lightbulb"></i> स्पष्टीकरण:</span> ${explanationText}
+              </div>
+            </div>`;
+        });
+        contentEl.innerHTML = html;
+      } else {
+        contentEl.innerHTML = `
+          <div class="p-8 text-center text-xs font-bold text-slate-400 space-y-3">
+            <div class="w-12 h-12 rounded-full bg-amber-500/10 text-amber-500 mx-auto flex items-center justify-center text-xl">
+              <i class="fa-solid fa-file-circle-question"></i>
+            </div>
+            <div>
+              <p class="text-slate-700 dark:text-slate-200 font-black">या चाचणीचे प्रश्न उपलब्ध नाहीत</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">हा मागील स्कोअर फक्त सारांश स्वरूपात (Summary Score) सेव्ह झालेला आहे. संपूर्ण प्रश्न-उत्तरे पाहण्यासाठी या चॅप्टरची एक नवीन क्विझ सोडवा.</p>
+            </div>
+          </div>`;
+      }
+    }
+
+    window.closeQuizHistoryModal = function() {
+      const modal = document.getElementById('quizHistoryModal');
+      if (modal) {
+        modal.classList.add('hidden'); 
+        modal.classList.remove('flex');
+      }
+    };
+
+    // DEDICATED FEEDBACK MODAL LOGIC
+    window.openDedicatedFeedbackModal = function(defaultContext = "") {
+      const modal = document.getElementById('dedicatedFeedbackModal');
+      const subjInput = document.getElementById('feedbackSubjectInput');
+      const msgInput = document.getElementById('feedbackMessageInput');
+      if (subjInput) subjInput.value = defaultContext || "General Feedback";
+      if (msgInput) msgInput.value = "";
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    };
+
+    window.closeDedicatedFeedbackModal = function() {
+      const modal = document.getElementById('dedicatedFeedbackModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    };
+
+    window.submitDedicatedFeedback = function() {
+      const subj = (document.getElementById('feedbackSubjectInput')?.value || '').trim();
+      const msg = (document.getElementById('feedbackMessageInput')?.value || '').trim();
+      if (!msg) {
+        showToast("कृपया तुमचा संदेश किंवा विनंती टाईप करा.");
+        return;
+      }
+
+      try {
+        const feedbackList = JSON.parse(localStorage.getItem('qq_user_feedback_queue') || '[]');
+        feedbackList.push({
+          subject: subj,
+          message: msg,
+          submittedAt: new Date().toISOString()
+        });
+        localStorage.setItem('qq_user_feedback_queue', JSON.stringify(feedbackList));
+      } catch (e) {}
+
+      closeDedicatedFeedbackModal();
+      showToast("तुमचा संदेश StudySphere टीमकडे नोंदवला गेला. धन्यवाद!");
+    };
+
+    let toastTimer;
+    window.showToast = function(msg) {
+      const t = document.getElementById('toastNotification');
+      const m = document.getElementById('toastMessage');
+      if(!t || !m) return;
+      m.textContent = msg;
+      t.classList.remove('translate-y-10', 'opacity-0');
+      t.classList.add('translate-y-0', 'opacity-100');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        t.classList.remove('translate-y-0', 'opacity-100');
+        t.classList.add('translate-y-10', 'opacity-0');
+      }, 2500);
+    };
+  </script>
+</body>
+</html>

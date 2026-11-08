@@ -1,0 +1,23 @@
+{
+  "name": "StudySphere MPSC",
+  "short_name": "StudySphere",
+  "description": "MPSC Practice and Revision Platform (Rajyaseva, Group B, Group C)",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#d97706",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./assets/icons/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icons/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

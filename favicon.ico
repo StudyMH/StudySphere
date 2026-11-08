@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Primary Amber / Saffron Solar Gradient -->
+    <linearGradient id="amberGlow" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <!-- Emerald Academic Horizon Accent -->
+    <linearGradient id="emeraldAccent" x1="128" y1="360" x2="384" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Crystal Refraction Highlight -->
+    <linearGradient id="crystalHighlight" x1="256" y1="40" x2="256" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Subtle Drop Shadow for Contrast on Light/White Backgrounds -->
+    <filter id="crispShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <g filter="url(#crispShadow)">
+    <!-- 1. Outer Sphere Orbit Ring (StudySphere Orbit) -->
+    <circle 
+      cx="256" 
+      cy="256" 
+      r="216" 
+      stroke="url(#amberGlow)" 
+      stroke-width="18" 
+      stroke-linecap="round"
+      stroke-dasharray="880 200"
+      opacity="0.9"
+    />
+
+    <!-- 2. Lower Growth Arc (Emerald Success Horizon) -->
+    <path 
+      d="M 120 376 C 160 424, 206 448, 256 448 C 306 448, 352 424, 392 376" 
+      stroke="url(#emeraldAccent)" 
+      stroke-width="16" 
+      stroke-linecap="round"
+    />
+
+    <!-- 3. Central Geometric Mortarboard / Knowledge Peak -->
+    <!-- Cap Diamond Rhombus Top -->
+    <path 
+      d="M 256 120 L 416 195 L 256 270 L 96 195 Z" 
+      fill="url(#amberGlow)" 
+    />
+
+    <!-- Cap Apex Facet / Subtle Lighting Split -->
+    <path 
+      d="M 256 120 L 416 195 L 256 270 Z" 
+      fill="#b45309" 
+      opacity="0.22"
+    />
+
+    <!-- Crystal Top Edge Sheen -->
+    <path 
+      d="M 256 126 L 400 195 L 256 262 L 112 195 Z" 
+      stroke="url(#crystalHighlight)" 
+      stroke-width="4" 
+      fill="none" 
+      opacity="0.6"
+    />
+
+    <!-- Cap Skull Base / Neck Foundation -->
+    <path 
+      d="M 152 225 L 152 305 C 152 355, 360 355, 360 305 L 360 225 L 256 272 Z" 
+      fill="url(#amberGlow)"
+    />
+
+    <path 
+      d="M 256 272 L 360 225 L 360 305 C 360 355, 256 355, 256 355 Z" 
+      fill="#b45309" 
+      opacity="0.28"
+    />
+
+    <!-- 4. Tassel & Academic Star Core -->
+    <!-- Tassel Ribbon Ribbon -->
+    <path 
+      d="M 128 208 C 114 235, 110 270, 114 318" 
+      stroke="url(#amberGlow)" 
+      stroke-width="9" 
+      stroke-linecap="round"
+    />
+    <!-- Tassel Bob / Pearl -->
+    <circle cx="114" cy="328" r="11" fill="url(#emeraldAccent)" />
+
+    <!-- Central Centerpoint Star-Sparkle (Illumination of Wisdom) -->
+    <circle cx="256" cy="195" r="9" fill="#ffffff" />
+    <path 
+      d="M 256 175 L 256 215 M 236 195 L 276 195" 
+      stroke="#ffffff" 
+      stroke-width="3" 
+      stroke-linecap="round" 
+      opacity="0.9"
+    />
+  </g>
+</svg>

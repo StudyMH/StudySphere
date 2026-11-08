@@ -1,0 +1,687 @@
+<!-- ========================================================================= -->
+<!-- GOOGLE GEMINI API KEY GATEKEEPER POPUP MODAL                              -->
+<!-- Path: modals/api-key-modal.html                                           -->
+<!-- Description: Classic Solid High-Contrast, Zero-Scroll, 100% Functional,   -->
+<!--              Complete 5-Step Flow: Paste > Connect > Save > Check > Delete-->
+<!-- ========================================================================= -->
+<div 
+  id="apiKeyModal" 
+  data-alias-id="apiKeyGatewayModal"
+  role="dialog" 
+  aria-modal="true" 
+  class="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 select-none overflow-hidden"
+  onclick="if(event.target === this){window.closeApiKeyModalDirect();}"
+>
+  <!-- Modal Card Shell: Solid Classic White & Slate 900 Shell with High Contrast Borders -->
+  <div 
+    class="relative w-full max-w-sm sm:max-w-[420px] rounded-3xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 animate-pop-in flex flex-col gap-2.5 overflow-hidden box-border"
+  >
+    <!-- 1. Top Header: Universal Transparent Inline SVG Logo + Brand Title + Close Button -->
+    <div class="flex items-center justify-between shrink-0 pb-0.5">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 flex items-center justify-center shrink-0">
+          <svg viewBox="0 0 512 512" class="w-7 h-7 object-contain" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="modalAmberGlow" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#fbbf24" />
+                <stop offset="50%" stop-color="#f59e0b" />
+                <stop offset="100%" stop-color="#d97706" />
+              </linearGradient>
+              <linearGradient id="modalEmeraldAccent" x1="128" y1="360" x2="384" y2="460" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#34d399" />
+                <stop offset="100%" stop-color="#059669" />
+              </linearGradient>
+            </defs>
+            <circle cx="256" cy="256" r="216" stroke="url(#modalAmberGlow)" stroke-width="20" stroke-linecap="round" stroke-dasharray="880 200" opacity="0.9" />
+            <path d="M 120 376 C 160 424, 206 448, 256 448 C 306 448, 352 424, 392 376" stroke="url(#modalEmeraldAccent)" stroke-width="18" stroke-linecap="round" />
+            <path d="M 256 120 L 416 195 L 256 270 L 96 195 Z" fill="url(#modalAmberGlow)" />
+            <path d="M 152 225 L 152 305 C 152 355, 360 355, 360 305 L 360 225 L 256 272 Z" fill="url(#modalAmberGlow)" />
+            <circle cx="114" cy="328" r="12" fill="url(#modalEmeraldAccent)" />
+            <circle cx="256" cy="195" r="9" fill="#ffffff" />
+          </svg>
+        </div>
+        <div class="min-w-0 leading-none flex flex-col justify-center">
+          <h2 class="text-base sm:text-lg font-black tracking-tight leading-none font-marathi">
+            <span class="text-slate-900 dark:text-white">Study</span><span class="text-amber-500 dark:text-amber-400">Sphere</span>
+          </h2>
+          <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 truncate">MPSC Portal</span>
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <button 
+        id="btnCloseApiKeyModal" 
+        type="button" 
+        onclick="window.closeApiKeyModalDirect()" 
+        class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-bold flex items-center justify-center transition-all duration-150 active:scale-95 cursor-pointer shrink-0 border border-slate-200 dark:border-slate-700"
+        aria-label="Close API Modal"
+      >
+        <i class="fa-solid fa-xmark text-xs font-black"></i>
+      </button>
+    </div>
+
+    <!-- 2. Trust Badges: 100% Free & Advertisement Free -->
+    <div class="flex items-center gap-2 shrink-0">
+      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-400/30 text-[10px] font-black tracking-wide">
+        <i class="fa-solid fa-gift text-[9px] text-emerald-500"></i>
+        <span>100% FREE</span>
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-500/10 text-red-800 dark:text-red-300 border border-red-400/30 text-[10px] font-black tracking-wide">
+        <i class="fa-solid fa-ban text-[9px] text-red-500"></i>
+        <span>NO ADVERTISEMENT</span>
+      </span>
+    </div>
+
+    <!-- 3. Guidance Box -->
+    <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 text-[11px] leading-relaxed text-slate-600 dark:text-slate-300 space-y-1 shrink-0">
+      <div class="flex items-start gap-1.5">
+        <i class="fa-solid fa-circle-question text-amber-500 text-xs mt-0.5 shrink-0"></i>
+        <p class="text-[10.5px] text-slate-600 dark:text-slate-300 leading-snug font-marathi">
+          <strong class="text-slate-900 dark:text-white">API Key:</strong> खालील Google AI Studio लिंकवरून मोफत की मिळवून इथे पेस्ट करा.
+        </p>
+      </div>
+      <div class="flex items-start gap-1.5 pt-1 border-t border-slate-200 dark:border-slate-700/60">
+        <i class="fa-solid fa-shield-halved text-emerald-500 text-xs mt-0.5 shrink-0"></i>
+        <p class="text-[10.5px] text-slate-600 dark:text-slate-300 leading-snug font-marathi">
+          <strong class="text-slate-900 dark:text-white">१००% सुरक्षित:</strong> की केवळ तुमच्या डिव्हाइसच्या स्थानिक ब्राऊझर मेमरीमध्ये सेव्ह राहते.
+        </p>
+      </div>
+    </div>
+
+    <!-- 4. Direct Link to Google AI Studio with Pulse Dot -->
+    <div class="flex items-center justify-between px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-300 dark:border-amber-800/50 text-[11px] shrink-0">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="relative flex h-2 w-2 shrink-0">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span class="text-slate-900 dark:text-slate-200 font-bold truncate">Google AI Studio</span>
+      </div>
+      <a 
+        href="https://aistudio.google.com/app/apikey" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="text-amber-700 dark:text-amber-400 font-black hover:underline inline-flex items-center gap-1 shrink-0 no-underline transition-transform duration-150 active:scale-95"
+      >
+        <span>Get Free Key</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+      </a>
+    </div>
+
+    <!-- 5. Key Input Bar -->
+    <div class="space-y-1.5 shrink-0">
+      <!-- Label Row with Paste & Clear Quick Actions -->
+      <div class="flex items-center justify-between px-0.5">
+        <label for="inputApiKey" class="block text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          Enter Gemini API Key
+        </label>
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            id="btnPasteKey" 
+            onclick="window.executePasteKey()" 
+            class="px-2 py-0.5 rounded-md bg-amber-500/15 hover:bg-amber-500/25 text-amber-900 dark:text-amber-300 border border-amber-400/40 text-[10px] font-black transition-all duration-150 active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 shadow-2xs"
+          >
+            <i class="fa-solid fa-paste text-[9px]"></i>
+            <span>Paste</span>
+          </button>
+          
+          <button 
+            type="button" 
+            id="btnClearKey" 
+            onclick="window.executeClearKey()" 
+            class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition-all duration-150 active:scale-95 cursor-pointer shadow-2xs flex items-center gap-1"
+          >
+            <i class="fa-solid fa-eraser text-[9px]"></i>
+            <span>Clear</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Clean Input Field -->
+      <div class="flex items-center gap-1.5 w-full">
+        <input 
+          type="password" 
+          id="inputApiKey" 
+          placeholder="Paste key here (AIzaSy...)" 
+          autocomplete="off"
+          spellcheck="false"
+          oninput="window.handleKeyInputTyping()"
+          class="flex-1 min-w-0 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs font-mono focus:outline-none focus:border-amber-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+        />
+
+        <button 
+          type="button" 
+          id="btnToggleVisibility" 
+          onclick="window.toggleKeyVisibilityDirect()" 
+          class="h-9 w-9 shrink-0 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-150 active:scale-95 cursor-pointer text-xs"
+          title="Show / Hide API Key"
+          aria-label="Toggle Key Visibility"
+        >
+          <i class="fa-solid fa-eye" id="toggleVisibilityIcon"></i>
+        </button>
+      </div>
+
+      <!-- Real-time Status Badge & Error Message -->
+      <div id="statusMessageWrapper" class="hidden flex items-center justify-between text-[10.5px] px-0.5 pt-0.5">
+        <div id="verifiedModelBadge" class="hidden items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium">
+          <i id="verifiedModelIcon" class="fa-solid fa-circle-check text-[10px]"></i>
+          <span id="verifiedModelText">Connected: gemini-3.5-flash-lite</span>
+        </div>
+        <p id="keyValidationError" class="hidden text-rose-500 font-bold truncate"></p>
+      </div>
+    </div>
+
+    <!-- 6. Action Controls: 5-Step Handlers -->
+    <div id="actionControlsContainer" class="flex flex-col gap-1.5 shrink-0 pt-0.5">
+      
+      <!-- Primary Interactive Row -->
+      <div id="primaryButtonsRow" class="flex items-center gap-2 w-full">
+        <button 
+          type="button" 
+          id="btnPrimaryAction" 
+          onclick="window.handlePrimaryFlowAction()" 
+          class="flex-1 py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 shadow-sm cursor-pointer flex items-center justify-center gap-2"
+        >
+          <i id="btnPrimaryIcon" class="fa-solid fa-plug text-xs"></i>
+          <span id="btnPrimaryLabel">Connect</span>
+
+          <!-- Three-Dot Bounce Wave Animation -->
+          <span id="btnPrimaryThreeDots" class="hidden items-center gap-1 text-slate-950">
+            <span class="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-current animate-bounce"></span>
+          </span>
+        </button>
+
+        <!-- Step 5: Delete Key Button -->
+        <button 
+          type="button" 
+          id="btnDeleteKey" 
+          onclick="window.executeDeleteKey()" 
+          class="hidden py-2 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-800/80 font-bold text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 cursor-pointer whitespace-nowrap shadow-2xs"
+        >
+          Delete Key
+        </button>
+      </div>
+
+      <!-- Explore Syllabus First Button -->
+      <button 
+        type="button" 
+        id="btnExploreDemo" 
+        onclick="window.executeExploreSyllabus()" 
+        class="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-all duration-150 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
+      >
+        <i class="fa-solid fa-compass text-[11px] text-amber-500"></i>
+        <span>Explore Syllabus First</span>
+        <i class="fa-solid fa-arrow-right text-[10px] text-slate-400"></i>
+      </button>
+
+    </div>
+
+    <!-- 7. Security Safeguard Micro-line -->
+    <p class="text-[9.5px] text-center text-slate-400 dark:text-slate-500 leading-tight pt-1 border-t border-slate-200 dark:border-slate-800/80 shrink-0 font-medium">
+      🔒 Stored exclusively inside your local browser storage.
+    </p>
+
+  </div>
+</div>
+
+<!-- Floating Gatekeeper Toast Notification -->
+<div 
+  id="gatekeeperToast" 
+  class="fixed bottom-6 right-4 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 z-[130] transform translate-y-10 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-slate-800 px-4 py-2 rounded-2xl shadow-xl flex items-center gap-2 text-xs font-bold pointer-events-none border border-slate-700"
+>
+  <span id="gatekeeperToastIcon" class="text-amber-400 text-sm">✓</span>
+  <span id="gatekeeperToastMessage">Action Completed!</span>
+</div>
+
+<!-- ========================================================================= -->
+<!-- COMPREHENSIVE 5-STEP ENGINE & AUTO-POPUP CONTROLLER                       -->
+<!-- ========================================================================= -->
+<script>
+  (function initGatekeeperFlowController() {
+    let currentFlowStage = 'CONNECT'; // 'CONNECT' | 'SAVE' | 'CHECK'
+    let stagingVerifiedKey = '';
+    let isVerifyingBusy = false;
+    let isDeleteConfirmActive = false;
+    let deleteConfirmTimeout = null;
+    let pingResetTimeout = null;
+
+    // Toast helper
+    function showGatekeeperToast(msg, icon = '✓') {
+      const toast = document.getElementById('gatekeeperToast');
+      const text = document.getElementById('gatekeeperToastMessage');
+      const iconEl = document.getElementById('gatekeeperToastIcon');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      if (iconEl) iconEl.textContent = icon;
+      toast.classList.remove('translate-y-10', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-10', 'opacity-0');
+      }, 3000);
+    }
+
+    function getStoredKey() {
+      try {
+        if (window.GatekeeperEngine && typeof window.GatekeeperEngine.getStoredKey === 'function') {
+          const k = window.GatekeeperEngine.getStoredKey();
+          if (k && k.trim().length > 8) return k.trim();
+        }
+      } catch (e) {}
+      return (localStorage.getItem('qq_gemini_key') || localStorage.getItem('gemini_api_key') || '').trim();
+    }
+
+    // Modal Visibility Triggers
+    window.openApiKeyModalDirect = function() {
+      const modal = document.getElementById('apiKeyModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+      window.syncModalDisplayFromState();
+    };
+
+    window.closeApiKeyModalDirect = function() {
+      const modal = document.getElementById('apiKeyModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+      sessionStorage.setItem('ss_explored_first_time', 'true');
+      resetDeleteConfirm();
+    };
+
+    function resetDeleteConfirm() {
+      isDeleteConfirmActive = false;
+      clearTimeout(deleteConfirmTimeout);
+      const btnDelete = document.getElementById('btnDeleteKey');
+      if (btnDelete) {
+        btnDelete.textContent = "Delete Key";
+        btnDelete.className = "hidden py-2 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-800/80 font-bold text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 cursor-pointer whitespace-nowrap shadow-2xs";
+      }
+    }
+
+    // Public alias mappings
+    if (window.GatekeeperEngine) {
+      window.GatekeeperEngine.openModal = window.openApiKeyModalDirect;
+      window.GatekeeperEngine.closeModal = window.closeApiKeyModalDirect;
+    }
+    if (!window.StudySphereCommon) window.StudySphereCommon = {};
+    window.StudySphereCommon.openApiKeyModal = window.openApiKeyModalDirect;
+    window.StudySphereCommon.closeApiKeyModal = window.closeApiKeyModalDirect;
+
+    // 1. Sync Modal UI from persistent state
+    window.syncModalDisplayFromState = function() {
+      const savedKey = getStoredKey();
+      const input = document.getElementById('inputApiKey');
+      const btnPaste = document.getElementById('btnPasteKey');
+      const btnClear = document.getElementById('btnClearKey');
+      const btnExplore = document.getElementById('btnExploreDemo');
+      const btnDelete = document.getElementById('btnDeleteKey');
+      const btnPrimary = document.getElementById('btnPrimaryAction');
+      const btnPrimaryLabel = document.getElementById('btnPrimaryLabel');
+      const btnPrimaryIcon = document.getElementById('btnPrimaryIcon');
+      const threeDots = document.getElementById('btnPrimaryThreeDots');
+      const statusWrapper = document.getElementById('statusMessageWrapper');
+      const verifiedBadge = document.getElementById('verifiedModelBadge');
+      const verifiedText = document.getElementById('verifiedModelText');
+      const verifiedIcon = document.getElementById('verifiedModelIcon');
+      const errorMsg = document.getElementById('keyValidationError');
+
+      if (!input || !btnPrimary) return;
+
+      if (threeDots) threeDots.classList.add('hidden');
+      if (errorMsg) errorMsg.classList.add('hidden');
+      btnPrimary.disabled = false;
+      resetDeleteConfirm();
+
+      if (savedKey && savedKey.length > 8) {
+        // STEP 4: KEY IS SAVED -> 'CHECK CONNECTION'
+        currentFlowStage = 'CHECK';
+        stagingVerifiedKey = savedKey;
+
+        input.value = savedKey;
+        input.disabled = true;
+        input.classList.add('opacity-60', 'cursor-not-allowed');
+
+        if (btnPaste) {
+          btnPaste.disabled = true;
+          btnPaste.classList.add('opacity-40', 'pointer-events-none');
+        }
+
+        if (btnExplore) btnExplore.classList.add('hidden');
+        if (btnDelete) btnDelete.classList.remove('hidden');
+        if (btnClear) btnClear.classList.remove('hidden');
+
+        if (statusWrapper) statusWrapper.classList.remove('hidden');
+        if (verifiedBadge) {
+          verifiedBadge.classList.remove('hidden');
+          verifiedBadge.className = "flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium";
+          if (verifiedIcon) verifiedIcon.className = "fa-solid fa-circle-check text-[10px] text-emerald-500";
+          if (verifiedText) verifiedText.textContent = "Connected: gemini-3.5-flash-lite";
+        }
+
+        btnPrimary.className = "flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-700 text-white font-black text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 shadow-sm cursor-pointer flex items-center justify-center gap-2";
+        if (btnPrimaryLabel) {
+          btnPrimaryLabel.classList.remove('hidden');
+          btnPrimaryLabel.textContent = "Check Connection";
+        }
+        if (btnPrimaryIcon) {
+          btnPrimaryIcon.classList.remove('hidden');
+          btnPrimaryIcon.className = "fa-solid fa-arrows-rotate text-xs text-white";
+        }
+
+      } else {
+        // STEP 1 & 2: NO KEY -> 'CONNECT' (AMBER)
+        currentFlowStage = 'CONNECT';
+        stagingVerifiedKey = '';
+
+        input.disabled = false;
+        input.classList.remove('opacity-60', 'cursor-not-allowed');
+
+        if (btnPaste) {
+          btnPaste.disabled = false;
+          btnPaste.classList.remove('opacity-40', 'pointer-events-none');
+        }
+
+        if (btnExplore) btnExplore.classList.remove('hidden');
+        if (btnDelete) btnDelete.classList.add('hidden');
+        if (statusWrapper) statusWrapper.classList.add('hidden');
+        if (verifiedBadge) verifiedBadge.classList.add('hidden');
+
+        btnPrimary.className = "flex-1 py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 shadow-sm cursor-pointer flex items-center justify-center gap-2";
+        if (btnPrimaryLabel) {
+          btnPrimaryLabel.classList.remove('hidden');
+          btnPrimaryLabel.textContent = "Connect";
+        }
+        if (btnPrimaryIcon) {
+          btnPrimaryIcon.classList.remove('hidden');
+          btnPrimaryIcon.className = "fa-solid fa-plug text-xs";
+        }
+      }
+    };
+
+    window.enforceApiKeyModalState = window.syncModalDisplayFromState;
+    window.refreshApiKeyModalUI = window.syncModalDisplayFromState;
+
+    // 2. STEP 1: PASTE ACTION (ZERO-PROMPT GUARANTEED)
+    window.executePasteKey = async function() {
+      const input = document.getElementById('inputApiKey');
+      if (!input || input.disabled) return;
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim()) {
+          input.value = text.trim();
+          window.handleKeyInputTyping();
+          showGatekeeperToast("Key Pasted from Clipboard!");
+        } else {
+          showGatekeeperToast("Clipboard is empty. Type your key.", "ℹ");
+          input.focus();
+        }
+      } catch (err) {
+        showGatekeeperToast("Clipboard access denied. Please paste manually.", "ℹ");
+        input.focus();
+      }
+    };
+
+    window.handleKeyInputTyping = function() {
+      const input = document.getElementById('inputApiKey');
+      const errorMsg = document.getElementById('keyValidationError');
+      const statusWrapper = document.getElementById('statusMessageWrapper');
+      
+      if (errorMsg) errorMsg.classList.add('hidden');
+      
+      if (currentFlowStage !== 'CHECK' && (!input || !input.value.trim())) {
+        if (statusWrapper) statusWrapper.classList.add('hidden');
+      }
+
+      if (currentFlowStage === 'SAVE') {
+        currentFlowStage = 'CONNECT';
+        const btnPrimary = document.getElementById('btnPrimaryAction');
+        const btnPrimaryLabel = document.getElementById('btnPrimaryLabel');
+        const btnPrimaryIcon = document.getElementById('btnPrimaryIcon');
+        if (btnPrimary) {
+          btnPrimary.className = "flex-1 py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 shadow-sm cursor-pointer flex items-center justify-center gap-2";
+          if (btnPrimaryLabel) btnPrimaryLabel.textContent = "Connect";
+          if (btnPrimaryIcon) btnPrimaryIcon.className = "fa-solid fa-plug text-xs";
+        }
+      }
+    };
+
+    // 3. STEP 2, 3, 4: REAL PING WITH HIGH-RESOLUTION LATENCY
+    window.handlePrimaryFlowAction = async function() {
+      if (isVerifyingBusy) return;
+
+      const input = document.getElementById('inputApiKey');
+      const btnPrimary = document.getElementById('btnPrimaryAction');
+      const btnPrimaryLabel = document.getElementById('btnPrimaryLabel');
+      const btnPrimaryIcon = document.getElementById('btnPrimaryIcon');
+      const threeDots = document.getElementById('btnPrimaryThreeDots');
+      const statusWrapper = document.getElementById('statusMessageWrapper');
+      const errorMsg = document.getElementById('keyValidationError');
+      const verifiedBadge = document.getElementById('verifiedModelBadge');
+      const verifiedText = document.getElementById('verifiedModelText');
+      const verifiedIcon = document.getElementById('verifiedModelIcon');
+
+      if (!input || !btnPrimary) return;
+
+      // BRANCH A: STAGE IS 'SAVE' -> COMMIT TO STORAGE & AUTO CLOSE MODAL
+      if (currentFlowStage === 'SAVE') {
+        const keyToSave = stagingVerifiedKey || input.value.trim();
+        if (!keyToSave) return;
+
+        localStorage.setItem('qq_gemini_key', keyToSave);
+        localStorage.setItem('gemini_api_key', keyToSave);
+
+        if (typeof window.refreshHeaderAiStatus === 'function') {
+          window.refreshHeaderAiStatus();
+        }
+
+        showGatekeeperToast("API Key Saved Successfully!", "✓");
+        window.syncModalDisplayFromState();
+        window.closeApiKeyModalDirect();
+        return;
+      }
+
+      // BRANCH B: STAGE IS 'CONNECT' OR 'CHECK' -> SEND REAL LIVE PING
+      const targetKey = (currentFlowStage === 'CHECK' ? getStoredKey() : input.value).trim();
+
+      if (!targetKey || targetKey.length < 8) {
+        if (statusWrapper) statusWrapper.classList.remove('hidden');
+        if (errorMsg) {
+          errorMsg.textContent = "Please enter a valid Gemini API Key";
+          errorMsg.classList.remove('hidden');
+        }
+        input.focus();
+        return;
+      }
+
+      isVerifyingBusy = true;
+      btnPrimary.disabled = true;
+      if (statusWrapper) statusWrapper.classList.remove('hidden');
+      if (errorMsg) errorMsg.classList.add('hidden');
+      if (btnPrimaryIcon) btnPrimaryIcon.classList.add('hidden');
+
+      if (currentFlowStage === 'CHECK') {
+        btnPrimary.className = "flex-1 py-2 px-3 rounded-xl bg-slate-800 border border-slate-700 text-white font-black text-xs shadow-sm flex items-center justify-center gap-2 cursor-wait";
+        if (btnPrimaryLabel) btnPrimaryLabel.textContent = "Checking...";
+        if (threeDots) threeDots.className = "inline-flex items-center gap-1 text-white";
+      } else {
+        if (btnPrimaryLabel) btnPrimaryLabel.textContent = "Connecting...";
+        if (threeDots) threeDots.className = "inline-flex items-center gap-1 text-slate-950";
+      }
+
+      const pingStart = performance.now();
+
+      try {
+        const testUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(targetKey)}`;
+        const res = await fetch(testUrl, { method: 'GET' });
+        const latencyMs = Math.round(performance.now() - pingStart);
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error?.message || `HTTP ${res.status}: Ping failed`);
+        }
+
+        stagingVerifiedKey = targetKey;
+
+        if (currentFlowStage === 'CHECK') {
+          clearTimeout(pingResetTimeout);
+          if (verifiedBadge && verifiedText) {
+            verifiedBadge.classList.remove('hidden');
+            verifiedBadge.className = "flex items-center gap-1.5 font-black text-emerald-800 dark:text-emerald-300";
+            if (verifiedIcon) verifiedIcon.className = "fa-solid fa-circle-check text-[10px] text-emerald-600 dark:text-emerald-400";
+            verifiedText.textContent = `Connected (${latencyMs}ms)`;
+
+            pingResetTimeout = setTimeout(() => {
+              if (currentFlowStage === 'CHECK') {
+                verifiedBadge.className = "flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium";
+                verifiedText.textContent = "Connected: gemini-3.5-flash-lite";
+              }
+            }, 4000);
+          }
+
+        } else {
+          // Transition to STEP 3 -> 'Save Key' (Emerald)
+          currentFlowStage = 'SAVE';
+          btnPrimary.className = "flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all duration-150 active:scale-[0.97] active:translate-y-0.5 shadow-sm cursor-pointer flex items-center justify-center gap-2";
+          if (btnPrimaryLabel) btnPrimaryLabel.textContent = "Save Key";
+          if (btnPrimaryIcon) {
+            btnPrimaryIcon.classList.remove('hidden');
+            btnPrimaryIcon.className = "fa-solid fa-floppy-disk text-xs";
+          }
+          if (verifiedBadge) {
+            verifiedBadge.classList.remove('hidden');
+            verifiedBadge.className = "flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-400";
+            if (verifiedIcon) verifiedIcon.className = "fa-solid fa-bolt text-[10px] text-emerald-600";
+            if (verifiedText) verifiedText.textContent = `Ping: ${latencyMs}ms • Ready to Save`;
+          }
+          showGatekeeperToast(`Ping: ${latencyMs}ms! Click 'Save Key' to activate.`, "✓");
+        }
+
+      } catch (err) {
+        console.warn("[Gatekeeper API Real Ping Error]", err);
+        
+        if (verifiedBadge && verifiedText) {
+          verifiedBadge.classList.remove('hidden');
+          verifiedBadge.className = "flex items-center gap-1.5 font-black text-rose-600 dark:text-rose-400";
+          if (verifiedIcon) verifiedIcon.className = "fa-solid fa-circle-xmark text-[10px] text-rose-500";
+          verifiedText.textContent = "✕ Connection Failed (Offline/Invalid)";
+        }
+        if (errorMsg) {
+          errorMsg.textContent = err.message || "Invalid API key or network error";
+          errorMsg.classList.remove('hidden');
+        }
+
+      } finally {
+        isVerifyingBusy = false;
+        btnPrimary.disabled = false;
+        if (threeDots) threeDots.classList.add('hidden');
+        if (btnPrimaryIcon) btnPrimaryIcon.classList.remove('hidden');
+        if (currentFlowStage === 'CHECK') {
+          if (btnPrimaryLabel) btnPrimaryLabel.textContent = "Check Connection";
+        }
+      }
+    };
+
+    // 4. STEP 5: CLEAR & CONFIRM DELETE
+    window.executeClearKey = function() {
+      const input = document.getElementById('inputApiKey');
+      if (input) {
+        input.value = '';
+        input.disabled = false;
+        input.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+      stagingVerifiedKey = '';
+      currentFlowStage = 'CONNECT';
+      localStorage.removeItem('qq_gemini_key');
+      localStorage.removeItem('gemini_api_key');
+      
+      if (typeof window.refreshHeaderAiStatus === 'function') {
+        window.refreshHeaderAiStatus();
+      }
+
+      showGatekeeperToast("Input Cleared", "ℹ");
+      window.syncModalDisplayFromState();
+      input?.focus();
+    };
+
+    window.executeDeleteKey = function() {
+      const btnDelete = document.getElementById('btnDeleteKey');
+      if (!btnDelete) return;
+
+      if (!isDeleteConfirmActive) {
+        isDeleteConfirmActive = true;
+        btnDelete.textContent = "Confirm Delete?";
+        btnDelete.className = "py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs transition-all duration-150 active:scale-[0.97] cursor-pointer whitespace-nowrap shadow-sm";
+        
+        clearTimeout(deleteConfirmTimeout);
+        deleteConfirmTimeout = setTimeout(() => {
+          resetDeleteConfirm();
+          btnDelete.classList.remove('hidden');
+        }, 3200);
+        return;
+      }
+
+      clearTimeout(deleteConfirmTimeout);
+      isDeleteConfirmActive = false;
+
+      stagingVerifiedKey = '';
+      currentFlowStage = 'CONNECT';
+      localStorage.removeItem('qq_gemini_key');
+      localStorage.removeItem('gemini_api_key');
+
+      const input = document.getElementById('inputApiKey');
+      if (input) {
+        input.value = '';
+        input.disabled = false;
+        input.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+
+      if (typeof window.refreshHeaderAiStatus === 'function') {
+        window.refreshHeaderAiStatus();
+      }
+
+      showGatekeeperToast("API Key Deleted", "🗑");
+      window.syncModalDisplayFromState();
+    };
+
+    window.executeExploreSyllabus = function() {
+      window.closeApiKeyModalDirect();
+      showGatekeeperToast("Browsing in Free Exploration Mode");
+    };
+
+    window.toggleKeyVisibilityDirect = function() {
+      const input = document.getElementById('inputApiKey');
+      const icon = document.getElementById('toggleVisibilityIcon');
+      if (!input || !icon) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    };
+
+    // 5. 1ST-TIME VISITOR AUTO-POPUP CONTROLLER
+    function checkAndTriggerFirstTimeVisitor() {
+      const savedKey = getStoredKey();
+      const hasExplored = sessionStorage.getItem('ss_explored_first_time');
+
+      if (!savedKey && !hasExplored) {
+        setTimeout(() => {
+          window.openApiKeyModalDirect();
+        }, 350);
+      }
+    }
+
+    // Initialize immediate sync and check visitor
+    window.syncModalDisplayFromState();
+    checkAndTriggerFirstTimeVisitor();
+
+  })();
+</script>

@@ -1,0 +1,158 @@
+<!-- ========================================================================= -->
+<!-- COMPONENT: INSTALL PWA MODAL                                              -->
+<!-- Path: modals/install-modal.html                                           -->
+<!-- Description: Clean, compact 1-click PWA installer with iOS Safari         -->
+<!--              guidelines, resilient fallback triggers, and zero emojis.    -->
+<!-- ========================================================================= -->
+<div 
+  id="installModal" 
+  role="dialog" 
+  aria-modal="true" 
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/80 backdrop-blur-sm p-3 sm:p-4 select-none overflow-y-auto"
+  onclick="if(event.target === this){if(window.StudySphereCommon && window.StudySphereCommon.closeModal){StudySphereCommon.closeModal('installModal');}else{this.classList.add('hidden');this.classList.remove('flex');document.body.classList.remove('overflow-hidden');}}"
+>
+  <div class="relative w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-3.5 my-auto max-h-[92vh] overflow-y-auto box-border animate-pop-in">
+    
+    <!-- 1. Modal Header -->
+    <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5 shrink-0">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-sm font-bold border border-amber-500/30 shrink-0">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+        </span>
+        <div class="min-w-0">
+          <h3 class="text-sm font-black text-slate-900 dark:text-white truncate">Install StudySphere App</h3>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold truncate">Fast • Lightweight • Offline Ready</p>
+        </div>
+      </div>
+      <button 
+        type="button" 
+        onclick="closeInstallModalSafe()" 
+        class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center cursor-pointer transition-colors btn-spring shrink-0 border border-slate-200 dark:border-slate-700"
+        aria-label="Close Install Modal"
+      >
+        <i class="fa-solid fa-xmark text-xs font-black"></i>
+      </button>
+    </div>
+
+    <!-- 2. Crisp 3-Point Benefits Overview -->
+    <div class="space-y-2 shrink-0">
+      
+      <!-- Point 1: Fullscreen Experience -->
+      <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-start gap-2.5">
+        <div class="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-600 flex items-center justify-center text-xs shrink-0 mt-0.5">
+          <i class="fa-solid fa-gauge-high"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-black text-slate-900 dark:text-white">अखंड ॲप अनुभव (Native Fullscreen)</h4>
+          <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug mt-0.5">
+            ब्राउझर टॅबचा अडथळा न येता मोबाईलवर पूर्ण स्क्रीनवर जलद सराव करा.
+          </p>
+        </div>
+      </div>
+
+      <!-- Point 2: Lightweight Storage -->
+      <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-start gap-2.5">
+        <div class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-600 flex items-center justify-center text-xs shrink-0 mt-0.5">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-black text-slate-900 dark:text-white">अत्यंत हलके आकारमान (Under 3 MB)</h4>
+          <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug mt-0.5">
+            कोणतेही मोठे अपडेट्स नाहीत; फोनची मेमरी न भरता सहज चालते.
+          </p>
+        </div>
+      </div>
+
+      <!-- Point 3: Offline Vault Access -->
+      <div class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex items-start gap-2.5">
+        <div class="w-6 h-6 rounded-lg bg-blue-500/15 text-blue-600 flex items-center justify-center text-xs shrink-0 mt-0.5">
+          <i class="fa-solid fa-box-archive"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-black text-slate-900 dark:text-white">ऑफलाइन रिव्हिजन व्हॉल्ट (Offline Vault)</h4>
+          <p class="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug mt-0.5">
+            सेव्ह केलेल्या उजळणी नोट्स आणि स्टार केलेले प्रश्न ऑफलाइन उघडतात.
+          </p>
+        </div>
+      </div>
+
+      <!-- iOS Safari Fallback Instruction Box -->
+      <div id="installFallbackHint" class="p-2.5 rounded-2xl bg-amber-500/10 border border-amber-300 dark:border-amber-800/60 text-center">
+        <p class="text-[11px] text-amber-950 dark:text-amber-200 font-bold leading-relaxed">
+          <i class="fa-brands fa-apple mr-1"></i> <strong>iPhone / Safari युझर्स:</strong> खालच्या <strong>Share</strong> बटणावर <i class="fa-solid fa-arrow-up-from-bracket mx-0.5"></i> टॅप करा आणि <strong>'Add to Home Screen'</strong> निवडा.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- 3. Action Buttons Row -->
+    <div class="grid grid-cols-2 gap-2 pt-1 border-t border-slate-200 dark:border-slate-800 shrink-0">
+      <button 
+        type="button" 
+        onclick="closeInstallModalSafe()" 
+        class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs uppercase tracking-wider transition-all btn-spring cursor-pointer text-center border border-slate-200 dark:border-slate-700"
+      >
+        Maybe Later
+      </button>
+
+      <button 
+        type="button" 
+        id="btnConfirmInstallPwa" 
+        onclick="executePwaInstallSafe()" 
+        class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-sm transition-all btn-spring cursor-pointer flex items-center justify-center gap-1.5 text-center"
+      >
+        <span>Install Now</span>
+        <i class="fa-solid fa-bolt text-[10px]"></i>
+      </button>
+    </div>
+
+    <!-- 4. Footer Assurance -->
+    <div class="text-center text-[10px] text-slate-400 dark:text-slate-500 font-bold flex items-center justify-center gap-1.5 shrink-0">
+      <i class="fa-solid fa-shield-halved text-emerald-500 text-[10px]"></i>
+      <span>PWA Technology • 100% Free & Secure</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- Inline Local Controller (Guarantees zero-crash standalone execution) -->
+<script>
+  (function initInstallModalBridge() {
+    window.closeInstallModalSafe = function() {
+      if (window.StudySphereCommon && typeof window.StudySphereCommon.closeModal === 'function') {
+        window.StudySphereCommon.closeModal('installModal');
+      } else {
+        const m = document.getElementById('installModal');
+        if (m) {
+          m.classList.add('hidden');
+          m.classList.remove('flex');
+          document.body.classList.remove('overflow-hidden');
+        }
+      }
+    };
+
+    window.executePwaInstallSafe = function() {
+      if (window.StudySphereCommon && typeof window.StudySphereCommon.triggerPWAInstall === 'function') {
+        window.StudySphereCommon.triggerPWAInstall();
+      } else if (window.deferredPrompt) {
+        window.deferredPrompt.prompt();
+        window.deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            if (typeof window.showToast === 'function') window.showToast("इन्स्टॉलेशन स्वीकारले.");
+          }
+          window.deferredPrompt = null;
+        });
+      } else {
+        const hint = document.getElementById('installFallbackHint');
+        if (hint) {
+          hint.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          hint.classList.add('ring-2', 'ring-amber-500');
+          setTimeout(() => hint.classList.remove('ring-2', 'ring-amber-500'), 1500);
+        }
+        if (typeof window.showToast === 'function') {
+          window.showToast("ॲप मॅन्युअली होम स्क्रीनवर जोडण्यासाठी वरील सूचनांचे पालन करा.", "warning");
+        }
+      }
+    };
+  })();
+</script>

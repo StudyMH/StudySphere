@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="mr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>MPSC Study Notes Reader | StudySphere</title>
+  <meta name="theme-color" content="#d97706">
+  <meta name="description" content="MPSC Authentic AI-Generated Study Notes, syllabus breakdowns, and high-yield revision summaries.">
+
+  <!-- Google Fonts: Plus Jakarta Sans (English) & Mukta (Devanagari) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Mukta"', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            brand: {
+              amber: '#f59e0b',
+              amberDark: '#d97706',
+              sage: '#10b981',
+              navy: '#0b1120',
+              obsidian: '#070b14'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Background Canvas */
+    .mesh-gradient-bg {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .dark .mesh-gradient-bg {
+      background-color: #070b14;
+      background-image: radial-gradient(#1e293b 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Font Scale S / M / L */
+    :root {
+      --notes-h1-size: 1.28rem;
+      --notes-h2-size: 1.15rem;
+      --notes-h3-size: 1.02rem;
+      --notes-h4-size: 0.95rem;
+      --notes-body-size: 0.94rem;
+      --notes-box-size: 0.88rem;
+    }
+    .font-scale-S {
+      --notes-h1-size: 1.15rem;
+      --notes-h2-size: 1.02rem;
+      --notes-h3-size: 0.92rem;
+      --notes-h4-size: 0.85rem;
+      --notes-body-size: 0.85rem;
+      --notes-box-size: 0.80rem;
+    }
+    .font-scale-M {
+      --notes-h1-size: 1.28rem;
+      --notes-h2-size: 1.15rem;
+      --notes-h3-size: 1.02rem;
+      --notes-h4-size: 0.95rem;
+      --notes-body-size: 0.94rem;
+      --notes-box-size: 0.88rem;
+    }
+    .font-scale-L {
+      --notes-h1-size: 1.45rem;
+      --notes-h2-size: 1.30rem;
+      --notes-h3-size: 1.15rem;
+      --notes-h4-size: 1.05rem;
+      --notes-body-size: 1.05rem;
+      --notes-box-size: 0.98rem;
+    }
+
+    #readingScrollProgressBar {
+      transition: width 0.1s ease-out;
+    }
+
+    body.notes-loading-lock {
+      overflow: hidden !important;
+      touch-action: none !important;
+    }
+
+    .pulse-dot-wave {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pulse-dot-wave span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: currentColor;
+      animation: pulseDot 1.2s infinite ease-in-out both;
+    }
+    .pulse-dot-wave span:nth-child(1) { animation-delay: -0.32s; }
+    .pulse-dot-wave span:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes pulseDot {
+      0%, 80%, 100% { transform: scale(0.3); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .btn-spring {
+      transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.12s ease, border-color 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-spring:active:not(:disabled) {
+      transform: scale(0.97) translateY(1px);
+    }
+
+    @keyframes shimmerWave {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-box {
+      background: linear-gradient(90deg, rgba(226, 232, 240, 0.6) 25%, rgba(241, 245, 249, 0.9) 50%, rgba(226, 232, 240, 0.6) 75%);
+      background-size: 200% 100%;
+      animation: shimmerWave 1.6s infinite ease-in-out;
+    }
+    .dark .shimmer-box {
+      background: linear-gradient(90deg, rgba(30, 41, 59, 0.7) 25%, rgba(51, 65, 85, 0.9) 50%, rgba(30, 41, 59, 0.7) 75%);
+      background-size: 200% 100%;
+      animation: shimmerWave 1.6s infinite ease-in-out;
+    }
+
+    /* Textbook Typography */
+    .notes-content {
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+      max-width: 100%;
+      width: 100%;
+      margin: 0 auto;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .notes-content h1 {
+      font-size: var(--notes-h1-size) !important;
+      font-weight: 800;
+      color: #0f172a !important;
+      margin-top: 1.8rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid #d97706;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      line-height: 1.4;
+    }
+    .dark .notes-content h1 {
+      color: #f8fafc !important;
+      border-bottom-color: #f59e0b;
+    }
+    .notes-content h2 {
+      font-size: var(--notes-h2-size) !important;
+      font-weight: 800;
+      color: #0f172a !important;
+      margin-top: 1.5rem;
+      margin-bottom: 0.65rem;
+      padding: 0.25rem 0 0.25rem 0.65rem;
+      border-left: 4px solid #d97706;
+      border-radius: 0.2rem;
+      line-height: 1.4;
+    }
+    .dark .notes-content h2 {
+      color: #f8fafc !important;
+      border-left-color: #f59e0b;
+    }
+    .notes-content h3 {
+      font-size: var(--notes-h3-size) !important;
+      font-weight: 800;
+      color: #0f172a !important;
+      margin-top: 1.25rem;
+      margin-bottom: 0.45rem;
+      padding-left: 0.5rem;
+      border-left: 2px solid #f59e0b;
+      line-height: 1.35;
+    }
+    .dark .notes-content h3 {
+      color: #f8fafc !important;
+      border-left-color: #fbbf24;
+    }
+    .notes-content h4 {
+      font-size: var(--notes-h4-size) !important;
+      font-weight: 800;
+      color: #0f172a !important;
+      margin-top: 1.1rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      line-height: 1.35;
+    }
+    .dark .notes-content h4 {
+      color: #f8fafc !important;
+    }
+    .notes-content p {
+      margin-bottom: 1.15rem;
+      line-height: 1.85;
+      font-size: var(--notes-body-size) !important;
+      color: #1e293b;
+      overflow-wrap: anywhere;
+    }
+    .dark .notes-content p {
+      color: #e2e8f0;
+    }
+    .notes-content ul, .notes-content ol {
+      margin-bottom: 1.15rem;
+      padding-left: 1.25rem;
+      overflow-wrap: anywhere;
+    }
+    .notes-content li {
+      margin-bottom: 0.45rem;
+      line-height: 1.75;
+      font-size: var(--notes-body-size) !important;
+      color: #1e293b;
+      overflow-wrap: anywhere;
+    }
+    .dark .notes-content li {
+      color: #e2e8f0;
+    }
+
+    /* Isolated Callouts */
+    .callout-box-trap {
+      margin: 1.25rem 0;
+      padding: 1.1rem 1.2rem;
+      border-radius: 0.85rem;
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      border-left: 5px solid #e11d48;
+      font-size: var(--notes-box-size) !important;
+      page-break-inside: avoid;
+      overflow-wrap: anywhere;
+    }
+    .dark .callout-box-trap {
+      background: rgba(159, 18, 57, 0.15);
+      border-color: rgba(244, 63, 94, 0.5);
+    }
+    .callout-trap-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #e11d48;
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .dark .callout-trap-header {
+      color: #fb7185;
+    }
+    .callout-trap-body {
+      color: #1e293b;
+      line-height: 1.8;
+      font-weight: 500;
+    }
+    .dark .callout-trap-body {
+      color: #e2e8f0;
+    }
+
+    .callout-box-tip {
+      margin: 1.25rem 0;
+      padding: 1.1rem 1.2rem;
+      border-radius: 0.85rem;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-left: 5px solid #d97706;
+      font-size: var(--notes-box-size) !important;
+      page-break-inside: avoid;
+      overflow-wrap: anywhere;
+    }
+    .dark .callout-box-tip {
+      background: rgba(180, 83, 9, 0.15);
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+    .callout-tip-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #d97706;
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .dark .callout-tip-header {
+      color: #fbbf24;
+    }
+    .callout-tip-body {
+      color: #1e293b;
+      line-height: 1.8;
+      font-weight: 500;
+    }
+    .dark .callout-tip-body {
+      color: #e2e8f0;
+    }
+
+    /* Responsive Tables */
+    .table-responsive-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.15rem 0;
+      border-radius: 0.85rem;
+      border: 1px solid #cbd5e1;
+      position: relative;
+    }
+    .dark .table-responsive-wrapper {
+      border-color: #334155;
+    }
+    .table-swipe-hint {
+      display: block;
+      font-size: 9px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      color: #64748b;
+      padding: 4px 8px;
+      background: rgba(241, 245, 249, 0.7);
+      border-bottom: 1px solid #e2e8f0;
+      text-align: right;
+    }
+    .dark .table-swipe-hint {
+      background: rgba(30, 41, 59, 0.7);
+      border-bottom-color: #334155;
+      color: #94a3b8;
+    }
+    .notes-content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    .notes-content th, .notes-content td {
+      border: 1px solid #cbd5e1;
+      padding: 0.65rem 0.85rem;
+      text-align: left;
+    }
+    .dark .notes-content th, .dark .notes-content td {
+      border-color: #334155;
+    }
+    .notes-content th {
+      background-color: #f1f5f9;
+      font-weight: 800;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+    .dark .notes-content th {
+      background-color: #1e293b;
+      color: #f8fafc;
+    }
+    .notes-content tr:nth-child(even) td {
+      background-color: rgba(248, 250, 252, 0.6);
+    }
+    .dark .notes-content tr:nth-child(even) td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Active Recall Blinder */
+    #notesRenderedText.blinder-active span.blur-nugget:not(.revealed) {
+      filter: blur(5px) !important;
+      -webkit-filter: blur(5px) !important;
+      background-color: rgba(245, 158, 11, 0.3) !important;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 4px;
+      padding: 0 4px;
+      transition: filter 0.2s ease, background-color 0.2s ease;
+    }
+    #notesRenderedText.blinder-active span.blur-nugget.revealed {
+      filter: none !important;
+      -webkit-filter: none !important;
+      background-color: rgba(16, 185, 129, 0.2) !important;
+      color: #047857 !important;
+      cursor: pointer;
+    }
+    .dark #notesRenderedText.blinder-active span.blur-nugget.revealed {
+      color: #34d399 !important;
+    }
+
+    /* Print & PDF Strict Stylesheet */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding-bottom: 0 !important;
+      }
+      header, footer, #readingScrollProgressBar, #readingProgressContainer,
+      #chunkProgressBarArea, .fixed, button, #toastNotification, 
+      #noTargetDirectAccessModal, #exitConfirmModal, 
+      #askAiModal, #reportNotesModal {
+        display: none !important;
+      }
+      main {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #notesCard {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        min-height: auto !important;
+      }
+      .notes-content {
+        color: #000000 !important;
+      }
+      .notes-content h1, .notes-content h2, .notes-content h3, .notes-content h4 {
+        color: #000000 !important;
+        background: transparent !important;
+        page-break-after: avoid;
+        break-after: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .notes-content h1 {
+        border-bottom: 2px solid #000000 !important;
+      }
+      .notes-content h2 {
+        border-left: 4px solid #000000 !important;
+      }
+      .notes-content p, .notes-content li {
+        color: #000000 !important;
+      }
+      .callout-box-trap, .callout-box-tip {
+        border: 1px solid #000000 !important;
+        background: #f8fafc !important;
+        color: #000000 !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .table-responsive-wrapper {
+        border: 1px solid #000000 !important;
+        overflow: visible !important;
+      }
+      .table-swipe-hint {
+        display: none !important;
+      }
+      .notes-content table {
+        width: 100% !important;
+        table-layout: fixed !important;
+        border: 1px solid #000000 !important;
+        page-break-inside: avoid;
+      }
+      .notes-content th, .notes-content td {
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+        word-break: break-word !important;
+      }
+      .notes-content th {
+        background-color: #f1f5f9 !important;
+      }
+      #notesRenderedText.blinder-active span.blur-nugget {
+        filter: none !important;
+        background: transparent !important;
+      }
+    }
+  </style>
+</head>
+<body class="mesh-gradient-bg text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 pb-24 select-text font-scale-M notes-loading-lock">
+
+  <!-- Reading Progress Bar -->
+  <div id="readingProgressContainer" class="fixed top-0 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800 z-[90] transition-opacity">
+    <div id="readingScrollProgressBar" class="h-full bg-amber-500 w-0"></div>
+  </div>
+
+  <!-- Fullscreen Initializer Loader -->
+  <div id="notesFullScreenLoader" class="fixed inset-0 z-[200] bg-slate-950 flex flex-col justify-between p-4 sm:p-6 text-center select-none" ontouchmove="event.stopPropagation()">
+    <div class="w-full flex items-center justify-start shrink-0">
+      <button onclick="triggerBackWithPrompt()" type="button" class="h-9 px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold text-xs flex items-center gap-2 btn-spring cursor-pointer shadow-sm">
+        <i class="fa-solid fa-arrow-left text-[11px]"></i>
+        <span>Back</span>
+      </button>
+    </div>
+
+    <div class="flex-1 flex flex-col items-center justify-center max-w-sm mx-auto my-auto py-6">
+      <div class="relative w-16 h-16 mb-5 flex items-center justify-center">
+        <div class="w-16 h-16 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin"></div>
+        <i class="fa-solid fa-book-open text-xl absolute animate-pulse text-amber-400"></i>
+      </div>
+
+      <div class="space-y-1.5 w-full">
+        <h2 class="text-sm sm:text-base font-black text-white" id="fullLoaderTitle">Preparing Academic Study Notes</h2>
+        <p class="text-xs text-slate-400 leading-relaxed" id="fullLoaderSubtitle">Synthesizing textbook depth, verified MPSC references, and core concepts...</p>
+      </div>
+
+      <div id="fullLoaderLiveStatus" class="mt-3 flex items-center justify-center gap-2 text-[11px] text-amber-400 font-mono">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+        <span id="fullLoaderStatusText">Generating Unit 1...</span>
+      </div>
+
+      <div id="fullLoaderRetryArea" class="hidden mt-6 flex flex-col sm:flex-row items-center justify-center gap-2.5 w-full">
+        <button onclick="fetchAcademicNotes()" type="button" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs btn-spring flex items-center justify-center gap-2 cursor-pointer shadow-md">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>Retry Generation</span>
+        </button>
+        <button onclick="triggerBackWithPrompt()" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs btn-spring cursor-pointer">
+          <span>Go Back</span>
+        </button>
+      </div>
+    </div>
+    <div class="h-6 shrink-0"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-2xs">
+    <div class="max-w-3xl mx-auto px-3 sm:px-4 py-2 flex flex-col gap-1.5">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <button onclick="triggerBackWithPrompt()" type="button" aria-label="Go Back" title="Back to Hub" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 btn-spring shrink-0 cursor-pointer">
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+          </button>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <h2 id="notesChapterHeader" class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate leading-tight">
+                MPSC Academic Notes
+              </h2>
+              <span class="px-1.5 py-0.2 rounded-md bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30 text-[8.5px] font-black uppercase tracking-wider">
+                BETA
+              </span>
+              <span class="px-1.5 py-0.2 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-[8.5px] font-black uppercase tracking-wider hidden sm:inline">
+                TEXTBOOK
+              </span>
+            </div>
+            <p id="notesSubjectHeader" class="text-[10px] text-slate-400 font-medium truncate leading-none mt-0.5">
+              Subject: सामान्य अध्ययन
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="btnFontScaleToggle" onclick="cycleNotesFontSize()" type="button" aria-label="Cycle Font Size" class="h-8 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 flex items-center gap-1 text-slate-800 dark:text-slate-200 btn-spring shrink-0 cursor-pointer">
+            <span class="text-[11px] font-bold text-slate-400">A</span>
+            <span id="fontScaleLabel" class="inline-flex items-center justify-center w-3.5 h-3.5 rounded bg-amber-500/20 text-amber-900 dark:text-amber-300 text-[9px] font-mono font-black">M</span>
+          </button>
+
+          <button onclick="reloadAndClearCache()" type="button" title="Clear cache and reload fresh notes" class="h-8 w-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-500/15 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-400 flex items-center justify-center btn-spring shrink-0 cursor-pointer">
+            <i class="fa-solid fa-rotate-right text-[11px]"></i>
+          </button>
+
+          <button onclick="toggleNotesTheme()" type="button" aria-label="Toggle Theme" class="h-8 w-8 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center btn-spring cursor-pointer">
+            <i id="themeIcon" class="fa-solid fa-moon text-[11px]"></i>
+          </button>
+
+          <button onclick="triggerPrintNotes()" type="button" title="Print or Save as PDF" class="h-8 w-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center btn-spring shrink-0 cursor-pointer">
+            <i class="fa-solid fa-print text-[11px]"></i>
+          </button>
+
+          <button id="btnSaveVault" onclick="toggleSaveCurrentNotes()" type="button" class="h-8 px-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-amber-400 text-slate-700 dark:text-slate-300 font-bold flex items-center gap-1 btn-spring shrink-0 cursor-pointer">
+            <i id="saveVaultIcon" class="fa-regular fa-star text-[11px]"></i>
+            <span id="saveVaultText" class="text-xs hidden sm:inline">Save</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Chips -->
+      <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-200 dark:border-slate-800 text-[10px]">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span id="badgeActiveStage" class="font-black uppercase px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-400 dark:border-amber-700 shrink-0">
+            PRELIMS
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="btnAskAI" onclick="openAskAIModal()" type="button" class="h-6 px-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400 dark:border-amber-600 flex items-center gap-1 text-amber-900 dark:text-amber-300 font-black btn-spring cursor-pointer">
+            <i class="fa-solid fa-wand-magic-sparkles text-[9px] text-amber-500"></i>
+            <span class="text-[9.5px]">Ask AI</span>
+          </button>
+
+          <!-- Audio Read Aloud & Immediate Stop Button -->
+          <div class="inline-flex items-center rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 p-0.5">
+            <button id="btnAudioRead" onclick="toggleAudioPodcast()" type="button" title="Listen / Toggle Speed" class="h-5 px-1.5 flex items-center gap-1 text-slate-700 dark:text-slate-300 hover:text-emerald-500 btn-spring cursor-pointer">
+              <i id="audioReadIcon" class="fa-solid fa-volume-high text-[10px] text-emerald-500"></i>
+              <span id="audioSpeedDisplay" class="text-[9px] font-bold font-mono">1.0x</span>
+            </button>
+            <button id="btnAudioStop" onclick="stopSpeechPlayback()" type="button" title="Stop Voice" class="h-5 px-1.5 text-slate-400 hover:text-rose-500 border-l border-slate-300 dark:border-slate-700 btn-spring cursor-pointer">
+              <i class="fa-solid fa-stop text-[9px]"></i>
+            </button>
+          </div>
+
+          <button id="btnBlinderToggle" onclick="toggleActiveRecallBlinder()" type="button" class="h-6 px-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-amber-500/20 border border-slate-300 dark:border-slate-700 flex items-center gap-1 text-slate-700 dark:text-slate-300 btn-spring cursor-pointer">
+            <i id="blinderIcon" class="fa-solid fa-eye-slash text-[10px] text-amber-500"></i>
+            <span id="blinderLabel" class="text-[9.5px] font-bold">Recall</span>
+          </button>
+
+          <button onclick="openReportNotesModal()" type="button" class="h-6 w-6 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-rose-500/15 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-rose-500 btn-spring cursor-pointer">
+            <i class="fa-solid fa-flag text-[9px]"></i>
+          </button>
+
+          <button onclick="shareNotesOnWhatsApp()" type="button" class="h-6 w-6 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-500/20 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-emerald-600 dark:text-emerald-400 btn-spring cursor-pointer">
+            <i class="fa-brands fa-whatsapp text-[10px]"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Notes Content Container -->
+  <main class="max-w-3xl mx-auto w-full px-3 sm:px-4 py-3 flex-1 flex flex-col justify-start overflow-hidden">
+    <article id="notesCard" class="w-full max-w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-4 sm:p-7 shadow-2xs flex flex-col transition-all min-h-[380px] overflow-hidden">
+      
+      <!-- Skeleton Shimmer -->
+      <div id="notesShimmer" class="space-y-4">
+        <div class="h-7 w-3/4 rounded-xl shimmer-box"></div>
+        <div class="h-4 w-1/2 rounded-lg shimmer-box"></div>
+        <div class="space-y-2 pt-3">
+          <div class="h-4 w-full rounded-lg shimmer-box"></div>
+          <div class="h-4 w-full rounded-lg shimmer-box"></div>
+          <div class="h-4 w-5/6 rounded-lg shimmer-box"></div>
+        </div>
+      </div>
+
+      <!-- Active Content Container -->
+      <div id="notesBodyContainer" class="hidden flex-col gap-4 w-full max-w-full overflow-hidden">
+        
+        <div class="pb-3 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-1 w-full max-w-full overflow-hidden">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 truncate" id="articleCategoryTag">
+                MPSC TEXTBOOK-GRADE STUDY NOTES
+              </span>
+              <span class="px-1.5 py-0.2 rounded-md bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30 text-[8.5px] font-black uppercase tracking-wider">
+                BETA
+              </span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono shrink-0" id="articleWordCount">
+              ~ वाचन वेळ: ५ मिनिटे
+            </span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-tight break-words" id="articleChapterTitle">
+            अभ्यास घटक
+          </h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed break-words" id="articleSubtopicsSummary">
+            प्रमाणित संदर्भग्रंथानुसार सविस्तर विश्लेषण
+          </p>
+        </div>
+
+        <!-- Rendered Notes HTML Content -->
+        <div id="notesRenderedText" class="notes-content text-slate-800 dark:text-slate-200 text-sm sm:text-base leading-relaxed w-full max-w-full overflow-hidden"></div>
+
+        <!-- Section Progress Area -->
+        <div id="chunkProgressBarArea" class="mt-4 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 flex flex-col gap-2.5">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+            <span id="chunkProgressStatusLabel">Section 1 Loaded</span>
+            <span id="chunkProgressPercentBadge" class="font-mono text-amber-600 dark:text-amber-400">25%</span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+            <div id="chunkProgressBarFill" class="h-full bg-amber-500 rounded-full transition-all duration-300" style="width: 25%;"></div>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
+            <button id="btnLoadNextChunk" onclick="handleLoadNextChunkClick(event)" type="button" class="w-full py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs btn-spring flex items-center justify-center gap-2 cursor-pointer shadow-xs truncate">
+              <i class="fa-solid fa-arrow-down text-[11px]" id="btnLoadNextChunkIcon"></i>
+              <span id="btnLoadNextChunkLabel" class="truncate">Load Next Section</span>
+            </button>
+            <button id="btnAutoLoadAll" onclick="handleAutoLoadAllSections(event)" type="button" class="w-full py-2.5 px-3 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-bold text-xs btn-spring flex items-center justify-center gap-1.5 cursor-pointer truncate">
+              <i class="fa-solid fa-layer-group text-amber-500 text-[11px]"></i>
+              <span>Load Complete Chapter</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dedicated Official Portal Branding Banner -->
+        <div id="officialPortalBrandingBadge" class="mt-4 p-4 rounded-2xl bg-slate-900 border border-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+          <div class="text-center sm:text-left">
+            <div class="flex items-center justify-center sm:justify-start gap-1.5 text-amber-400 font-black text-xs">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>STUDY SPHERE MH</span>
+            </div>
+            <p class="text-[11px] text-slate-300 mt-0.5">आपल्या अभ्यासाचा विश्वासू साथीदार • दर्जेदार नोट्स व स्मार्ट सराव</p>
+          </div>
+          <a href="https://t.me/StudySphereMH" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs flex items-center gap-2 btn-spring">
+            <i class="fa-brands fa-telegram text-sm"></i>
+            <span>Join Telegram</span>
+          </a>
+        </div>
+
+        <!-- Next Chapter Navigation Card -->
+        <div id="nextChapterCardArea" class="hidden mt-4 p-4 rounded-2xl bg-amber-500/10 border-2 border-amber-400 dark:border-amber-600 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+          <div class="min-w-0 text-center sm:text-left">
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center justify-center sm:justify-start gap-1">
+              <i class="fa-solid fa-circle-check text-emerald-500"></i>
+              <span>हे प्रकरण पूर्ण वाचून झाले आहे</span>
+            </span>
+            <h3 id="nextChapterTitleText" class="text-sm font-black text-slate-900 dark:text-white mt-0.5 truncate">
+              पुढील घटक
+            </h3>
+          </div>
+          <button id="btnGoToNextChapter" onclick="navigateToNextChapter()" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 btn-spring shrink-0 cursor-pointer shadow-xs">
+            <span>पुढील घटक सुरू करा</span>
+            <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </button>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <!-- Sticky Bottom Action Bar -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-2 sm:p-3">
+    <div class="max-w-3xl mx-auto flex items-center justify-between gap-1.5 sm:gap-2">
+      <button onclick="copyNotesToClipboard()" type="button" class="flex-1 py-2 px-1.5 sm:px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] sm:text-xs font-bold btn-spring flex items-center justify-center gap-1 cursor-pointer border border-slate-300 dark:border-slate-700 truncate">
+        <i class="fa-solid fa-copy text-[11px]"></i>
+        <span>कॉपी</span>
+      </button>
+
+      <button onclick="triggerPrintNotes()" type="button" class="flex-1 py-2 px-1.5 sm:px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] sm:text-xs font-bold btn-spring flex items-center justify-center gap-1 cursor-pointer border border-slate-300 dark:border-slate-700 truncate">
+        <i class="fa-solid fa-print text-[11px]"></i>
+        <span>प्रिंट / PDF</span>
+      </button>
+
+      <button onclick="jumpToQuizForThisChapter()" type="button" class="flex-[1.4] py-2 px-2 sm:px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-[11px] sm:text-xs font-black btn-spring flex items-center justify-center gap-1 cursor-pointer shadow-xs truncate">
+        <i class="fa-solid fa-bolt text-[11px]"></i>
+        <span>MCQ सराव</span>
+      </button>
+
+      <button id="btnToggleDone" onclick="toggleChapterDoneState()" type="button" class="flex-1 py-2 px-1.5 sm:px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] sm:text-xs font-bold btn-spring flex items-center justify-center gap-1 cursor-pointer border border-slate-300 dark:border-slate-700 truncate">
+        <i id="doneStateIcon" class="fa-regular fa-circle-check text-[11px]"></i>
+        <span id="doneStateLabel">झाले</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Exit Confirmation Modal -->
+  <div 
+    id="exitConfirmModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[160] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 text-center select-none"
+    onclick="if(event.target === this){closeExitModal();}"
+  >
+    <div class="max-w-sm w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-5 shadow-2xl flex flex-col items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center text-xl">
+        <i class="fa-solid fa-arrow-left"></i>
+      </div>
+      <h3 class="text-sm font-black text-slate-900 dark:text-white">वाचन थांबवून मागे जायचे आहे का?</h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+        तुमच्या वाचलेल्या नोट्स सुरक्षित सेव्ह आहेत. तुम्ही कधीही परत येऊन पुढील भाग वाचू शकता.
+      </p>
+      <div class="flex items-center gap-2 w-full pt-1">
+        <button onclick="closeExitModal()" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs btn-spring cursor-pointer">
+          इथेच थांबा
+        </button>
+        <button onclick="confirmExitToHub()" type="button" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring cursor-pointer shadow-xs">
+          होय, बाहेर पडा
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Direct Visit Fallback Modal -->
+  <div 
+    id="noTargetDirectAccessModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[150] bg-slate-950/90 backdrop-blur-md hidden items-center justify-center p-4 text-center"
+    onclick="if(event.target === this){confirmExitToHub();}"
+  >
+    <div class="max-w-sm w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col items-center gap-3">
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center">
+        <i class="fa-solid fa-book-bookmark text-2xl"></i>
+      </div>
+      <span class="text-[10px] font-black uppercase tracking-wider text-amber-600">NO ACTIVE NOTES SELECTED</span>
+      <h3 class="text-base font-black text-slate-900 dark:text-white">कोणताही घटक निवडलेला नाही</h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+        नोट्स वाचण्यासाठी कृपया प्रथम मुख्य पोर्टलवरून परीक्षा व घटकाची निवड करा.
+      </p>
+      <button onclick="confirmExitToHub()" type="button" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring flex items-center justify-center gap-2 cursor-pointer shadow-xs mt-2">
+        <i class="fa-solid fa-house"></i>
+        <span>मुख्य पानावर जा (Back to Home)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Ask AI Modal -->
+  <div 
+    id="askAiModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[130] bg-slate-950/85 backdrop-blur-sm hidden items-center justify-center p-3 select-none"
+    onclick="if(event.target === this){closeAskAIModal();}"
+  >
+    <div class="relative w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-3">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-500 flex items-center justify-center border border-amber-400/50">
+            <i class="fa-solid fa-wand-magic-sparkles text-sm text-amber-500"></i>
+          </div>
+          <div>
+            <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white">Ask AI • Study Notes</h3>
+            <p class="text-[10px] text-slate-400 font-bold">1-Click Prompt & App Handshake</p>
+          </div>
+        </div>
+        <button onclick="closeAskAIModal()" type="button" class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-slate-800 dark:hover:text-white text-xs cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+        या प्रकरणाच्या सखोल नोट्ससाठी खालीलपैकी एका ॲपवर उघडा. संपूर्ण अभ्यासक्रम मास्टर प्रॉम्प्ट <strong>ऑटो-कॉपी</strong> होईल:
+      </p>
+      <div class="space-y-2">
+        <button onclick="launchTargetAiApp('gemini')" type="button" class="w-full p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-amber-500/10 border border-slate-200 dark:border-slate-700 hover:border-amber-500 flex items-center justify-between gap-3 btn-spring cursor-pointer transition-all">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center shrink-0 shadow-xs text-white text-xs">
+              <i class="fa-solid fa-sparkles"></i>
+            </div>
+            <div class="text-left">
+              <h4 class="text-xs font-black text-slate-900 dark:text-white">Google Gemini</h4>
+              <p class="text-[9.5px] text-slate-400 font-medium">Textbook chapter & web-grounded research</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-amber-500"></i>
+        </button>
+        <button onclick="launchTargetAiApp('chatgpt')" type="button" class="w-full p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-500/10 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 flex items-center justify-between gap-3 btn-spring cursor-pointer transition-all">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-[#10a37f] flex items-center justify-center shrink-0 shadow-xs text-white text-xs font-bold">
+              AI
+            </div>
+            <div class="text-left">
+              <h4 class="text-xs font-black text-slate-900 dark:text-white">OpenAI ChatGPT</h4>
+              <p class="text-[9.5px] text-slate-400 font-medium">Auto-prefills prompt in ChatGPT</p>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-emerald-500"></i>
+        </button>
+      </div>
+      <button onclick="copyMasterNotesPromptOnly()" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold btn-spring flex items-center justify-center gap-1.5 cursor-pointer">
+        <i class="fa-solid fa-copy text-slate-400"></i>
+        <span>फक्त प्रॉम्प्ट कॉपी करा (Copy Prompt Only)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Report Issue Modal -->
+  <div 
+    id="reportNotesModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[130] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 select-none"
+    onclick="if(event.target === this){closeReportNotesModal();}"
+  >
+    <div class="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-3">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-flag text-rose-500 text-sm"></i>
+          <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white">Report Notes Fact Error</h3>
+        </div>
+        <button onclick="closeReportNotesModal()" type="button" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white text-xs cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="space-y-2 text-xs">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-400">Chapter Context</label>
+          <input type="text" id="reportChapterContext" readonly class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 truncate" />
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-slate-400">चुकीचे तथ्य किंवा दुरुस्ती सांगा</label>
+          <textarea id="reportNotesDetails" rows="3" placeholder="उदा. चुकीचे वर्ष किंवा संदर्भग्रंथातील विसंगती..." class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-amber-500"></textarea>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+        <button onclick="closeReportNotesModal()" type="button" class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-xs btn-spring cursor-pointer">
+          Cancel
+        </button>
+        <button onclick="submitNotesReport()" type="button" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs btn-spring cursor-pointer">
+          Submit Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Utility -->
+  <div id="toastNotification" class="fixed bottom-16 right-4 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 z-50 transform translate-y-10 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-slate-800 px-4 py-2 rounded-2xl shadow-md flex items-center gap-2 text-xs font-bold pointer-events-none border border-slate-700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toastMessage">Done!</span>
+  </div>
+
+  <!-- Main JavaScript Controller -->
+  <script type="module">
+    import { mpscMasterEngine } from './database/master-database.js';
+    import { NotesChunkEngine } from './ai-engine/pipeline/notes-chunk-engine.js';
+
+    // Global Notes State
+    const NotesState = {
+      target: null,
+      apiKey: null,
+      fontScale: 'M',
+      rawMarkdownContent: '',
+      chunkEngine: null,
+      savedVault: {},
+      nextChapterTarget: null,
+      audioReading: false,
+      synth: typeof window !== 'undefined' ? window.speechSynthesis : null,
+      currentUtterance: null,
+      audioPlaybackSpeed: 1.0,
+      speechSentences: [],
+      currentSentenceIdx: 0,
+      isBlinderActive: false
+    };
+
+    window.NotesState = NotesState;
+
+    // Navigation and Modals
+    window.triggerBackWithPrompt = function() {
+      const modal = document.getElementById('exitConfirmModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    };
+
+    window.closeExitModal = function() {
+      const modal = document.getElementById('exitConfirmModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    };
+
+    window.confirmExitToHub = function() {
+      stopSpeechPlayback();
+      if (document.referrer && document.referrer.includes(window.location.host)) {
+        window.history.back();
+      } else {
+        const fallbackHub = NotesState.target?.sourceHub || './rajyaseva.html';
+        window.location.href = fallbackHub;
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTheme();
+      initSpeechVoices();
+      loadSavedVaultState();
+      attachScrollProgressTracker();
+
+      const rawTarget = localStorage.getItem('qq_active_notes_target') || localStorage.getItem('qq_active_topic_target');
+      if (!rawTarget) {
+        document.getElementById('noTargetDirectAccessModal')?.classList.remove('hidden');
+        document.getElementById('noTargetDirectAccessModal')?.classList.add('flex');
+        return;
+      }
+
+      try {
+        NotesState.target = JSON.parse(rawTarget);
+      } catch (e) {
+        console.error("Invalid target in localStorage", e);
+        return;
+      }
+
+      populateHeaderMetadata();
+      resolveNextChapterTarget();
+
+      NotesState.apiKey = (
+        localStorage.getItem('qq_gemini_key') || 
+        localStorage.getItem('gemini_api_key') || 
+        localStorage.getItem('mpsc_api_key') || 
+        ""
+      ).trim();
+
+      if (!NotesState.apiKey || NotesState.apiKey.length < 15) {
+        const fullTitle = document.getElementById('fullLoaderTitle');
+        const fullSub = document.getElementById('fullLoaderSubtitle');
+        const fullRetry = document.getElementById('fullLoaderRetryArea');
+        const fullLoader = document.getElementById('notesFullScreenLoader');
+        if (fullTitle) fullTitle.textContent = "Google Gemini API Key Needed";
+        if (fullSub) fullSub.textContent = "Please connect your free Gemini API key on the Homepage to generate notes.";
+        if (fullRetry) {
+          fullRetry.innerHTML = `
+            <button onclick="if(window.openApiKeyModalDirect){openApiKeyModalDirect();}else if(window.StudySphereCommon){StudySphereCommon.openApiKeyModal();}else{window.location.href='./index.html';}" type="button" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs btn-spring flex items-center justify-center gap-2 cursor-pointer shadow-md">
+              <i class="fa-solid fa-key"></i>
+              <span>Connect API Key</span>
+            </button>
+            <button onclick="triggerBackWithPrompt()" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs btn-spring cursor-pointer">
+              <span>Go Back</span>
+            </button>
+          `;
+          fullRetry.classList.remove('hidden');
+        }
+        if (fullLoader) fullLoader.classList.remove('hidden');
+        return;
+      }
+
+      initChunkEngineAndLoadFirst();
+    });
+
+    // 🛑 BFCache Cleanup & Modal Recovery
+    window.addEventListener('pageshow', () => {
+      stopSpeechPlayback();
+      closeExitModal();
+      closeAskAIModal();
+      closeReportNotesModal();
+      document.body.classList.remove('notes-loading-lock');
+    });
+
+    // 🛑 Escape Key Global Guard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeExitModal();
+        closeAskAIModal();
+        closeReportNotesModal();
+      }
+    });
+
+    function populateHeaderMetadata() {
+      const chapterHeader = document.getElementById('notesChapterHeader');
+      const subjectHeader = document.getElementById('notesSubjectHeader');
+      const stageBadge = document.getElementById('badgeActiveStage');
+
+      const title = NotesState.target?.topicTitleMr || NotesState.target?.chapterTitleMr || "अभ्यास घटक";
+      if (chapterHeader) chapterHeader.textContent = title;
+      if (subjectHeader) subjectHeader.textContent = `Subject: ${NotesState.target?.subjectId || 'सामान्य अध्ययन'}`;
+      if (stageBadge) stageBadge.textContent = (NotesState.target?.stageId || 'Prelims').toUpperCase();
+
+      const trackKey = NotesState.target?.chapterCacheKey || `track_${NotesState.target?.selectedNotesChapterIndex || 0}`;
+      try {
+        const completedRaw = JSON.parse(localStorage.getItem('qq_completed_chapters') || '{}');
+        const isDone = Array.isArray(completedRaw) 
+          ? completedRaw.includes(trackKey) 
+          : Boolean(completedRaw && completedRaw[trackKey]);
+        updateDoneButtonState(isDone);
+      } catch (e) {
+        updateDoneButtonState(false);
+      }
+    }
+
+    function attachScrollProgressTracker() {
+      window.addEventListener('scroll', () => {
+        const docElem = document.documentElement;
+        const totalHeight = docElem.scrollHeight - docElem.clientHeight;
+        const scrollPercent = totalHeight > 0 ? (docElem.scrollTop / totalHeight) * 100 : 0;
+        const bar = document.getElementById('readingScrollProgressBar');
+        if (bar) bar.style.width = `${Math.min(100, Math.max(0, scrollPercent))}%`;
+      }, { passive: true });
+    }
+
+    function resolveNextChapterTarget() {
+      try {
+        const examId = NotesState.target?.examId || 'rajyaseva';
+        const stageId = NotesState.target?.stageId || 'prelims';
+        const paperId = NotesState.target?.paperId || 'paper_1';
+        const subjectId = NotesState.target?.subjectId;
+        const currentIdx = parseInt(NotesState.target?.selectedNotesChapterIndex, 10) || 0;
+
+        const chapters = mpscMasterEngine.getChapters(examId, stageId, paperId, subjectId) || [];
+        if (chapters.length > currentIdx + 1) {
+          const nextCh = chapters[currentIdx + 1];
+          NotesState.nextChapterTarget = {
+            examId,
+            stageId,
+            paperId,
+            subjectId,
+            selectedNotesChapterIndex: currentIdx + 1,
+            topicTitleMr: nextCh.nameMr || nextCh.name || `घटक ${currentIdx + 2}`,
+            topicTitleEn: nextCh.nameEn || nextCh.name || `Chapter ${currentIdx + 2}`,
+            selectedNotesSubtopics: nextCh.subtopics || [],
+            sourceHub: NotesState.target?.sourceHub || './rajyaseva.html',
+            startedAt: new Date().toISOString()
+          };
+          const nextTitleEl = document.getElementById('nextChapterTitleText');
+          if (nextTitleEl) nextTitleEl.textContent = `पुढील घटक: ${NotesState.nextChapterTarget.topicTitleMr}`;
+        } else {
+          NotesState.nextChapterTarget = null;
+        }
+      } catch (e) {
+        NotesState.nextChapterTarget = null;
+      }
+    }
+
+    // Subtopic normalization helper to fix [object Object]
+    function sanitizeSubtopicItems(rawList) {
+      if (!Array.isArray(rawList)) return [];
+      return rawList.map(item => {
+        if (!item) return '';
+        if (typeof item === 'string') return item.trim();
+        return (item.nameMr || item.nameEn || item.name || item.title || '').trim();
+      }).filter(Boolean);
+    }
+
+    async function initChunkEngineAndLoadFirst() {
+      const chapterIdx = NotesState.target?.selectedNotesChapterIndex !== undefined 
+        ? NotesState.target.selectedNotesChapterIndex 
+        : 0;
+
+      const aiContext = mpscMasterEngine.getAIContextPayload(
+        NotesState.target?.examId || 'rajyaseva',
+        NotesState.target?.stageId || 'prelims',
+        NotesState.target?.paperId || 'paper_1',
+        NotesState.target?.subjectId || null,
+        chapterIdx
+      );
+
+      const chapterName = aiContext.chapter?.nameMr || NotesState.target?.topicTitleMr || "अभ्यास घटक";
+      const subjectName = aiContext.subject?.nameMr || NotesState.target?.subjectNameMr || "सामान्य अध्ययन";
+      
+      let refBook = "एम. लक्ष्मीकांत / रंजन कोळंबे / स्टेट बोर्ड संदर्भ";
+      if (Array.isArray(aiContext.subject?.referenceBooks) && aiContext.subject.referenceBooks.length > 0) {
+        const rawFirst = aiContext.subject.referenceBooks[0];
+        refBook = typeof rawFirst === 'string' ? rawFirst : (rawFirst.name || rawFirst.title || rawFirst.book || refBook);
+      }
+      
+      const subtopics = sanitizeSubtopicItems(aiContext.chapter?.subtopics || NotesState.target?.selectedNotesSubtopics || []);
+
+      const articleChTitle = document.getElementById('articleChapterTitle');
+      const articleSubSummary = document.getElementById('articleSubtopicsSummary');
+      if (articleChTitle) articleChTitle.textContent = chapterName;
+      if (articleSubSummary) {
+        articleSubSummary.textContent = subtopics.length > 0 
+          ? `अभ्यास घटक: ${subtopics.slice(0, 4).join(', ')}...` 
+          : `प्रमाणित संदर्भग्रंथानुसार सविस्तर विश्लेषण`;
+      }
+
+      const sanitizedSources = (aiContext.subject?.referenceBooks || [refBook]).map(s => 
+        typeof s === 'string' ? s : (s.name || s.title || s.book || String(s))
+      );
+
+      const engineConfig = {
+        examId: NotesState.target?.examId,
+        stageId: NotesState.target?.stageId,
+        paperId: NotesState.target?.paperId,
+        subjectId: NotesState.target?.subjectId,
+        subjectNameMr: subjectName,
+        chapterNameMr: chapterName,
+        topicTitleMr: chapterName,
+        selectedNotesSubtopics: subtopics,
+        sources: sanitizedSources,
+        selectedNotesChapterIndex: chapterIdx,
+        customSynthesizedPrompt: NotesState.target?.customSynthesizedPrompt || ''
+      };
+
+      NotesState.chunkEngine = new NotesChunkEngine(engineConfig, NotesState.apiKey);
+      await executeChunkFetchStep();
+    }
+
+    async function executeChunkFetchStep() {
+      const fullLoader = document.getElementById('notesFullScreenLoader');
+      const shimmer = document.getElementById('notesShimmer');
+      const bodyCont = document.getElementById('notesBodyContainer');
+      const statusText = document.getElementById('fullLoaderStatusText');
+      const currentScrollY = window.scrollY;
+
+      if (NotesState.chunkEngine.currentChunk === 0) {
+        document.body.classList.add('notes-loading-lock');
+        if (fullLoader) {
+          fullLoader.classList.remove('hidden');
+          fullLoader.classList.add('flex');
+        }
+        if (statusText) statusText.textContent = "Synthesizing Chapter Notes...";
+        if (shimmer) shimmer.classList.remove('hidden');
+        if (bodyCont) bodyCont.classList.add('hidden');
+      }
+
+      try {
+        const result = await NotesState.chunkEngine.loadNextChunk();
+        NotesState.rawMarkdownContent = result.cumulativeMarkdown;
+
+        document.body.classList.remove('notes-loading-lock');
+        if (fullLoader) {
+          fullLoader.classList.add('hidden');
+          fullLoader.classList.remove('flex');
+        }
+        if (shimmer) shimmer.classList.add('hidden');
+        if (bodyCont) {
+          bodyCont.classList.remove('hidden');
+          bodyCont.classList.add('flex');
+        }
+
+        renderMarkdownContentDirect(result.cumulativeMarkdown);
+        updateChunkProgressUI(result.status);
+        updateVaultStarIcon();
+        updateDynamicReadingTime(result.cumulativeMarkdown);
+
+        if (NotesState.chunkEngine.currentChunk > 1) {
+          window.scrollTo({ top: currentScrollY, behavior: 'instant' });
+        }
+        return true;
+      } catch (err) {
+        console.error("[Chunk Load Error]", err);
+        document.body.classList.remove('notes-loading-lock');
+        if (fullLoader) {
+          fullLoader.classList.remove('hidden');
+          fullLoader.classList.add('flex');
+        }
+        const fTitle = document.getElementById('fullLoaderTitle');
+        const fSub = document.getElementById('fullLoaderSubtitle');
+        const fRetry = document.getElementById('fullLoaderRetryArea');
+        const fLive = document.getElementById('fullLoaderLiveStatus');
+        if (fTitle) fTitle.textContent = "Section Generation Delayed";
+        if (fSub) fSub.textContent = err.message || "Failed to load notes section. Please click retry.";
+        if (fLive) fLive.classList.add('hidden');
+        if (fRetry) fRetry.classList.remove('hidden');
+        throw err;
+      }
+    }
+
+    function renderMarkdownContentDirect(markdownText) {
+      const renderedText = document.getElementById('notesRenderedText');
+      if (!renderedText) return;
+      renderedText.innerHTML = parseMarkdownToHtml(markdownText);
+    }
+
+    function updateDynamicReadingTime(markdownText) {
+      if (!markdownText) return;
+      const wordsCount = markdownText.trim().split(/\s+/).filter(Boolean).length;
+      const readingMinutes = Math.max(1, Math.round(wordsCount / 160));
+      const wordCountBadge = document.getElementById('articleWordCount');
+      if (wordCountBadge) {
+        wordCountBadge.textContent = `~ वाचन वेळ: ${readingMinutes} मिनिटे (${wordsCount} शब्द)`;
+      }
+    }
+
+    // Markdown Parser with Clean Isolated Callouts & Table Handling
+    function parseMarkdownToHtml(mdText) {
+      if (!mdText) return '';
+
+      // 1. Clean Devanagari font artifacts & strip raw AI prompt dispatch artifacts
+      let text = mdText
+        .replace(/\[SYS_DISPATCH_BLOCK[\s\S]*?\]/gi, '')
+        .replace(/:::brand[\s\S]*?:::/gi, '')
+        .replace(/मूJ/g, 'मूळ')
+        .replace(/jo\s*ड्या/gi, 'जोड्या')
+        .replace(/jo\s*डी/gi, 'जोडी')
+        .replace(/ठिकाणाI[ńn]/gi, 'ठिकाणांशी')
+        .replace(/संदर्भाI/g, 'संदर्भात');
+
+      // 2. Eradicate redundant mid-chapter exam meta banners like "# MPSC Group C (Services) Prelims..."
+      text = text.replace(/^#+\s*(?:MPSC|Maharashtra Public Service Commission|महाराष्ट्र लोकसेवा आयोग)[^\n]*\n?/gim, '');
+      text = text.replace(/^[#\s]*(?:विषय|प्रकरण|सक्रिय घटक|Subject|Paper|Exam Stage)[\s:]+[^\n]*\n?/gim, '');
+
+      // 3. Resilient Callout Box Parser (Handles :::trap, :::tip, and unclosed / malformed tags)
+      const stashedCallouts = [];
+      const stash = (html) => {
+        const id = `__CALLOUT_STASH_${stashedCallouts.length}__`;
+        stashedCallouts.push({ id, html });
+        return id;
+      };
+
+      const cleanBlockText = (str) => {
+        return str
+          .replace(/^(?:trap|tip)\b/gi, '')
+          .replace(/^[-*#\s]+/gm, '')
+          .replace(/---/g, '')
+          .replace(/###/g, '')
+          .trim()
+          .replace(/\n/g, '<br>');
+      };
+
+      // 3.A: Strict or permissive :::trap ... ::: (or until next header/section)
+      text = text.replace(/:::\s*trap\s*([\s\S]*?)(?::::|(?=\n#{1,4}\s)|\n\n(?=:::)|$)/gi, (match, content) => {
+        const cleaned = cleanBlockText(content);
+        if (!cleaned) return '';
+        return stash(`
+          <div class="callout-box-trap">
+            <div class="callout-trap-header">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>MPSC संभाव्य फसवणूक / ट्रॅप (Exam Trap Alert)</span>
+            </div>
+            <div class="callout-trap-body">
+              ${cleaned}
+            </div>
+          </div>`);
+      });
+
+      // 3.B: Strict or permissive :::tip ... ::: (or until next header/section)
+      text = text.replace(/:::\s*tip\s*([\s\S]*?)(?::::|(?=\n#{1,4}\s)|\n\n(?=:::)|$)/gi, (match, content) => {
+        const cleaned = cleanBlockText(content);
+        if (!cleaned) return '';
+        return stash(`
+          <div class="callout-box-tip">
+            <div class="callout-tip-header">
+              <i class="fa-solid fa-lightbulb"></i>
+              <span>स्मरण क्लृप्ती व शॉर्टकट (High-Yield Mnemonic)</span>
+            </div>
+            <div class="callout-tip-body">
+              ${cleaned}
+            </div>
+          </div>`);
+      });
+
+      // 3.C: Catch raw leaked 'tip स्मरणात ठेवण्याची...' lines that missed colons
+      text = text.replace(/(?:^|\n)\s*tip\s+([^\n]+)([\s\S]*?)(?=(?:\n#{1,4}\s)|\n\n|$)/gi, (match, heading, body) => {
+        const fullContent = `${heading}\n${body}`;
+        const cleaned = cleanBlockText(fullContent);
+        if (!cleaned) return '';
+        return '\n\n' + stash(`
+          <div class="callout-box-tip">
+            <div class="callout-tip-header">
+              <i class="fa-solid fa-lightbulb"></i>
+              <span>स्मरण क्लृप्ती व शॉर्टकट (High-Yield Mnemonic)</span>
+            </div>
+            <div class="callout-tip-body">
+              ${cleaned}
+            </div>
+          </div>`) + '\n\n';
+      });
+
+      // 3.D: Fact Cards
+      text = text.replace(/:::\s*fact\s*([\s\S]*?):::/gi, (match, content) => {
+        const rawLines = content.trim().split('\n').filter(l => l.trim().length > 0);
+        let cardsHtml = '';
+        rawLines.forEach((l, idx) => {
+          const cleanText = l.replace(/^[\*\-\d\.]+\s*/, '').trim();
+          const numStr = String(idx + 1).padStart(2, '0');
+          cardsHtml += `
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 border-l-4 border-l-emerald-500 flex items-start gap-2.5 my-1.5 text-xs">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 font-black text-[10px] shrink-0 font-mono">#${numStr}</span>
+              <div class="font-medium text-slate-800 dark:text-slate-200 leading-relaxed">${cleanText}</div>
+            </div>`;
+        });
+        return stash(`<div class="my-3 space-y-1">${cardsHtml}</div>`);
+      });
+
+      // 4. Universal Active Recall Masking (Applied safely to content only; callouts are safely stashed)
+      text = text.replace(/(\b(?:कलम|अनुच्छेद|Article|Section)\s*\d+[A-Za-z\(\)]*(?:\s*ते\s*\d+[A-Za-z\(\)]*)?)/gi, 
+        '<span class="blur-nugget font-mono font-bold text-xs">$1</span>');
+
+      text = text.replace(/(\b(?:इ\.स\.\s*(?:पूर्व\s*)?|BCE\s*|CE\s*|\b)(?:[१२][०-९]{3}|[12][0-9]{3}|[४-९][०-९]{2}|[4-9][0-9]{2})\b)/gi, 
+        '<span class="blur-nugget font-bold">$1</span>');
+
+      text = text.replace(/(\([A-Za-z\s]{3,35}\))/g, 
+        '<span class="blur-nugget opacity-90">$1</span>');
+
+      // 5. Headings & Markdown Formatting
+      let html = text
+        .replace(/^##### (.*$)/gim, '<h5 class="text-xs font-black uppercase text-amber-600 dark:text-amber-400 mt-3 mb-1.5">$1</h5>')
+        .replace(/^#### (.*$)/gim, '<h4><i class="fa-solid fa-diamond text-[9px] text-sky-500"></i> $1</h4>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/gim, '<strong class="blur-nugget-key font-bold text-slate-900 dark:text-white">$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+        .replace(/^\* (.*)/gim, '<li>$1</li>')
+        .replace(/^\- (.*)/gim, '<li>$1</li>')
+        .replace(/^\d+\.\s+(.*)/gim, '<li>$1</li>')
+        .replace(/^\> (.*)/gim, '<blockquote class="border-l-4 border-amber-500 pl-3 my-2 text-slate-600 dark:text-slate-400 italic">$1</blockquote>')
+        .replace(/^---$/gim, '<hr class="my-6 border-slate-200 dark:border-slate-800">')
+        .replace(/\n\n/gim, '</p><p>')
+        .replace(/\n/gim, '<br>');
+
+      if (html.includes('|')) {
+        html = parseSimpleMarkdownTable(html);
+      }
+
+      // 6. Restore Stashed Callouts
+      stashedCallouts.forEach(({ id, html: calloutHtml }) => {
+        html = html.replace(id, calloutHtml);
+      });
+
+      // Cleanup trailing stray markdown remnants
+      html = html.replace(/<br>\s*---/g, '').replace(/<br>\s*###/g, '');
+
+      return `<p>${html}</p>`;
+    }
+
+    function parseSimpleMarkdownTable(text) {
+      const lines = text.split('<br>');
+      let inTable = false;
+      let result = [];
+      let tableRows = [];
+
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+          if (trimmed.includes('---')) return;
+          const cells = trimmed.split('|').filter((_, idx, arr) => idx !== 0 && idx !== arr.length - 1);
+          if (!inTable) {
+            inTable = true;
+            tableRows.push(`<tr>${cells.map(c => `<th>${c.trim()}</th>`).join('')}</tr>`);
+          } else {
+            tableRows.push(`<tr>${cells.map(c => `<td>${c.trim()}</td>`).join('')}</tr>`);
+          }
+        } else {
+          if (inTable) {
+            result.push(`<div class="table-responsive-wrapper"><span class="table-swipe-hint">← स्वाइप करा →</span><table><tbody>${tableRows.join('')}</tbody></table></div>`);
+            tableRows = [];
+            inTable = false;
+          }
+          result.push(line);
+        }
+      });
+
+      if (inTable && tableRows.length > 0) {
+        result.push(`<div class="table-responsive-wrapper"><span class="table-swipe-hint">← स्वाइप करा →</span><table><tbody>${tableRows.join('')}</tbody></table></div>`);
+      }
+      return result.join('<br>');
+    }
+
+    function updateChunkProgressUI(status) {
+      if (!status) return;
+      const label = document.getElementById('chunkProgressStatusLabel');
+      const pctBadge = document.getElementById('chunkProgressPercentBadge');
+      const barFill = document.getElementById('chunkProgressBarFill');
+      const btn = document.getElementById('btnLoadNextChunk');
+      const btnLabel = document.getElementById('btnLoadNextChunkLabel');
+      const nextCard = document.getElementById('nextChapterCardArea');
+
+      const total = status.totalChunks || 4;
+      const current = Math.min(status.currentChunk, total);
+      const pct = Math.min(100, Math.round((current / total) * 100));
+
+      if (label) label.textContent = `Section ${current} of ${total} Loaded`;
+      if (pctBadge) pctBadge.textContent = `${pct}%`;
+      if (barFill) barFill.style.width = `${pct}%`;
+
+      if (status.isCompleted) {
+        if (btn) {
+          btn.className = "w-full py-2.5 px-3 rounded-xl bg-emerald-600 text-white font-black text-xs flex items-center justify-center gap-2 cursor-default truncate";
+          btn.disabled = true;
+          btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>100% Complete Chapter Loaded</span>`;
+        }
+        if (nextCard && NotesState.nextChapterTarget) {
+          nextCard.classList.remove('hidden');
+          nextCard.classList.add('flex');
+        }
+      } else {
+        if (btnLabel && status.nextSectionTitle) {
+          btnLabel.textContent = `Load Next: ${status.nextSectionTitle}`;
+        }
+      }
+    }
+
+    window.handleLoadNextChunkClick = async function(e) {
+      if (e) e.preventDefault();
+      const btn = document.getElementById('btnLoadNextChunk');
+      const label = document.getElementById('btnLoadNextChunkLabel');
+      const icon = document.getElementById('btnLoadNextChunkIcon');
+      if (btn) btn.disabled = true;
+      if (icon) icon.className = "hidden";
+      if (label) label.innerHTML = `<span class="pulse-dot-wave"><span></span><span></span><span></span></span><span class="ml-1.5">लोड होत आहे...</span>`;
+      
+      try {
+        await executeChunkFetchStep();
+      } catch (e) {
+        showToast("विभाग लोड करताना अडचण आली. पुन्हा प्रयत्न करा.", true);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (icon) icon.className = "fa-solid fa-arrow-down text-[11px]";
+      }
+    };
+
+    window.handleAutoLoadAllSections = async function(e) {
+      if (e) e.preventDefault();
+      const autoBtn = document.getElementById('btnAutoLoadAll');
+      if (autoBtn) {
+        autoBtn.disabled = true;
+        autoBtn.innerHTML = `<span class="pulse-dot-wave text-amber-500"><span></span><span></span><span></span></span><span class="ml-1.5">सर्व विभाग लोड होत आहेत...</span>`;
+      }
+
+      try {
+        let maxTries = 8;
+        while (!NotesState.chunkEngine.isCompleted && maxTries > 0) {
+          maxTries--;
+          try {
+            await executeChunkFetchStep();
+            await new Promise(r => setTimeout(r, 600));
+          } catch (innerErr) {
+            console.warn("[AutoLoad retry step]", innerErr);
+            await new Promise(r => setTimeout(r, 1200));
+          }
+        }
+        if (NotesState.chunkEngine.isCompleted) {
+          showToast("संपूर्ण प्रकरण १००% लोड झाले!");
+        }
+      } catch (err) {
+        showToast("विभाग लोड करताना अडचण आली.", true);
+      } finally {
+        if (autoBtn) {
+          autoBtn.disabled = false;
+          if (NotesState.chunkEngine.isCompleted) {
+            autoBtn.classList.add('hidden');
+          } else {
+            autoBtn.innerHTML = `<i class="fa-solid fa-layer-group text-amber-500 text-[11px]"></i> <span>Load Remaining Sections</span>`;
+          }
+        }
+      }
+    };
+
+    window.fetchAcademicNotes = initChunkEngineAndLoadFirst;
+
+    // Active Recall Blinder Logic
+    window.toggleActiveRecallBlinder = function() {
+      const renderedText = document.getElementById('notesRenderedText');
+      const icon = document.getElementById('blinderIcon');
+      const label = document.getElementById('blinderLabel');
+      if (!renderedText) return;
+
+      NotesState.isBlinderActive = !NotesState.isBlinderActive;
+
+      if (NotesState.isBlinderActive) {
+        renderedText.classList.add('blinder-active');
+        if (icon) icon.className = "fa-solid fa-eye text-[10px] text-emerald-500";
+        if (label) label.textContent = "Unmask";
+        showToast("Active Recall चालू झाला! शब्द उघडण्यासाठी टॅप करा.");
+      } else {
+        renderedText.classList.remove('blinder-active');
+        document.querySelectorAll('#notesRenderedText .blur-nugget').forEach(el => el.classList.remove('revealed'));
+        if (icon) icon.className = "fa-solid fa-eye-slash text-[10px] text-amber-500";
+        if (label) label.textContent = "Recall";
+        showToast("सर्व शब्द स्पष्ट दिसत आहेत.");
+      }
+    };
+
+    document.addEventListener('click', (e) => {
+      if (!NotesState.isBlinderActive) return;
+      const target = e.target.closest('#notesRenderedText .blur-nugget');
+      if (target) target.classList.toggle('revealed');
+    });
+
+    // Web Speech API with Stop Voice & Heartbeat
+    let availableVoices = [];
+    let audioHeartbeatTimer = null;
+
+    function initSpeechVoices() {
+      if (!NotesState.synth) return;
+      const load = () => { availableVoices = NotesState.synth.getVoices() || []; };
+      load();
+      if (NotesState.synth.onvoiceschanged !== undefined) {
+        NotesState.synth.onvoiceschanged = load;
+      }
+    }
+
+    function startAudioHeartbeat() {
+      stopAudioHeartbeat();
+      audioHeartbeatTimer = setInterval(() => {
+        if (NotesState.audioReading && NotesState.synth && NotesState.synth.paused) {
+          NotesState.synth.resume();
+        }
+      }, 10000);
+    }
+
+    function stopAudioHeartbeat() {
+      if (audioHeartbeatTimer) {
+        clearInterval(audioHeartbeatTimer);
+        audioHeartbeatTimer = null;
+      }
+    }
+
+    function pickBestFemaleMarathiVoice() {
+      if (!NotesState.synth) return null;
+      if (!availableVoices || availableVoices.length === 0) {
+        availableVoices = NotesState.synth.getVoices() || [];
+      }
+      const mrVoices = availableVoices.filter(v => (v.lang && (v.lang.includes('mr') || v.lang.includes('MR'))) || (v.name && v.name.toLowerCase().includes('marathi')));
+      if (mrVoices.length > 0) {
+        const female = mrVoices.find(v => {
+          const n = (v.name || '').toLowerCase();
+          return n.includes('female') || n.includes('heera') || n.includes('kalpana') || n.includes('shashi');
+        });
+        return female || mrVoices[0];
+      }
+      const hiVoices = availableVoices.filter(v => v.lang && (v.lang.includes('hi') || v.lang.includes('HI')));
+      if (hiVoices.length > 0) {
+        const hiFemale = hiVoices.find(v => (v.name || '').toLowerCase().includes('female') || (v.name || '').toLowerCase().includes('swara'));
+        return hiFemale || hiVoices[0];
+      }
+      return availableVoices[0] || null;
+    }
+
+    window.toggleAudioPodcast = function() {
+      if (!NotesState.synth) {
+        showToast("Speech synthesis is not supported in this browser.", true);
+        return;
+      }
+
+      const spdLabel = document.getElementById('audioSpeedDisplay');
+
+      if (NotesState.audioReading) {
+        if (NotesState.audioPlaybackSpeed === 1.0) {
+          NotesState.audioPlaybackSpeed = 1.25;
+          if (spdLabel) spdLabel.textContent = "1.25x";
+          restartSpeechWithCurrentSpeed();
+        } else if (NotesState.audioPlaybackSpeed === 1.25) {
+          NotesState.audioPlaybackSpeed = 1.5;
+          if (spdLabel) spdLabel.textContent = "1.5x";
+          restartSpeechWithCurrentSpeed();
+        } else {
+          stopSpeechPlayback();
+        }
+        return;
+      }
+
+      if (!NotesState.rawMarkdownContent) {
+        showToast("No notes loaded to read.", true);
+        return;
+      }
+
+      prepareAndStartSpeech();
+    };
+
+    window.stopSpeechPlayback = function() {
+      stopAudioHeartbeat();
+      if (NotesState.synth) NotesState.synth.cancel();
+      NotesState.audioReading = false;
+      NotesState.audioPlaybackSpeed = 1.0;
+      NotesState.currentSentenceIdx = 0;
+      NotesState.speechSentences = [];
+      const icon = document.getElementById('audioReadIcon');
+      const spdLabel = document.getElementById('audioSpeedDisplay');
+      if (spdLabel) spdLabel.textContent = "1.0x";
+      if (icon) icon.className = "fa-solid fa-volume-high text-[10px] text-emerald-500";
+    };
+
+    function prepareAndStartSpeech() {
+      const cleanText = NotesState.rawMarkdownContent
+        .replace(/:::[a-z]*[\s\S]*?:::/gi, '')
+        .replace(/<[^>]*>/g, '')
+        .replace(/\[SYS_DISPATCH_BLOCK[\s\S]*?\]/gi, '')
+        .replace(/[#*`_~|]/g, ' ')
+        .replace(/\n+/g, '. ');
+
+      const rawSentences = cleanText.split(/[\.।!?\n]+/)
+        .map(s => s.trim())
+        .filter(s => s.length > 3);
+
+      if (rawSentences.length === 0) {
+        showToast("No readable text found.", true);
+        return;
+      }
+
+      NotesState.speechSentences = rawSentences;
+      NotesState.currentSentenceIdx = 0;
+      NotesState.audioReading = true;
+      const icon = document.getElementById('audioReadIcon');
+      if (icon) icon.className = "fa-solid fa-pause text-[10px] text-rose-500";
+      startAudioHeartbeat();
+      speakSentenceAt(0);
+    }
+
+    function speakSentenceAt(idx) {
+      if (!NotesState.audioReading || !NotesState.synth) return;
+      if (idx >= NotesState.speechSentences.length) {
+        stopSpeechPlayback();
+        showToast("वाचन पूर्ण झाले.");
+        return;
+      }
+
+      NotesState.currentSentenceIdx = idx;
+      const sentence = NotesState.speechSentences[idx];
+      const utterance = new SpeechSynthesisUtterance(sentence);
+      utterance.lang = 'mr-IN';
+      utterance.rate = NotesState.audioPlaybackSpeed;
+
+      const chosenVoice = pickBestFemaleMarathiVoice();
+      if (chosenVoice) utterance.voice = chosenVoice;
+
+      utterance.onend = () => {
+        if (NotesState.audioReading) speakSentenceAt(idx + 1);
+      };
+
+      utterance.onerror = (e) => {
+        console.warn("[Speech Error]", e);
+        if (NotesState.audioReading) speakSentenceAt(idx + 1);
+      };
+
+      NotesState.currentUtterance = utterance;
+      NotesState.synth.speak(utterance);
+    }
+
+    function restartSpeechWithCurrentSpeed() {
+      if (!NotesState.synth) return;
+      NotesState.synth.cancel();
+      speakSentenceAt(NotesState.currentSentenceIdx);
+    }
+
+    // Vault, Storage & Sharing
+    function loadSavedVaultState() {
+      try {
+        NotesState.savedVault = JSON.parse(localStorage.getItem('qq_vault_data') || '{}');
+      } catch (e) {
+        NotesState.savedVault = {};
+      }
+    }
+
+    window.toggleSaveCurrentNotes = function() {
+      if (!NotesState.rawMarkdownContent) return;
+      const examId = (NotesState.target?.examId || 'rajyaseva').toLowerCase();
+      const stageId = (NotesState.target?.stageId || 'prelims').toLowerCase();
+      const subjectId = (NotesState.target?.subjectId || 'core').toLowerCase();
+      const chIdx = NotesState.target?.selectedNotesChapterIndex !== undefined 
+        ? NotesState.target.selectedNotesChapterIndex 
+        : 0;
+      const chapterTitle = NotesState.target?.topicTitleMr || NotesState.target?.chapterTitleMr || "Chapter Notes";
+
+      const key = `notes_${examId}_${stageId}_${subjectId}_ch${chIdx}`;
+
+      if (NotesState.savedVault[key]) {
+        delete NotesState.savedVault[key];
+        showToast("Notes removed from Vault");
+      } else {
+        NotesState.savedVault[key] = {
+          id: key,
+          type: 'notes',
+          examId: examId,
+          stageId: stageId,
+          subjectId: subjectId,
+          chapterIndex: chIdx,
+          title: chapterTitle,
+          topicTitleMr: chapterTitle,
+          content: NotesState.rawMarkdownContent,
+          savedAt: new Date().toISOString()
+        };
+        showToast("Notes saved to Vault!");
+      }
+
+      localStorage.setItem('qq_vault_data', JSON.stringify(NotesState.savedVault));
+      
+      // Also sync unified qq_vault_notes dictionary for zero-friction access
+      try {
+        let vaultNotesMap = JSON.parse(localStorage.getItem('qq_vault_notes') || '{}');
+        if (typeof vaultNotesMap !== 'object' || Array.isArray(vaultNotesMap)) vaultNotesMap = {};
+        if (NotesState.savedVault[key]) {
+          vaultNotesMap[key] = NotesState.savedVault[key];
+        } else {
+          delete vaultNotesMap[key];
+        }
+        localStorage.setItem('qq_vault_notes', JSON.stringify(vaultNotesMap));
+      } catch (e) {}
+
+      updateVaultStarIcon();
+    };
+
+    function updateVaultStarIcon() {
+      const examId = (NotesState.target?.examId || 'rajyaseva').toLowerCase();
+      const stageId = (NotesState.target?.stageId || 'prelims').toLowerCase();
+      const subjectId = (NotesState.target?.subjectId || 'core').toLowerCase();
+      const chIdx = NotesState.target?.selectedNotesChapterIndex !== undefined 
+        ? NotesState.target.selectedNotesChapterIndex 
+        : 0;
+
+      const key = `notes_${examId}_${stageId}_${subjectId}_ch${chIdx}`;
+      const legacyKey = `notes_${subjectId}_${chIdx}`;
+
+      const icon = document.getElementById('saveVaultIcon');
+      const text = document.getElementById('saveVaultText');
+      if (!icon || !text) return;
+
+      if (NotesState.savedVault[key] || NotesState.savedVault[legacyKey]) {
+        icon.className = "fa-solid fa-star text-amber-500 text-[11px]";
+        text.textContent = "Saved";
+      } else {
+        icon.className = "fa-regular fa-star text-[11px]";
+        text.textContent = "Save";
+      }
+    }
+
+    window.reloadAndClearCache = function() {
+      sessionStorage.clear();
+      showToast("कॅश साफ केला. ताज्या नोट्स लोड होत आहेत...");
+      setTimeout(() => window.location.reload(), 400);
+    };
+
+    window.cycleNotesFontSize = function() {
+      const badge = document.getElementById('fontScaleLabel');
+      const body = document.body;
+      if (!badge || !body) return;
+
+      const order = ['S', 'M', 'L'];
+      const nextIdx = (order.indexOf(NotesState.fontScale) + 1) % order.length;
+      NotesState.fontScale = order[nextIdx];
+      badge.textContent = NotesState.fontScale;
+
+      body.classList.remove('font-scale-S', 'font-scale-M', 'font-scale-L');
+      body.classList.add(`font-scale-${NotesState.fontScale}`);
+    };
+
+    window.toggleChapterDoneState = function() {
+      const trackKey = NotesState.target?.chapterCacheKey || `track_${NotesState.target?.selectedNotesChapterIndex || 0}`;
+      try {
+        const completedMap = JSON.parse(localStorage.getItem('qq_completed_chapters') || '{}');
+        let isDone = false;
+        if (Array.isArray(completedMap)) {
+          const idx = completedMap.indexOf(trackKey);
+          if (idx > -1) {
+            completedMap.splice(idx, 1);
+            isDone = false;
+          } else {
+            completedMap.push(trackKey);
+            isDone = true;
+          }
+          localStorage.setItem('qq_completed_chapters', JSON.stringify(completedMap));
+        } else {
+          if (completedMap[trackKey]) {
+            delete completedMap[trackKey];
+            isDone = false;
+          } else {
+            completedMap[trackKey] = { completedAt: new Date().toISOString() };
+            isDone = true;
+          }
+          localStorage.setItem('qq_completed_chapters', JSON.stringify(completedMap));
+        }
+        updateDoneButtonState(isDone);
+        showToast(isDone ? "घटक पूर्ण नोंदवला!" : "घटक 'वाचले' मधून काढला.");
+      } catch (e) {
+        showToast("Error updating progress.", true);
+      }
+    };
+
+    function updateDoneButtonState(isDone) {
+      const icon = document.getElementById('doneStateIcon');
+      const label = document.getElementById('doneStateLabel');
+      if (!icon || !label) return;
+
+      if (isDone) {
+        icon.className = "fa-solid fa-circle-check text-[11px] text-emerald-500";
+        label.textContent = "Done";
+        label.className = "text-emerald-600 dark:text-emerald-400 font-black";
+      } else {
+        icon.className = "fa-regular fa-circle-check text-[11px] text-slate-400";
+        label.textContent = "Done";
+        label.className = "text-slate-600 dark:text-slate-300 font-bold";
+      }
+    }
+
+    window.jumpToQuizForThisChapter = function() {
+      stopSpeechPlayback();
+      const quizTarget = {
+        examId: NotesState.target?.examId || 'rajyaseva',
+        stageId: NotesState.target?.stageId || 'prelims',
+        paperId: NotesState.target?.paperId || 'paper_1',
+        subjectId: NotesState.target?.subjectId || null,
+        selectedQuizChapterIndices: [NotesState.target?.selectedNotesChapterIndex || 0],
+        topicTitleMr: NotesState.target?.topicTitleMr || "MPSC Chapter Quiz",
+        topicTitleEn: NotesState.target?.topicTitleEn || "MPSC Chapter Quiz",
+        difficulty: 'medium',
+        questionsCount: 15,
+        language: NotesState.target?.language || 'mr',
+        startedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('qq_active_topic_target', JSON.stringify(quizTarget));
+      showToast("Launching Practice Arena for this Chapter...");
+      setTimeout(() => window.location.href = './quiz.html', 300);
+    };
+
+    window.navigateToNextChapter = function() {
+      stopSpeechPlayback();
+      if (!NotesState.nextChapterTarget) {
+        showToast("हा या विषयाचा शेवटचा घटक आहे.");
+        return;
+      }
+      localStorage.setItem('qq_active_notes_target', JSON.stringify(NotesState.nextChapterTarget));
+      window.location.reload();
+    };
+
+    window.copyNotesToClipboard = function() {
+      if (!NotesState.rawMarkdownContent) {
+        showToast("No notes loaded to copy.", true);
+        return;
+      }
+      copyPromptToClipboard(NotesState.rawMarkdownContent);
+      showToast("Notes copied to clipboard!");
+    };
+
+    window.triggerPrintNotes = function() {
+      if (!NotesState.rawMarkdownContent) {
+        showToast("No notes loaded to print.", true);
+        return;
+      }
+      window.print();
+    };
+
+    window.shareNotesOnWhatsApp = function() {
+      const title = NotesState.target?.topicTitleMr || "MPSC Notes";
+      const subject = NotesState.target?.subjectId || "GS";
+      const text = encodeURIComponent(`📚 MPSC Study Notes: ${title} (${subject})\n\nअभ्यास करा StudySphere सोबत: ${window.location.href}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    };
+
+    function copyPromptToClipboard(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    // Ask AI & Modals
+    window.openAskAIModal = () => document.getElementById('askAiModal')?.classList.replace('hidden', 'flex');
+    window.closeAskAIModal = () => document.getElementById('askAiModal')?.classList.replace('flex', 'hidden');
+    window.openReportNotesModal = () => document.getElementById('reportNotesModal')?.classList.replace('hidden', 'flex');
+    window.closeReportNotesModal = () => document.getElementById('reportNotesModal')?.classList.replace('flex', 'hidden');
+
+    function buildChapterMasterAIPrompt() {
+      if (NotesState.target?.customSynthesizedPrompt && NotesState.target.customSynthesizedPrompt.trim().length > 50) {
+        return NotesState.target.customSynthesizedPrompt.trim();
+      }
+      const chapter = NotesState.target?.topicTitleMr || "MPSC घटक";
+      const subject = NotesState.target?.subjectNameMr || NotesState.target?.subjectId || "सामान्य अध्ययन";
+      return `Generate complete, exhaustive textbook study notes in formal academic Marathi for MPSC: "${chapter}" (${subject}). Include detailed subtopic breakdowns, comparison matrices, and official MPSC traps.`;
+    }
+
+    window.copyMasterNotesPromptOnly = function() {
+      copyPromptToClipboard(buildChapterMasterAIPrompt());
+      showToast("मास्टर प्रॉम्प्ट क्लिपबोर्डवर कॉपी झाला!");
+      closeAskAIModal();
+    };
+
+    window.launchTargetAiApp = function(platform) {
+      const prompt = buildChapterMasterAIPrompt();
+      copyPromptToClipboard(prompt);
+      let targetUrl = platform === 'gemini' ? "https://gemini.google.com/app" : `https://chatgpt.com/?q=${encodeURIComponent(prompt.substring(0, 1800))}`;
+      closeAskAIModal();
+      setTimeout(() => window.open(targetUrl, '_blank'), 600);
+    };
+
+    window.submitNotesReport = function() {
+      const details = document.getElementById('reportNotesDetails')?.value?.trim() || '';
+      if (!details) {
+        showToast("कृपया त्रुटी थोडक्यात स्पष्ट करा.", true);
+        return;
+      }
+      try {
+        const reports = JSON.parse(localStorage.getItem('qq_notes_reported_issues') || '[]');
+        reports.push({
+          context: document.getElementById('reportChapterContext')?.value || '',
+          details: details,
+          reportedAt: new Date().toISOString()
+        });
+        localStorage.setItem('qq_notes_reported_issues', JSON.stringify(reports));
+      } catch (e) {}
+      closeReportNotesModal();
+      showToast("फीडबॅक यशस्वीरीत्या नोंदवला गेला. धन्यवाद!");
+    };
+
+    // Theme Management
+    function initTheme() {
+      const savedTheme = localStorage.getItem('qq_theme') || 'light';
+      applyTheme(savedTheme);
+    }
+
+    window.toggleNotesTheme = function() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      const newTheme = isDark ? 'dark' : 'light';
+      localStorage.setItem('qq_theme', newTheme);
+      applyTheme(newTheme);
+    };
+
+    function applyTheme(theme) {
+      const icon = document.getElementById('themeIcon');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (icon) icon.className = "fa-solid fa-sun text-[11px]";
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (icon) icon.className = "fa-solid fa-moon text-[11px]";
+      }
+    }
+
+    let toastTimeout;
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      if (!toast || !text) return;
+
+      text.textContent = msg;
+      toast.classList.remove('translate-y-10', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-10', 'opacity-0');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

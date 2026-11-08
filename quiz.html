@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="mr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>MPSC Practice Arena | StudySphere</title>
+  
+  <meta name="theme-color" content="#f59e0b">
+  <meta name="description" content="MPSC Practice Arena with real-time AI generation, zero fake questions, official 1/4th negative marking rule, and verified academic references.">
+
+  <!-- Google Fonts: Plus Jakarta Sans (English) & Mukta (Devanagari/Marathi) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- html2canvas for Clean Question Snapshots -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Mukta"', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            brand: {
+              amber: '#f59e0b',
+              amberDark: '#d97706',
+              sage: '#10b981',
+              navy: '#0b1120',
+              obsidian: '#070b14'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ARENA LAYOUT & ZERO-JUMP STYLES */
+    .mesh-gradient-bg {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .dark .mesh-gradient-bg {
+      background-color: #070b14;
+      background-image: radial-gradient(#1e293b 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Spring Action Buttons */
+    .btn-spring {
+      transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.12s ease, border-color 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-spring:active:not(:disabled) {
+      transform: scale(0.97) translateY(1px);
+    }
+
+    /* Clean Scrollbars */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+    /* Top Tricolor Accent Stripe */
+    .tiranga-stripe {
+      background: linear-gradient(90deg, #ea580c 0%, #ea580c 33.33%, #ffffff 33.33%, #ffffff 66.66%, #15803d 66.66%, #15803d 100%);
+      height: 3.5px;
+      width: 100%;
+    }
+
+    /* Shimmer Wave Loading Animation */
+    @keyframes shimmerWave {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-box {
+      background: linear-gradient(90deg, rgba(226, 232, 240, 0.6) 25%, rgba(241, 245, 249, 0.9) 50%, rgba(226, 232, 240, 0.6) 75%);
+      background-size: 200% 100%;
+      animation: shimmerWave 1.6s infinite ease-in-out;
+    }
+    .dark .shimmer-box {
+      background: linear-gradient(90deg, rgba(30, 41, 59, 0.7) 25%, rgba(51, 65, 85, 0.9) 50%, rgba(30, 41, 59, 0.7) 75%);
+      background-size: 200% 100%;
+      animation: shimmerWave 1.6s infinite ease-in-out;
+    }
+
+    /* Option Click & Correct States */
+    .opt-btn {
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .opt-btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+    .opt-correct {
+      background-color: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      color: #064e3b !important;
+    }
+    .dark .opt-correct {
+      background-color: rgba(16, 185, 129, 0.18) !important;
+      border-color: #059669 !important;
+      color: #a7f3d0 !important;
+    }
+    .opt-wrong {
+      background-color: #fff1f2 !important;
+      border-color: #f43f5e !important;
+      color: #881337 !important;
+    }
+    .dark .opt-wrong {
+      background-color: rgba(244, 63, 94, 0.18) !important;
+      border-color: #e11d48 !important;
+      color: #fecdd3 !important;
+    }
+
+    /* Match Pairs Table */
+    .pairs-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .dark .pairs-table {
+      border-color: #1e293b;
+    }
+    .pairs-table td {
+      padding: 0.6rem 0.8rem;
+      font-size: 0.875rem;
+      border-bottom: 1px solid #e2e8f0;
+      background: #ffffff;
+      line-height: 1.5;
+    }
+    .dark .pairs-table td {
+      background: #0f172a;
+      border-color: #1e293b;
+      color: #e2e8f0;
+    }
+    .pairs-table tr:last-child td { border-bottom: none; }
+
+    /* Statement Item Badge */
+    .statement-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+    .statement-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* Pop In Animation */
+    .animate-pop-in {
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.96) translateY(8px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Dynamic Font Scale Variable System */
+    :root {
+      --arena-q-size: 1.05rem;
+      --arena-body-size: 0.875rem;
+      --arena-opt-size: 0.875rem;
+    }
+    .font-scale-S {
+      --arena-q-size: 0.95rem;
+      --arena-body-size: 0.8rem;
+      --arena-opt-size: 0.8rem;
+    }
+    .font-scale-M {
+      --arena-q-size: 1.05rem;
+      --arena-body-size: 0.875rem;
+      --arena-opt-size: 0.875rem;
+    }
+    .font-scale-L {
+      --arena-q-size: 1.2rem;
+      --arena-body-size: 1rem;
+      --arena-opt-size: 0.95rem;
+    }
+    #questionTitleText {
+      font-size: var(--arena-q-size) !important;
+    }
+    .statement-row, .statement-text-body, #concludingPrompt, #solutionText {
+      font-size: var(--arena-body-size) !important;
+    }
+    .option-text-label {
+      font-size: var(--arena-opt-size) !important;
+    }
+  </style>
+</head>
+<body class="mesh-gradient-bg text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 pb-20 select-none overflow-x-hidden font-scale-M">
+
+  <!-- Direct URL Visit Guard Modal -->
+  <div id="noTargetDirectAccessModal" class="fixed inset-0 z-[200] bg-slate-950/85 backdrop-blur-xl hidden items-center justify-center p-4 text-center select-none">
+    <div class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-6 sm:p-7 max-w-sm w-full shadow-2xl flex flex-col items-center gap-3 animate-pop-in">
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/15 border border-amber-400 text-amber-500 flex items-center justify-center text-2xl shadow-sm">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <span class="text-[10px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">NO ACTIVE PRACTICE SESSION FOUND</span>
+        <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">कोणतेही सक्रिय सराव सत्र निवडलेले नाही</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+          सराव चाचणी सुरू करण्यासाठी कृपया प्रथम मुख्य पोर्टलवरून परीक्षा (राज्यसेवा, गट-ब किंवा गट-क) आणि अभ्यासाचा घटक निवडा.
+        </p>
+      </div>
+      <a href="./index.html" class="mt-2 w-full h-11 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 btn-spring no-underline shadow-md cursor-pointer">
+        <i class="fa-solid fa-house text-xs"></i>
+        <span>मुख्य पानावर जा (Back to Home)</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      try {
+        var target = localStorage.getItem('qq_active_topic_target');
+        var guard = document.getElementById('noTargetDirectAccessModal');
+        if (target) {
+          if (guard) guard.style.display = 'none';
+        } else {
+          if (guard) guard.style.display = 'flex';
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Top Tricolor Accent Stripe -->
+  <div class="tiranga-stripe shrink-0 fixed top-0 left-0 right-0 z-50"></div>
+
+  <!-- 1. COMPACT ARENA TOP HUD -->
+  <header class="bg-white/95 dark:bg-slate-900/95 border-b border-slate-300 dark:border-slate-800 sticky top-0 z-40 pt-1 shadow-2xs shrink-0 backdrop-blur-md">
+    <div class="max-w-3xl mx-auto px-3 sm:px-4 py-2 flex flex-col gap-1.5">
+      
+      <!-- Tier 1: Navigation, Target & Indicators -->
+      <div class="flex items-center justify-between gap-2 min-h-[38px]">
+        
+        <!-- Left: Exit Button & Target Display -->
+        <div class="flex items-center gap-2 min-w-0">
+          <button onclick="handleTriggerExitConfirmation()" type="button" aria-label="Exit Arena" class="h-8 px-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center gap-1.5 border border-slate-300 dark:border-slate-700 btn-spring shrink-0 cursor-pointer">
+            <i class="fa-solid fa-arrow-left text-[11px]"></i>
+            <span class="hidden xs:inline">Hub</span>
+          </button>
+
+          <div class="min-w-0 leading-tight">
+            <h1 class="text-xs sm:text-[13px] font-black text-slate-900 dark:text-white uppercase truncate" id="targetExamDisplay">
+              Loading Arena...
+            </h1>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold truncate mt-0.5" id="targetSubjectDisplay">
+              Authentic Syllabus Practice
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Countdown Timer, Streak & Sequence Counter -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          
+          <div id="quizTimerPod" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-2.5 py-1 rounded-xl text-slate-800 dark:text-slate-200 text-xs font-black h-8 shadow-2xs font-mono tabular-nums">
+            <i class="fa-solid fa-clock text-[11px] text-amber-500" id="timerIcon"></i>
+            <span id="quizTimerText">15:00</span>
+          </div>
+
+          <div class="flex items-center gap-1 bg-amber-500/10 border border-amber-400 dark:border-amber-700/80 px-2 py-1 rounded-xl text-amber-900 dark:text-amber-300 text-xs font-black h-8 shadow-2xs">
+            <i class="fa-solid fa-fire text-amber-500 text-[11px]"></i>
+            <span id="quizStreakCount" class="font-mono tabular-nums leading-none">0</span>
+          </div>
+
+          <button onclick="toggleQuestionPaletteDrawer()" type="button" title="View Question Palette" class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-amber-500/15 border border-slate-300 dark:border-slate-700 px-2.5 py-1 rounded-xl text-slate-800 dark:text-slate-200 text-xs font-black h-8 shadow-2xs btn-spring cursor-pointer">
+            <i class="fa-solid fa-table-cells text-[10px] text-slate-400"></i>
+            <span id="questionSequenceIndicator" class="font-mono tabular-nums leading-none">Q 1/15</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Tier 2: Utility & Action Strip -->
+      <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-200 dark:border-slate-800 text-[10px]">
+        
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="badgeActiveLang" class="font-black uppercase px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-400 dark:border-amber-700 shrink-0">
+            MR
+          </span>
+          <span id="badgeBufferStatus" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 text-[10px] font-bold">
+            <i class="fa-solid fa-bolt text-[9px] text-amber-500"></i>
+            <span id="bufferStatusCount" class="font-mono">Buffer: 0 Ready</span>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0">
+          
+          <button id="btnFontScaleToggle" onclick="cycleFontSize()" type="button" aria-label="Cycle Font Size" title="Text size: Medium -> Large -> Small" class="h-6 px-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 flex items-center gap-1 text-slate-800 dark:text-slate-200 btn-spring cursor-pointer">
+            <i class="fa-solid fa-font text-[9px] text-slate-400"></i>
+            <span id="fontScaleLabel" class="inline-flex items-center justify-center w-3.5 h-3.5 rounded bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-400/60 dark:border-amber-700/60 text-[9px] font-mono font-black">M</span>
+          </button>
+
+          <button onclick="captureQuestionSnapshot()" type="button" aria-label="Take Snapshot" title="Save question image" class="h-6 px-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold border border-slate-300 dark:border-slate-700 flex items-center gap-1 btn-spring cursor-pointer">
+            <i class="fa-solid fa-camera text-[9px]"></i>
+            <span class="hidden xs:inline">Snap</span>
+          </button>
+          
+          <button onclick="toggleQuizTheme()" type="button" aria-label="Toggle Theme" class="h-6 w-7 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center btn-spring cursor-pointer">
+            <i id="themeIcon" class="fa-solid fa-moon text-[10px]"></i>
+          </button>
+
+          <button onclick="handleTriggerPreSubmitModal()" type="button" class="h-6 px-2.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-black btn-spring cursor-pointer">
+            Finish
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Tier 3: Metadata Badges -->
+      <div id="questionTagsRow" class="h-7 flex items-center justify-between gap-2 pt-0.5 border-t border-slate-200 dark:border-slate-800 text-[10px]">
+        <div id="tagsScrollContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 min-w-0">
+          <span id="badgeDifficulty" class="px-2 py-0.5 rounded-md font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 shrink-0">
+            MEDIUM
+          </span>
+          <span id="badgeExamType" class="px-2 py-0.5 rounded-md font-bold bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-400/50 shrink-0">
+            MPSC Combine
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="btnReportCurrentQuestion" onclick="triggerQuestionReport()" type="button" title="Report error in this question" class="h-6 px-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:text-rose-500 text-slate-600 dark:text-slate-300 font-bold flex items-center gap-1 btn-spring cursor-pointer">
+            <i class="fa-solid fa-flag text-[10px]"></i>
+            <span class="hidden xs:inline text-[9px]">Report</span>
+          </button>
+
+          <button id="btnSaveVault" onclick="toggleSaveCurrentQuestion()" type="button" class="h-6 px-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-amber-400 text-slate-700 dark:text-slate-300 font-bold flex items-center gap-1 btn-spring cursor-pointer">
+            <i id="saveVaultIcon" class="fa-regular fa-star text-[11px]"></i>
+            <span id="saveVaultText">Save</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. FULLSCREEN INITIALIZER -->
+  <div id="quizFullScreenLoader" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md hidden flex-col items-center justify-center p-4 text-center animate-pop-in">
+    <button id="btnInitialLoaderBack" onclick="handleInitialLoaderExit()" type="button" class="absolute top-4 left-4 h-8 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold text-xs flex items-center gap-1.5 btn-spring cursor-pointer">
+      <i class="fa-solid fa-arrow-left text-[11px]"></i>
+      <span>Back</span>
+    </button>
+
+    <div class="relative w-16 h-16 mb-4 flex items-center justify-center">
+      <div id="fullLoaderSpinnerRing" class="w-16 h-16 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin"></div>
+      <i id="fullLoaderCenterIcon" class="fa-solid fa-bolt text-xl absolute animate-pulse text-amber-400"></i>
+    </div>
+
+    <div class="space-y-1.5 max-w-sm">
+      <h2 class="text-sm sm:text-base font-black text-white" id="fullLoaderTitle">Preparing Syllabus-Aligned Questions</h2>
+      
+      <div class="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs text-amber-400 font-bold h-8 max-w-[290px] sm:max-w-[340px] mx-auto overflow-hidden">
+        <i class="fa-solid fa-circle-notch animate-spin text-[11px] shrink-0" id="realStatusSpinner"></i>
+        <span id="realStatusText" class="truncate whitespace-nowrap overflow-hidden text-ellipsis">Connecting with reference database...</span>
+      </div>
+    </div>
+
+    <div id="fullLoaderRetryArea" class="hidden mt-4 flex flex-col items-center gap-2.5 w-full max-w-sm animate-pop-in">
+      <p id="fullLoaderFallbackMessage" class="text-[11px] text-amber-300/90 font-medium text-center leading-relaxed px-2">
+        पुढचा प्रश्न लोड होण्यास विलंब होत आहे. तुम्ही आतापर्यंतची चाचणी सबमिट करू शकता किंवा मागे जाऊन सोडवलेले प्रश्न पाहू शकता.
+      </p>
+      <div class="flex flex-row items-center justify-center gap-1.5 w-full pt-1">
+        <button onclick="retryActiveBufferBatch()" type="button" class="flex-1 py-2 px-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring flex items-center justify-center gap-1 cursor-pointer shadow-xs">
+          <i class="fa-solid fa-rotate-right text-[10px]"></i>
+          <span>Retry</span>
+        </button>
+        <button id="btnLoaderViewSolved" onclick="handleLoaderViewSolvedQuestions()" type="button" class="flex-1 py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold text-xs btn-spring cursor-pointer flex items-center justify-center gap-1">
+          <i class="fa-solid fa-eye text-[10px]"></i>
+          <span>View Solved</span>
+        </button>
+        <button id="btnLoaderFallbackAction" onclick="handleLoaderFallbackSubmitOrHub()" type="button" class="flex-1 py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs btn-spring cursor-pointer flex items-center justify-center gap-1">
+          <i class="fa-solid fa-flag-checkered text-[10px]" id="iconLoaderFallback"></i>
+          <span id="labelLoaderFallback">Submit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MAIN ARENA QUESTION CARD -->
+  <main class="max-w-3xl mx-auto w-full px-3 sm:px-4 py-3 flex-1 flex flex-col justify-start">
+
+    <div id="quizCard" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xs flex flex-col transition-all min-h-[380px]">
+      
+      <!-- SKELETON SHIMMER LOADER -->
+      <div id="shimmerCardSkeleton" class="space-y-4 hidden">
+        <div class="h-6 w-3/4 rounded-xl shimmer-box"></div>
+        <div class="space-y-2">
+          <div class="h-4 w-full rounded-lg shimmer-box"></div>
+          <div class="h-4 w-5/6 rounded-lg shimmer-box"></div>
+        </div>
+        <div class="grid grid-cols-1 gap-2 pt-2">
+          <div class="h-12 w-full rounded-2xl shimmer-box"></div>
+          <div class="h-12 w-full rounded-2xl shimmer-box"></div>
+          <div class="h-12 w-full rounded-2xl shimmer-box"></div>
+          <div class="h-12 w-full rounded-2xl shimmer-box"></div>
+        </div>
+      </div>
+
+      <!-- ACTIVE QUESTION CONTENT -->
+      <div id="quizQuestionBody" class="space-y-2.5 text-base flex-1 flex flex-col justify-start">
+        
+        <div class="space-y-2.5 text-base">
+          <div id="questionTitleText" class="font-black text-slate-900 dark:text-white leading-relaxed text-base sm:text-lg"></div>
+
+          <div id="pairsContainer" class="hidden overflow-x-auto my-1.5"></div>
+
+          <div id="statementsContainer" class="hidden space-y-1.5 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60"></div>
+          <p id="concludingPrompt" class="hidden text-xs sm:text-sm font-black text-slate-900 dark:text-white mt-1"></p>
+
+          <div id="optionsContainer" class="grid grid-cols-1 gap-2 pt-1"></div>
+        </div>
+
+        <!-- Solution & Academic Reference Card -->
+        <div id="solutionBox" class="hidden mt-2 p-3 rounded-2xl bg-amber-500/10 border border-amber-300 dark:border-amber-800/60 space-y-1">
+          <div class="flex items-center justify-between pb-1 border-b border-amber-200 dark:border-amber-800/50">
+            <h2 class="text-xs font-black text-amber-950 dark:text-amber-200 flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-amber-500"></i>
+              <span>Detailed Solution & Analysis</span>
+            </h2>
+            <button onclick="toggleSolutionBox()" type="button" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs p-1 cursor-pointer">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div id="solutionRefRow" class="hidden flex items-center gap-1.5 text-xs font-bold pt-1 pb-0 mb-0">
+            <span class="text-slate-500 dark:text-slate-400 text-[10px] uppercase font-black shrink-0">Reference:</span>
+            <span id="solutionReferenceBadge" class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700 leading-normal truncate"></span>
+          </div>
+
+          <div id="solutionText" class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-medium leading-relaxed whitespace-pre-line pt-0.5 mt-0"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- 4. STICKY BOTTOM ACTION TOOLBAR -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-300 dark:border-slate-800 shadow-md py-2.5 px-3">
+    <div class="max-w-3xl mx-auto flex items-center gap-2">
+      
+      <button id="btnPrevQuestion" onclick="goToPreviousQuestion()" type="button" class="h-10 px-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs flex items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed btn-spring shrink-0 cursor-pointer">
+        <i class="fa-solid fa-arrow-left text-[11px]"></i>
+        <span>Prev</span>
+      </button>
+
+      <button id="btnShowSolutionManual" onclick="toggleSolutionBox()" type="button" class="flex-1 h-10 px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 dark:bg-slate-800 dark:hover:bg-slate-700 text-amber-950 dark:text-amber-200 font-bold text-xs border border-amber-300 dark:border-slate-700 truncate btn-spring cursor-pointer flex items-center justify-center gap-1.5">
+        <i class="fa-solid fa-lightbulb text-amber-500 text-xs"></i>
+        <span>Solution</span>
+      </button>
+
+      <button id="btnMainAction" onclick="handlePrimaryNextAction()" type="button" class="flex-[1.5] h-10 px-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 btn-spring cursor-pointer shadow-sm transition-colors">
+        <span id="mainActionLabel">Next</span>
+        <i id="mainActionIcon" class="fa-solid fa-arrow-right text-xs"></i>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- 5. QUESTION PALETTE BOTTOM DRAWER -->
+  <div id="questionPaletteDrawer" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden items-end justify-center select-none" onclick="if(event.target===this)toggleQuestionPaletteDrawer();">
+    <div class="bg-white dark:bg-slate-900 rounded-t-3xl w-full max-w-2xl max-h-[75vh] flex flex-col p-4 border-t border-slate-300 dark:border-slate-800 animate-pop-in">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-table-cells text-amber-500 text-sm"></i>
+          <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Question Palette</h3>
+        </div>
+        <button onclick="toggleQuestionPaletteDrawer()" type="button" class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-slate-800 dark:hover:text-white text-xs cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3 py-2 text-[10px] font-bold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800 shrink-0">
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-emerald-500 inline-block"></span> Solved</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-slate-200 dark:bg-slate-700 inline-block"></span> Unsolved</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-amber-500 inline-block"></span> Current</span>
+      </div>
+
+      <div id="paletteGridContainer" class="grid grid-cols-5 sm:grid-cols-10 gap-2 py-3 overflow-y-auto custom-scrollbar flex-1">
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. PRE-SUBMIT CHECK MODAL -->
+  <div 
+    id="preSubmitCheckModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs hidden items-center justify-center p-3 select-none"
+    onclick="if(event.target === this){resumeCurrentQuizSession();}"
+  >
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-sm p-5 text-center shadow-2xl border border-slate-300 dark:border-slate-800 space-y-3.5 animate-pop-in">
+      <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 flex items-center justify-center text-xl mx-auto border border-amber-400">
+        <i class="fa-solid fa-clipboard-question"></i>
+      </div>
+      <div>
+        <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white">Submit Practice Session?</h3>
+        <p id="preSubmitSummaryText" class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+          You have answered 9 of 15 questions. 6 questions remain unsolved.
+        </p>
+      </div>
+
+      <div class="flex flex-row items-center gap-2 pt-1">
+        <button onclick="resumeCurrentQuizSession()" type="button" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring cursor-pointer flex items-center justify-center gap-1.5 shadow-xs">
+          <i class="fa-solid fa-play text-[10px]"></i>
+          <span>Resume Quiz</span>
+        </button>
+        <button onclick="executeFinalSubmission()" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-rose-600 dark:text-rose-400 font-bold text-xs btn-spring cursor-pointer">
+          Submit Test
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. SCORECARD & EVALUATION MODAL (AUTO-SAVED, MANUAL SAVE BUTTON REMOVED) -->
+  <div 
+    id="resultModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-4 select-none"
+    onclick="if(event.target === this){closeModal('resultModal');}"
+  >
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-sm p-5 text-center shadow-xl border border-slate-300 dark:border-slate-800 space-y-3.5 animate-pop-in">
+      
+      <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-500/15 text-amber-600 flex items-center justify-center text-xl border border-amber-400">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+
+      <div>
+        <h2 class="text-sm sm:text-base font-black text-slate-900 dark:text-white uppercase">Practice Performance</h2>
+        <p id="resultMarkingRuleSubtext" class="text-[10px] text-slate-400 mt-0.5">Calculated using official negative marking standard</p>
+      </div>
+
+      <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-300 dark:border-amber-800/60">
+        <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Net Score</span>
+        <div id="scoreFinalValue" class="text-3xl font-black text-amber-600 font-mono tabular-nums mt-0.5">0.00</div>
+        <div class="flex items-center justify-center gap-3 mt-1 text-xs font-bold text-slate-600 dark:text-slate-300 font-mono">
+          <span>Accuracy: <strong id="scoreAccuracyValue" class="text-emerald-600">0%</strong></span>
+          <span>•</span>
+          <span>Time: <strong id="scoreTimeElapsed" class="text-indigo-600">0m</strong></span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 text-center text-xs">
+        <div class="p-2 rounded-xl bg-emerald-500/10 border border-emerald-300 dark:border-emerald-800">
+          <span id="scoreCorrectCount" class="text-emerald-600 dark:text-emerald-400 font-black text-sm block font-mono">0</span>
+          <span class="text-[9px] font-bold text-slate-500" id="scoreCorrectLabel">Correct (+1.0)</span>
+        </div>
+        <div class="p-2 rounded-xl bg-rose-500/10 border border-rose-300 dark:border-rose-800">
+          <span id="scoreWrongCount" class="text-rose-600 dark:text-rose-400 font-black text-sm block font-mono">0</span>
+          <span class="text-[9px] font-bold text-slate-500" id="scoreWrongLabel">Wrong (-0.25)</span>
+        </div>
+        <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+          <span id="scoreSkippedCount" class="text-slate-700 dark:text-slate-300 font-black text-sm block font-mono">0</span>
+          <span class="text-[9px] font-bold text-slate-400">Unanswered</span>
+        </div>
+      </div>
+
+      <!-- Auto-Saved Confirmation Tag -->
+      <div class="flex items-center justify-center gap-1 text-[10.5px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 py-1.5 px-3 rounded-xl">
+        <i class="fa-solid fa-circle-check text-[11px]"></i>
+        <span>चाचणी निकाल व प्रश्न व्हॉल्टमध्ये सुरक्षित सेव्ह झाले आहेत!</span>
+      </div>
+
+      <div class="flex items-center gap-2 pt-1">
+        <button onclick="enterReadOnlyReviewMode()" type="button" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs btn-spring cursor-pointer">
+          Review
+        </button>
+        <button id="btnReturnToHubOrVault" onclick="returnToOriginHubSafe()" type="button" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring cursor-pointer flex items-center justify-center gap-1">
+          <span id="labelReturnToHubOrVault">Return to Hub</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 8. EXIT CONFIRMATION MODAL -->
+  <div 
+    id="confirmExitModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs hidden items-center justify-center p-3 select-none"
+    onclick="if(event.target === this){closeModal('confirmExitModal');}"
+  >
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-xs p-5 text-center shadow-xl border border-slate-300 dark:border-slate-800 space-y-3 animate-pop-in">
+      <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 flex items-center justify-center text-xl mx-auto border border-amber-400">
+        <i class="fa-solid fa-door-open"></i>
+      </div>
+      <div>
+        <h2 class="text-sm sm:text-base font-black text-slate-900 dark:text-white">Leave Practice Arena?</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+          You are returning to the hub. Your active session will end.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 pt-1">
+        <button onclick="closeModal('confirmExitModal')" type="button" class="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs btn-spring cursor-pointer">
+          Stay
+        </button>
+        <button onclick="returnToOriginHubSafe()" type="button" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs btn-spring cursor-pointer">
+          Leave
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. REPORT MODAL -->
+  <div 
+    id="feedbackModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[120] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 select-none"
+    onclick="if(event.target === this){closeModal('feedbackModal');}"
+  >
+    <div class="relative w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-3 animate-pop-in box-border">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-flag text-rose-500 text-sm"></i>
+          <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white">Report Question Issue</h3>
+        </div>
+        <button onclick="closeModal('feedbackModal')" type="button" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white text-xs cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-2 text-xs">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-400">Question Reference</label>
+          <input type="text" id="reportQuestionContext" readonly class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 truncate" />
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+              <i class="fa-solid fa-camera text-slate-400"></i>
+              <span>Screen Snapshot (Optional)</span>
+            </span>
+            <span id="reportSnapshotStatus" class="text-[9px] text-slate-400 font-bold">Not Attached</span>
+          </div>
+
+          <div id="reportSnapshotActionRow" class="flex items-center gap-2">
+            <button id="btnCaptureReportSnapshot" onclick="requestAndCaptureReportScreenshot()" type="button" class="w-full py-1.5 px-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-bold text-[10px] flex items-center justify-center gap-1.5 btn-spring cursor-pointer">
+              <i class="fa-solid fa-camera-retro"></i>
+              <span>Capture Screen Now</span>
+            </button>
+          </div>
+
+          <div id="reportSnapshotPreviewBox" class="mt-1 w-full h-24 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 overflow-hidden hidden items-center justify-center relative">
+            <img id="reportSnapshotImg" class="w-full h-full object-contain" alt="Question Snapshot" />
+            <button onclick="removeAttachedReportScreenshot()" type="button" class="absolute top-1 right-1 w-5 h-5 rounded-md bg-slate-900/80 text-white flex items-center justify-center text-[10px] cursor-pointer" title="Remove snapshot">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-slate-400">Describe the Issue</label>
+          <textarea id="reportIssueDetails" rows="2" placeholder="उदा. चुकीचा पर्याय, भाषांतर त्रुटी किंवा चुकीचे उत्तर..." class="w-full mt-1 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-amber-500"></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-1 border-t border-slate-200 dark:border-slate-800">
+        <button onclick="closeModal('feedbackModal')" type="button" class="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs btn-spring cursor-pointer">
+          Cancel
+        </button>
+        <button onclick="submitQuestionReport()" type="button" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs btn-spring cursor-pointer">
+          Submit Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Utility -->
+  <div id="toastNotification" class="fixed bottom-16 right-4 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 z-[150] transform translate-y-10 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-slate-800 px-4 py-2 rounded-2xl shadow-md flex items-center gap-2 text-xs font-bold pointer-events-none border border-slate-700">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toastMessage">Done!</span>
+  </div>
+
+  <!-- 10. JAVASCRIPT: ENGINE & STATE CONTROLLER -->
+  <script type="module">
+    import { ResponseValidator } from './ai-engine/validators/response-validator.js';
+
+    const safeValidateBatch = (rawBatch, isEnglish) => {
+      if (typeof ResponseValidator !== 'undefined' && typeof ResponseValidator.validateQuestionBatch === 'function') {
+        return ResponseValidator.validateQuestionBatch(rawBatch, isEnglish);
+      }
+      return Array.isArray(rawBatch) ? rawBatch : [];
+    };
+
+    const GEMINI_MODELS = [
+      'gemini-3.5-flash-lite'
+    ];
+
+    const ArenaState = {
+      target: null,
+      apiKey: null,
+      totalQuestionsTarget: 15,
+      marksPerQuestion: 1.0,
+      negativeMarking: 0.25,
+      durationMinutes: 15,
+      timeRemainingSec: 15 * 60,
+      timerInterval: null,
+      isTimerPaused: false,
+      
+      questions: [],
+      bufferQueue: [],
+      currentIndex: 0,
+      maxForwardReached: 0,
+      rejectedShortfall: 0,
+      isFetchingBatch: false,
+      currentModelIndex: 0,
+      rateLimitCooldownUntil: 0,
+      fontScale: 'M',
+      streak: 0,
+      startTime: Date.now(),
+      savedVault: {},
+      isReadOnlyReview: false,
+      consecutiveErrors: 0,
+      loadingTimerHandle: null,
+      recoveryTimeoutHandle: null,
+      currentCapturedScreenshot: null,
+      activeAbortController: null
+    };
+
+    window.ArenaState = ArenaState;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTheme();
+      loadSavedVaultState();
+
+      const storedTarget = localStorage.getItem('qq_active_topic_target');
+      if (!storedTarget) {
+        const fullLoader = document.getElementById('quizFullScreenLoader');
+        if (fullLoader) {
+          fullLoader.classList.add('hidden');
+          fullLoader.classList.remove('flex');
+        }
+
+        const warningModal = document.getElementById('noTargetDirectAccessModal');
+        if (warningModal) {
+          warningModal.style.display = 'flex';
+          warningModal.classList.remove('hidden');
+        }
+
+        showToast("Please choose a topic from the Hub first.", true);
+        return;
+      } else {
+        const warningModal = document.getElementById('noTargetDirectAccessModal');
+        if (warningModal) warningModal.style.display = 'none';
+      }
+
+      ArenaState.target = JSON.parse(storedTarget);
+      ArenaState.totalQuestionsTarget = parseInt(ArenaState.target.questionsCount || ArenaState.target.totalQuestions, 10) || 15;
+      ArenaState.marksPerQuestion = parseFloat(ArenaState.target.marksPerQuestion) || 1.0;
+      ArenaState.negativeMarking = parseFloat(ArenaState.target.negativeMarking) || 0.25;
+      ArenaState.durationMinutes = parseInt(ArenaState.target.durationMinutes, 10) || (ArenaState.totalQuestionsTarget >= 100 ? 120 : (ArenaState.totalQuestionsTarget >= 50 ? 60 : 15));
+      ArenaState.timeRemainingSec = ArenaState.durationMinutes * 60;
+
+      // Update Result Modal button label if this is a Re-attempt
+      const returnBtnLabel = document.getElementById('labelReturnToHubOrVault');
+      if (returnBtnLabel && (ArenaState.target.isReattempt || ArenaState.target.sourceHub === './vault.html')) {
+        returnBtnLabel.textContent = "Back to Vault";
+      }
+
+      // =========================================================================
+      // FAST-PATH: INSTANT RE-TEST FROM REVISION VAULT (ZERO API LATENCY)
+      // =========================================================================
+      if (ArenaState.target.isReattempt && Array.isArray(ArenaState.target.cachedQuestions) && ArenaState.target.cachedQuestions.length > 0) {
+        const cached = ArenaState.target.cachedQuestions;
+        ArenaState.totalQuestionsTarget = cached.length;
+
+        // Ingest and normalize cached questions with fresh unanswered state
+        ArenaState.questions = cached.map((q, idx) => {
+          let correctIdx = q.correctAnswerIndex;
+          if (correctIdx === undefined && Array.isArray(q.options) && q.correctAnswer) {
+            correctIdx = q.options.findIndex(opt => String(opt).trim().toLowerCase() === String(q.correctAnswer).trim().toLowerCase());
+            if (correctIdx === -1) correctIdx = 0;
+          }
+
+          return {
+            id: q.id || `retest_q_${idx}`,
+            questionTitleMr: q.questionTitleMr || q.questionText || q.question || `प्रश्न ${idx + 1}`,
+            questionTitle: q.questionTitleMr || q.questionText || q.question || `Question ${idx + 1}`,
+            type: q.type || 'standard',
+            statements: q.statements || [],
+            concludingPrompt: q.concludingPrompt || '',
+            pairs: q.pairs || [],
+            options: Array.isArray(q.options) ? [...q.options] : [],
+            correctAnswerIndex: correctIdx !== undefined ? correctIdx : 0,
+            explanation: q.explanation || q.exp || 'सविस्तर स्पष्टीकरण उपलब्ध आहे.',
+            referenceBook: q.referenceBook || 'MPSC प्रमाणित संदर्भ',
+            topicChip: q.topicChip || 'पुन्हा सराव (Re-Test)',
+            difficulty: q.difficulty || 'MEDIUM',
+            userSelectedIndex: undefined
+          };
+        });
+
+        updateTopHUDLabels();
+        const fullLoader = document.getElementById('quizFullScreenLoader');
+        if (fullLoader) {
+          fullLoader.classList.add('hidden');
+          fullLoader.classList.remove('flex');
+        }
+
+        showCardSkeleton(false);
+        renderActiveQuestion();
+        resumeTimer();
+        showToast(`Re-Test सुरू झाली! (${ArenaState.questions.length} प्रश्न)`);
+        return;
+      }
+
+      // Check all official API key keys uniformly
+      ArenaState.apiKey = (
+        localStorage.getItem('qq_gemini_key') || 
+        localStorage.getItem('gemini_api_key') || 
+        localStorage.getItem('mpsc_api_key') || 
+        ""
+      ).trim();
+
+      if (!ArenaState.apiKey || ArenaState.apiKey.length < 15) {
+        const fullLoader = document.getElementById('quizFullScreenLoader');
+        if (fullLoader) {
+          fullLoader.classList.remove('hidden');
+          fullLoader.classList.add('flex');
+        }
+        document.getElementById('fullLoaderTitle').textContent = "Google Gemini API Key Needed";
+        setRealStatusText("Please connect your free Gemini API key on the Homepage.");
+        document.getElementById('fullLoaderRetryArea').classList.remove('hidden');
+        return;
+      }
+
+      updateTopHUDLabels();
+      pauseTimer();
+
+      const fullLoader = document.getElementById('quizFullScreenLoader');
+      if (fullLoader) {
+        fullLoader.classList.remove('hidden');
+        fullLoader.classList.add('flex');
+        document.getElementById('btnInitialLoaderBack')?.classList.remove('hidden');
+      }
+      setRealStatusText("Connecting with syllabus reference database...");
+
+      showCardSkeleton(true);
+      triggerElasticBatchFetch(3);
+    });
+
+    // 🛑 BFCache Cleanup & Modal Recovery
+    window.addEventListener('pageshow', () => {
+      closeModal('preSubmitCheckModal');
+      closeModal('resultModal');
+      closeModal('confirmExitModal');
+      closeModal('feedbackModal');
+      const drawer = document.getElementById('questionPaletteDrawer');
+      if (drawer) {
+        drawer.classList.add('hidden');
+        drawer.classList.remove('flex');
+      }
+      document.body.classList.remove('overflow-hidden');
+    });
+
+    // 🛑 Escape Key Global Guard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal('preSubmitCheckModal');
+        closeModal('resultModal');
+        closeModal('confirmExitModal');
+        closeModal('feedbackModal');
+        const drawer = document.getElementById('questionPaletteDrawer');
+        if (drawer) {
+          drawer.classList.add('hidden');
+          drawer.classList.remove('flex');
+        }
+        document.body.classList.remove('overflow-hidden');
+      }
+    });
+
+    function showCardSkeleton(show) {
+      const skeleton = document.getElementById('shimmerCardSkeleton');
+      const body = document.getElementById('quizQuestionBody');
+      if (skeleton && body) {
+        if (show) {
+          skeleton.classList.remove('hidden');
+          body.classList.add('hidden');
+        } else {
+          skeleton.classList.add('hidden');
+          body.classList.remove('hidden');
+        }
+      }
+    }
+
+    function updateTopHUDLabels() {
+      const isEnglish = (ArenaState.target?.language === 'en');
+      const langBadge = document.getElementById('badgeActiveLang');
+      if (langBadge) {
+        langBadge.textContent = isEnglish ? "EN" : "MR";
+      }
+
+      const examDisplay = document.getElementById('targetExamDisplay');
+      const subjectDisplay = document.getElementById('targetSubjectDisplay');
+      
+      if (examDisplay) {
+        examDisplay.textContent = ArenaState.target?.topicTitleMr || (isEnglish ? "Practice Quiz" : "सराव चाचणी");
+      }
+      if (subjectDisplay) {
+        const examName = ArenaState.target?.examId === 'rajyaseva' ? 'Rajyaseva' :
+                         ArenaState.target?.examId === 'group_b' ? 'Group B' : 'Group C';
+        subjectDisplay.textContent = `${examName} • ${ArenaState.totalQuestionsTarget} Qs • -${ArenaState.negativeMarking} Mark`;
+      }
+
+      updateSequenceIndicator();
+      updateBufferBadge();
+    }
+
+    function updateSequenceIndicator() {
+      const el = document.getElementById('questionSequenceIndicator');
+      if (el) {
+        el.textContent = `Q ${ArenaState.currentIndex + 1}/${ArenaState.totalQuestionsTarget}`;
+      }
+    }
+
+    function updateBufferBadge() {
+      const el = document.getElementById('bufferStatusCount');
+      if (el) {
+        el.textContent = `Buffer: ${ArenaState.bufferQueue.length} Ready`;
+      }
+    }
+
+    function pauseTimer() {
+      ArenaState.isTimerPaused = true;
+      if (ArenaState.timerInterval) clearInterval(ArenaState.timerInterval);
+    }
+
+    function resumeTimer() {
+      if (ArenaState.isReadOnlyReview) return;
+      ArenaState.isTimerPaused = false;
+      if (ArenaState.timerInterval) clearInterval(ArenaState.timerInterval);
+      
+      ArenaState.timerInterval = setInterval(() => {
+        if (ArenaState.isTimerPaused) return;
+        if (ArenaState.timeRemainingSec > 0) {
+          ArenaState.timeRemainingSec--;
+          const m = Math.floor(ArenaState.timeRemainingSec / 60);
+          const s = ArenaState.timeRemainingSec % 60;
+          const display = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+          const tEl = document.getElementById('quizTimerText');
+          if (tEl) tEl.textContent = display;
+        } else {
+          clearInterval(ArenaState.timerInterval);
+          executeFinalSubmission();
+        }
+      }, 1000);
+    }
+
+    function setRealStatusText(text) {
+      const el = document.getElementById('realStatusText');
+      if (el) el.textContent = text;
+    }
+
+    async function triggerElasticBatchFetch(count = 3) {
+      if (ArenaState.isFetchingBatch) return;
+
+      const now = Date.now();
+      if (now < ArenaState.rateLimitCooldownUntil) {
+        const waitMs = ArenaState.rateLimitCooldownUntil - now;
+        setRealStatusText(`Rate limit active. Waiting ${(waitMs / 1000).toFixed(0)}s...`);
+        await new Promise(r => setTimeout(r, waitMs));
+      }
+
+      ArenaState.isFetchingBatch = true;
+      let success = false;
+      let attempts = 0;
+
+      try {
+        while (!success && attempts < GEMINI_MODELS.length) {
+          const activeModel = GEMINI_MODELS[ArenaState.currentModelIndex];
+          try {
+            setRealStatusText(`Connecting with Gemini (${activeModel})...`);
+            const rawItems = await fetchRawBatchFromGemini(activeModel, count);
+            const isEnglish = (ArenaState.target?.language === 'en');
+            const validBatch = safeValidateBatch(rawItems, isEnglish);
+
+            if (validBatch && validBatch.length > 0) {
+              ArenaState.bufferQueue.push(...validBatch);
+              updateBufferBadge();
+              success = true;
+              ArenaState.consecutiveErrors = 0;
+
+              if (ArenaState.questions.length === 0 && ArenaState.bufferQueue.length > 0) {
+                const firstQ = ArenaState.bufferQueue.shift();
+                ArenaState.questions.push(firstQ);
+                
+                const fullLoader = document.getElementById('quizFullScreenLoader');
+                if (fullLoader) {
+                  fullLoader.classList.add('hidden');
+                  fullLoader.classList.remove('flex');
+                }
+                
+                showCardSkeleton(false);
+                renderActiveQuestion();
+                resumeTimer();
+              }
+            } else {
+              throw new Error(`Zero valid items returned from ${activeModel}`);
+            }
+          } catch (err) {
+            console.warn(`[Batch Generation Warning: ${activeModel}]`, err.message);
+            attempts++;
+            ArenaState.consecutiveErrors++;
+
+            if (String(err.message || '').includes('429')) {
+              ArenaState.rateLimitCooldownUntil = Date.now() + 3500;
+              setRealStatusText("Google AI quota full. Switching model tier in 3s...");
+              await new Promise(r => setTimeout(r, 3500));
+            }
+
+            ArenaState.currentModelIndex = (ArenaState.currentModelIndex + 1) % GEMINI_MODELS.length;
+          }
+        }
+      } finally {
+        ArenaState.isFetchingBatch = false;
+        updateBufferBadge();
+      }
+
+      if (!success && ArenaState.questions.length === 0) {
+        showLoaderRecoveryPod("पहिला प्रश्न तयार करताना संपर्क तुटला. कृपया पुन्हा प्रयत्न करा.");
+      }
+    }
+
+    window.retryActiveBufferBatch = async function() {
+      if (ArenaState.recoveryTimeoutHandle) {
+        clearTimeout(ArenaState.recoveryTimeoutHandle);
+        ArenaState.recoveryTimeoutHandle = null;
+      }
+
+      if (ArenaState.activeAbortController) {
+        try { ArenaState.activeAbortController.abort(); } catch (e) {}
+      }
+      ArenaState.isFetchingBatch = false;
+
+      const retryArea = document.getElementById('fullLoaderRetryArea');
+      if (retryArea) retryArea.classList.add('hidden');
+      const spinner = document.getElementById('realStatusSpinner');
+      if (spinner) spinner.classList.remove('hidden');
+      
+      const spinnerRing = document.getElementById('fullLoaderSpinnerRing');
+      const centerIcon = document.getElementById('fullLoaderCenterIcon');
+      if (spinnerRing) spinnerRing.className = "w-16 h-16 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin";
+      if (centerIcon) centerIcon.className = "fa-solid fa-bolt text-xl absolute animate-pulse text-amber-400";
+      
+      document.getElementById('fullLoaderTitle').textContent = "Preparing Syllabus-Aligned Questions";
+      setRealStatusText("Reconnecting with syllabus database...");
+
+      ArenaState.recoveryTimeoutHandle = setTimeout(() => {
+        if (ArenaState.bufferQueue.length === 0) {
+          setRealStatusText("Connection Delayed • Action Required");
+          showLoaderRecoveryPod("पुढचा प्रश्न मिळण्यास विलंब होत आहे. तुम्ही आतापर्यंतची चाचणी सबमिट करू शकता किंवा मागे जाऊन सोडवलेले प्रश्न पाहू शकता.");
+        }
+      }, 8000);
+
+      await triggerElasticBatchFetch(3);
+
+      if (ArenaState.bufferQueue.length > 0) {
+        if (ArenaState.recoveryTimeoutHandle) {
+          clearTimeout(ArenaState.recoveryTimeoutHandle);
+          ArenaState.recoveryTimeoutHandle = null;
+        }
+
+        const nextQ = ArenaState.bufferQueue.shift();
+        ArenaState.questions.push(nextQ);
+        ArenaState.currentIndex++;
+
+        const fullLoader = document.getElementById('quizFullScreenLoader');
+        if (fullLoader) {
+          fullLoader.classList.add('hidden');
+          fullLoader.classList.remove('flex');
+        }
+
+        renderActiveQuestion();
+        resumeTimer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.handleLoaderFallbackSubmitOrHub = function() {
+      if (ArenaState.recoveryTimeoutHandle) {
+        clearTimeout(ArenaState.recoveryTimeoutHandle);
+        ArenaState.recoveryTimeoutHandle = null;
+      }
+
+      const fullLoader = document.getElementById('quizFullScreenLoader');
+      if (fullLoader) {
+        fullLoader.classList.add('hidden');
+        fullLoader.classList.remove('flex');
+      }
+      
+      if (ArenaState.activeAbortController) {
+        try { ArenaState.activeAbortController.abort(); } catch (e) {}
+      }
+      
+      const hasAnsweredQuestions = ArenaState.questions.some(q => q && q.userSelectedIndex !== undefined);
+      if (hasAnsweredQuestions) {
+        executeFinalSubmission();
+      } else {
+        returnToOriginHubSafe();
+      }
+    };
+
+    window.handleLoaderViewSolvedQuestions = function() {
+      if (ArenaState.recoveryTimeoutHandle) {
+        clearTimeout(ArenaState.recoveryTimeoutHandle);
+        ArenaState.recoveryTimeoutHandle = null;
+      }
+
+      if (ArenaState.activeAbortController) {
+        try { ArenaState.activeAbortController.abort(); } catch (e) {}
+      }
+      ArenaState.isFetchingBatch = false;
+
+      const fullLoader = document.getElementById('quizFullScreenLoader');
+      if (fullLoader) {
+        fullLoader.classList.add('hidden');
+        fullLoader.classList.remove('flex');
+      }
+
+      if (ArenaState.questions.length > 0) {
+        ArenaState.currentIndex = Math.min(ArenaState.currentIndex, ArenaState.questions.length - 1);
+        renderActiveQuestion();
+        resumeTimer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast("Returned to solved questions.");
+      } else {
+        returnToOriginHubSafe();
+      }
+    };
+
+    function showLoaderRecoveryPod(customMsg = null) {
+      const retryArea = document.getElementById('fullLoaderRetryArea');
+      const msgEl = document.getElementById('fullLoaderFallbackMessage');
+      const labelEl = document.getElementById('labelLoaderFallback');
+      const iconEl = document.getElementById('iconLoaderFallback');
+      const spinner = document.getElementById('realStatusSpinner');
+      const viewSolvedBtn = document.getElementById('btnLoaderViewSolved');
+      const spinnerRing = document.getElementById('fullLoaderSpinnerRing');
+      const centerIcon = document.getElementById('fullLoaderCenterIcon');
+      const titleEl = document.getElementById('fullLoaderTitle');
+
+      if (spinner) spinner.classList.add('hidden');
+      if (spinnerRing) spinnerRing.className = "w-16 h-16 rounded-full border-4 border-amber-500/40";
+      if (centerIcon) centerIcon.className = "fa-solid fa-triangle-exclamation text-xl absolute text-amber-500";
+      if (titleEl) titleEl.textContent = "Connection Delayed";
+
+      const isFirstQuestion = (ArenaState.questions.length === 0);
+      const hasAnsweredAny = ArenaState.questions.some(q => q && q.userSelectedIndex !== undefined);
+
+      if (viewSolvedBtn) {
+        viewSolvedBtn.classList.toggle('hidden', ArenaState.questions.length === 0);
+      }
+
+      if (msgEl) {
+        msgEl.textContent = customMsg || (isFirstQuestion 
+          ? "पहिला प्रश्न तयार करताना संपर्क तुटला. कृपया पुन्हा प्रयत्न करा किंवा हबवर परत जा."
+          : "पुढचा प्रश्न मिळण्यास विलंब होत आहे. तुम्ही आतापर्यंतची चाचणी सबमिट करू शकता किंवा मागे जाऊन सोडवलेले प्रश्न पाहू शकता.");
+      }
+
+      if (labelEl && iconEl) {
+        if (hasAnsweredAny) {
+          labelEl.textContent = "Submit";
+          iconEl.className = "fa-solid fa-flag-checkered text-[10px]";
+        } else {
+          labelEl.textContent = "Cancel";
+          iconEl.className = "fa-solid fa-xmark text-[10px]";
+        }
+      }
+
+      if (retryArea) {
+        retryArea.classList.remove('hidden');
+      }
+    }
+
+    window.handleInitialLoaderExit = function() {
+      if (ArenaState.activeAbortController) {
+        try { ArenaState.activeAbortController.abort(); } catch (e) {}
+      }
+      returnToOriginHubSafe();
+    };
+
+    async function fetchRawBatchFromGemini(modelName, count) {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${ArenaState.apiKey}`;
+
+      const isEnglish = (ArenaState.target?.language === 'en');
+      const topic = isEnglish ? (ArenaState.target.topicTitleEn || ArenaState.target.topicTitleMr || "General Studies") 
+                              : (ArenaState.target.topicTitleMr || "सामान्य अध्ययन");
+      const examName = ArenaState.target.examId === 'rajyaseva' ? 'MPSC Rajyaseva' :
+                       ArenaState.target.examId === 'group_b' ? 'MPSC Combine Group B' : 'MPSC Combine Group C';
+
+      const languageInstruction = isEnglish
+        ? `Language Requirement: Strictly in 100% pure ENGLISH only. All questions, statements, concluding questions, tables, options, and explanations MUST be written in English. Do NOT output Marathi or Devanagari script.`
+        : `Language Requirement: Strictly in pure MARATHI only (देवनागरी लिपी). Use authentic Marathi terms.`;
+
+      const promptText = `
+You are an expert exam question generator for Maharashtra Competitive Exams (${examName}).
+Target Chapter / Topic: "${topic}".
+${languageInstruction}
+Task: Generate EXACTLY ${count} authentic, syllabus-aligned multiple choice questions.
+
+Strict Formatting & Academic Rules:
+1. Strict Single-choice MCQ with exactly 4 distinct options.
+2. NO forward slashes '/' (use "or" in English or "किंवा" in Marathi).
+3. NO emojis anywhere.
+4. MANDATORY: Distribute correctAnswerIndex uniformly across 0, 1, 2, and 3. DO NOT bias towards 0.
+5. Provide verified reference book names (e.g. M. Laxmikanth, Ranjan Kolambe, Bipin Chandra, NCERT/State Board).
+6. Format must be a valid JSON Array of objects without markdown text outside.
+
+JSON Output Schema:
+[
+  {
+    "id": "q_${Date.now()}_index",
+    "questionTitleMr": "${isEnglish ? 'Question title in English...' : 'प्रश्न मजकूर...'}",
+    "type": "standard",
+    "statements": [${isEnglish ? '"Statement A...", "Statement B..."' : '"विधान अ...", "विधान ब..."'}],
+    "concludingPrompt": "${isEnglish ? 'Which of the above statements is/are correct?' : 'वरीलपैकी कोणते विधान योग्य आहे?'}",
+    "pairs": [ {"colA": "${isEnglish ? 'A. Item...' : 'अ. ...'}", "colB": "${isEnglish ? '1. Item...' : '१. ...'}"} ],
+    "options": [${isEnglish ? '"Option 1", "Option 2", "Option 3", "Option 4"' : '"पर्याय १", "पर्याय २", "पर्याय ३", "पर्याय ४"'}],
+    "correctAnswerIndex": 0,
+    "explanation": "${isEnglish ? 'Detailed analytical solution in English...' : 'सविस्तर विश्लेषणात्मक स्पष्टीकरण...'}",
+    "referenceBook": "${isEnglish ? 'Standard Reference Book' : 'प्रमाणित संदर्भग्रंथ'}",
+    "topicChip": "${isEnglish ? 'Core Concept' : 'घटक संकल्पना'}",
+    "difficulty": "MEDIUM"
+  }
+]
+`;
+
+      const requestBody = {
+        contents: [{ parts: [{ text: promptText }] }],
+        generationConfig: {
+          responseMimeType: "application/json"
+        }
+      };
+
+      ArenaState.activeAbortController = new AbortController();
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+        signal: ArenaState.activeAbortController.signal
+      });
+
+      if (!res.ok) {
+        throw new Error(`Gemini API HTTP Status ${res.status}`);
+      }
+
+      const json = await res.json();
+      const rawText = json.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawText) throw new Error("Empty candidate payload from Gemini.");
+
+      const jsonMatch = rawText.match(/\[[\s\S]*\]/);
+      if (!jsonMatch) {
+        throw new Error("No JSON array found in AI response.");
+      }
+
+      return JSON.parse(jsonMatch[0]);
+    }
+
+    function renderActiveQuestion() {
+      if (!ArenaState.questions || ArenaState.questions.length === 0) return;
+      const q = ArenaState.questions[ArenaState.currentIndex];
+      if (!q) return;
+
+      const isEnglish = (ArenaState.target?.language === 'en');
+
+      const diffBadge = document.getElementById('badgeDifficulty');
+      const examTypeBadge = document.getElementById('badgeExamType');
+      if (diffBadge) diffBadge.textContent = (q.difficulty || "MEDIUM").toUpperCase();
+      if (examTypeBadge) {
+        examTypeBadge.textContent = ArenaState.target?.examId === 'rajyaseva' ? 'Rajyaseva' :
+                                    ArenaState.target?.examId === 'group_b' ? 'Group B' : 'Group C';
+      }
+
+      const qTitleEl = document.getElementById('questionTitleText');
+      if (qTitleEl) {
+        qTitleEl.innerHTML = formatSubjectRichText(q.questionTitleMr || q.questionTitle || q.question || '');
+      }
+
+      const pairsContainer = document.getElementById('pairsContainer');
+      const stContainer = document.getElementById('statementsContainer');
+      const promptEl = document.getElementById('concludingPrompt');
+
+      let renderedPairs = Array.isArray(q.pairs) && q.pairs.length >= 2 ? [...q.pairs] : [];
+
+      const titleIndicatesPairs = /जोड्या|जोडी|pairs|match/i.test(q.questionTitleMr || q.questionTitle || '');
+      if (renderedPairs.length === 0 && Array.isArray(q.statements) && q.statements.length >= 2 && titleIndicatesPairs) {
+        const extractedPairs = [];
+        q.statements.forEach(st => {
+          const raw = String(st || '').replace(/^([अबकडइ\d]|[A-Ea-e])[\.\)]\s*/, '').trim();
+          const splitMatch = raw.match(/^(.*?)(?:\s+([१२३४\d]\.|\-)\s+)(.*)$/);
+          if (splitMatch && splitMatch[1] && splitMatch[3]) {
+            extractedPairs.push({
+              colA: splitMatch[1].trim(),
+              colB: `${splitMatch[2] || ''} ${splitMatch[3]}`.trim()
+            });
+          }
+        });
+        if (extractedPairs.length >= 2) {
+          renderedPairs = extractedPairs;
+        }
+      }
+
+      if (pairsContainer) {
+        if (renderedPairs.length >= 2) {
+          const colALabelsMr = ['अ', 'ब', 'क', 'ड', 'इ'];
+          const colALabelsEn = ['A', 'B', 'C', 'D', 'E'];
+          const colBLabelsMr = ['१', '२', '३', '४', '५'];
+          const colBLabelsEn = ['1', '2', '3', '4', '5'];
+
+          let tableHtml = `<table class="pairs-table shadow-2xs"><tbody>`;
+          renderedPairs.forEach((p, pIdx) => {
+            const rawColA = String(p.colA || '').replace(/^([अबकडइ\d]|[A-Ea-e])[\.\)]\s*/, '').trim();
+            const rawColB = String(p.colB || '').replace(/^([१२३४५\d]|[1-5])[\.\)]\s*/, '').trim();
+
+            const leftLabel = isEnglish ? (colALabelsEn[pIdx] || (pIdx + 1)) : (colALabelsMr[pIdx] || (pIdx + 1));
+            const rightLabel = isEnglish ? (colBLabelsEn[pIdx] || (pIdx + 1)) : (colBLabelsMr[pIdx] || (pIdx + 1));
+
+            tableHtml += `
+              <tr>
+                <td class="font-extrabold text-slate-900 dark:text-white w-1/2 border-r border-slate-200 dark:border-slate-800">
+                  <span class="inline-flex items-center justify-center w-5 h-5 rounded bg-amber-500/15 text-amber-900 dark:text-amber-300 text-[11px] font-black mr-1.5 shrink-0">${leftLabel}</span>
+                  <span>${formatSubjectRichText(rawColA)}</span>
+                </td>
+                <td class="text-slate-700 dark:text-slate-300 font-semibold w-1/2">
+                  <span class="inline-flex items-center justify-center w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-bold mr-1.5 shrink-0">${rightLabel}</span>
+                  <span>${formatSubjectRichText(rawColB)}</span>
+                </td>
+              </tr>`;
+          });
+          tableHtml += `</tbody></table>`;
+          pairsContainer.innerHTML = tableHtml;
+          pairsContainer.classList.remove('hidden');
+        } else {
+          pairsContainer.innerHTML = '';
+          pairsContainer.classList.add('hidden');
+        }
+      }
+
+      const statementBadgesMr = ['अ', 'ब', 'क', 'ड', 'इ'];
+      const statementBadgesEn = ['A', 'B', 'C', 'D', 'E'];
+
+      if (stContainer) {
+        const hasVisibleStatements = renderedPairs.length === 0 && Array.isArray(q.statements) && q.statements.length > 0;
+        if (hasVisibleStatements) {
+          stContainer.innerHTML = q.statements.map((s, idx) => {
+            const badgeText = isEnglish ? (statementBadgesEn[idx] || (idx + 1)) : (statementBadgesMr[idx] || (idx + 1));
+            const cleanedStatement = String(s || '').replace(/^([अबकडइ\d]|[A-Ea-e])[\.\)]\s*/, '').trim();
+            return `
+              <div class="statement-row">
+                <span class="statement-badge bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-400/40">
+                  ${badgeText}
+                </span>
+                <div class="statement-text-body font-semibold text-slate-800 dark:text-slate-200 leading-relaxed flex-1">
+                  ${formatSubjectRichText(cleanedStatement)}
+                </div>
+              </div>
+            `;
+          }).join('');
+          stContainer.classList.remove('hidden');
+        } else {
+          stContainer.innerHTML = '';
+          stContainer.classList.add('hidden');
+        }
+
+        if (promptEl) {
+          if (q.concludingPrompt) {
+            promptEl.innerHTML = formatSubjectRichText(q.concludingPrompt);
+            promptEl.classList.remove('hidden');
+          } else {
+            promptEl.classList.add('hidden');
+          }
+        }
+      }
+
+      const optContainer = document.getElementById('optionsContainer');
+      if (optContainer) {
+        optContainer.innerHTML = '';
+        const optionLetters = ['A', 'B', 'C', 'D'];
+        (q.options || []).forEach((optText, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = "opt-btn w-full p-3 rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 text-slate-900 dark:text-slate-100 font-bold text-xs sm:text-sm text-left flex items-center justify-between gap-2.5 cursor-pointer shadow-2xs";
+          btn.innerHTML = `
+            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+              <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-black flex items-center justify-center shrink-0">
+                ${optionLetters[idx]}
+              </span>
+              <span class="leading-relaxed option-text-label flex-1 break-words">${formatSubjectRichText(optText)}</span>
+            </div>
+            <span id="optMark_${idx}" class="w-5 h-5 flex items-center justify-center text-sm font-black shrink-0"></span>
+          `;
+          btn.onclick = () => selectOption(idx);
+          optContainer.appendChild(btn);
+        });
+      }
+
+      const defaultExplanation = isEnglish ? "Detailed solution is available." : "स्पष्टीकरण उपलब्ध आहे.";
+      const solBox = document.getElementById('solutionBox');
+      const solText = document.getElementById('solutionText');
+      const solRefRow = document.getElementById('solutionRefRow');
+      const solRefBadge = document.getElementById('solutionReferenceBadge');
+
+      if (solBox) solBox.classList.add('hidden');
+      if (solText) solText.innerHTML = formatStructuredSolution(q.explanation || defaultExplanation, isEnglish);
+      
+      if (solRefRow && solRefBadge) {
+        if (q.referenceBook) {
+          solRefBadge.textContent = q.referenceBook;
+          solRefRow.classList.remove('hidden');
+        } else {
+          solRefRow.classList.add('hidden');
+        }
+      }
+
+      if (q.userSelectedIndex !== undefined) {
+        highlightAnswerState(q.userSelectedIndex, q.correctAnswerIndex);
+        if (solBox) solBox.classList.remove('hidden');
+      }
+
+      updateNavigationButtonStates();
+      applyCurrentFontScale();
+      updateSequenceIndicator();
+      updateVaultStarIcon();
+
+      if (ArenaState.bufferQueue.length === 1 && !ArenaState.isFetchingBatch) {
+        triggerElasticBatchFetch(3);
+      }
+    }
+
+    function formatSubjectRichText(text) {
+      if (!text) return '';
+      let safe = escapeHtml(text);
+
+      safe = safe.replace(/jo\s*ड्या/gi, 'जोड्या')
+                 .replace(/jo\s*डी/gi, 'जोडी')
+                 .replace(/ठिकाणाI[ńn]/gi, 'ठिकाणांशी')
+                 .replace(/संदर्भाI/g, 'संदर्भात')
+                 .replace(/कोणtI/g, 'कोणती')
+                 .replace(/अनुdowж/g, 'अनुतरंग')
+                 .replace(/पूर्णur/g, 'पूर्णपणे')
+                 .replace(/कчte/g, 'कपाटे');
+
+      safe = safe.replace(/(कलम\s*\d+[A-Za-z\(\)]*|Article\s*\d+[A-Za-z\(\)]*)/gi, 
+        `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono font-bold text-xs">$1</span>`);
+
+      safe = safe.replace(/\b(H)2(O)\b/g, '$1<sub>2</sub>$2')
+                 .replace(/\b(CO)2\b/g, '$1<sub>2</sub>')
+                 .replace(/\b(H)2(SO)4\b/g, '$1<sub>2</sub>$2<sub>4</sub>')
+                 .replace(/\b(O)2\b/g, '$1<sub>2</sub>')
+                 .replace(/\b(N)2\b/g, '$1<sub>2</sub>');
+
+      safe = safe.replace(/\s*->\s*/g, ' <i class="fa-solid fa-arrow-right text-[10px] text-amber-500 mx-1"></i> ')
+                 .replace(/\s*➔\s*/g, ' <i class="fa-solid fa-arrow-right text-[10px] text-amber-500 mx-1"></i> ');
+
+      return safe;
+    }
+
+    function formatStructuredSolution(rawExp, isEnglish) {
+      if (!rawExp) return '';
+      const cleanExp = String(rawExp).trim().replace(/^[\r\n]+/, '');
+      const formatted = formatSubjectRichText(cleanExp);
+      return `<div class="text-xs sm:text-sm leading-relaxed">${formatted}</div>`;
+    }
+
+    function updateNavigationButtonStates() {
+      const prevBtn = document.getElementById('btnPrevQuestion');
+      if (prevBtn) prevBtn.disabled = (ArenaState.currentIndex === 0);
+      
+      const isLast = (ArenaState.currentIndex === ArenaState.totalQuestionsTarget - 1);
+      const mainBtn = document.getElementById('btnMainAction');
+      const label = document.getElementById('mainActionLabel');
+      const icon = document.getElementById('mainActionIcon');
+
+      if (!mainBtn || !label || !icon) return;
+
+      const currentQ = ArenaState.questions[ArenaState.currentIndex];
+      const isAnswered = currentQ && (currentQ.userSelectedIndex !== undefined);
+
+      if (isLast) {
+        label.textContent = "Finish";
+        icon.className = "fa-solid fa-flag-checkered text-xs";
+        mainBtn.className = "flex-[1.5] h-10 px-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 btn-spring cursor-pointer shadow-sm transition-colors bg-rose-600 hover:bg-rose-500 text-white";
+      } else if (isAnswered) {
+        label.textContent = "Next";
+        icon.className = "fa-solid fa-arrow-right text-xs";
+        mainBtn.className = "flex-[1.5] h-10 px-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 btn-spring cursor-pointer shadow-sm transition-colors bg-amber-500 hover:bg-amber-400 text-slate-950";
+      } else {
+        label.textContent = "Skip";
+        icon.className = "fa-solid fa-forward-step text-xs";
+        mainBtn.className = "flex-[1.5] h-10 px-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 btn-spring cursor-pointer shadow-sm transition-colors bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700";
+      }
+    }
+
+    function selectOption(selectedIdx) {
+      if (ArenaState.isReadOnlyReview) return;
+      const q = ArenaState.questions[ArenaState.currentIndex];
+      if (!q) return;
+
+      q.userSelectedIndex = selectedIdx;
+      highlightAnswerState(selectedIdx, q.correctAnswerIndex);
+
+      if (selectedIdx === q.correctAnswerIndex) {
+        ArenaState.streak++;
+      } else {
+        ArenaState.streak = 0;
+      }
+
+      const streakEl = document.getElementById('quizStreakCount');
+      if (streakEl) streakEl.textContent = ArenaState.streak;
+
+      const solBox = document.getElementById('solutionBox');
+      if (solBox) {
+        solBox.classList.remove('hidden');
+        setTimeout(() => {
+          solBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      }
+
+      updateNavigationButtonStates();
+      saveProgressLocalSession();
+    }
+
+    function highlightAnswerState(userIndex, correctIndex) {
+      const buttons = document.querySelectorAll('#optionsContainer .opt-btn');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('opt-correct', 'opt-wrong');
+        const mark = document.getElementById(`optMark_${idx}`);
+        if (mark) mark.innerHTML = '';
+
+        if (idx === correctIndex) {
+          btn.classList.add('opt-correct');
+          if (mark) mark.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400 text-sm"></i>';
+        } else if (idx === userIndex && userIndex !== correctIndex) {
+          btn.classList.add('opt-wrong');
+          if (mark) mark.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 dark:text-rose-400 text-sm"></i>';
+        }
+      });
+    }
+
+    window.handlePrimaryNextAction = async function() {
+      if (ArenaState.currentIndex === ArenaState.totalQuestionsTarget - 1) {
+        handleTriggerPreSubmitModal();
+        return;
+      }
+
+      if (ArenaState.currentIndex + 1 < ArenaState.questions.length) {
+        ArenaState.currentIndex++;
+        renderActiveQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      if (ArenaState.bufferQueue.length > 0) {
+        const nextQ = ArenaState.bufferQueue.shift();
+        ArenaState.questions.push(nextQ);
+        ArenaState.currentIndex++;
+        renderActiveQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      pauseTimer();
+      const fullLoader = document.getElementById('quizFullScreenLoader');
+      const retryArea = document.getElementById('fullLoaderRetryArea');
+      const loaderBack = document.getElementById('btnInitialLoaderBack');
+      const spinner = document.getElementById('realStatusSpinner');
+      const spinnerRing = document.getElementById('fullLoaderSpinnerRing');
+      const centerIcon = document.getElementById('fullLoaderCenterIcon');
+      const titleEl = document.getElementById('fullLoaderTitle');
+
+      if (ArenaState.recoveryTimeoutHandle) {
+        clearTimeout(ArenaState.recoveryTimeoutHandle);
+        ArenaState.recoveryTimeoutHandle = null;
+      }
+
+      if (fullLoader) {
+        fullLoader.classList.remove('hidden');
+        fullLoader.classList.add('flex');
+        if (retryArea) retryArea.classList.add('hidden');
+        if (loaderBack) loaderBack.classList.add('hidden');
+        if (spinner) spinner.classList.remove('hidden');
+        if (spinnerRing) spinnerRing.className = "w-16 h-16 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin";
+        if (centerIcon) centerIcon.className = "fa-solid fa-bolt text-xl absolute animate-pulse text-amber-400";
+        if (titleEl) titleEl.textContent = "Preparing Syllabus-Aligned Questions";
+      }
+
+      setRealStatusText("Generating next practice question from syllabus...");
+
+      ArenaState.recoveryTimeoutHandle = setTimeout(() => {
+        if (ArenaState.bufferQueue.length === 0) {
+          setRealStatusText("Connection Delayed • Action Required");
+          showLoaderRecoveryPod();
+        }
+      }, 8000);
+
+      await triggerElasticBatchFetch(3);
+
+      if (ArenaState.bufferQueue.length === 0) {
+        setRealStatusText("Optimizing connection tier...");
+        await new Promise(r => setTimeout(r, 1200));
+        await triggerElasticBatchFetch(3);
+      }
+
+      if (ArenaState.bufferQueue.length > 0) {
+        if (ArenaState.recoveryTimeoutHandle) {
+          clearTimeout(ArenaState.recoveryTimeoutHandle);
+          ArenaState.recoveryTimeoutHandle = null;
+        }
+
+        const nextQ = ArenaState.bufferQueue.shift();
+        ArenaState.questions.push(nextQ);
+        ArenaState.currentIndex++;
+        
+        if (fullLoader) {
+          fullLoader.classList.add('hidden');
+          fullLoader.classList.remove('flex');
+        }
+        
+        renderActiveQuestion();
+        resumeTimer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setRealStatusText("Connection Delayed • Action Required");
+        showLoaderRecoveryPod("पुढचा प्रश्न मिळण्यास विलंब होत आहे. कृपया पुन्हा प्रयत्न करा किंवा आतापर्यंतची चाचणी सबमिट करा.");
+      }
+    };
+
+    window.goToPreviousQuestion = function() {
+      if (ArenaState.currentIndex > 0) {
+        ArenaState.currentIndex--;
+        renderActiveQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.toggleSolutionBox = function() {
+      const box = document.getElementById('solutionBox');
+      if (box) box.classList.toggle('hidden');
+    };
+
+    window.handleTriggerPreSubmitModal = function() {
+      pauseTimer();
+      const answeredCount = ArenaState.questions.filter(q => q.userSelectedIndex !== undefined).length;
+      const total = ArenaState.totalQuestionsTarget;
+      const remaining = total - answeredCount;
+
+      const summaryText = document.getElementById('preSubmitSummaryText');
+      if (summaryText) {
+        summaryText.textContent = `You have answered ${answeredCount} of ${total} questions. ${remaining} question(s) remain unanswered.`;
+      }
+
+      const modal = document.getElementById('preSubmitCheckModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    };
+
+    window.resumeCurrentQuizSession = function() {
+      const modal = document.getElementById('preSubmitCheckModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      resumeTimer();
+    };
+
+    window.executeFinalSubmission = function() {
+      pauseTimer();
+      closeModal('preSubmitCheckModal');
+
+      let correctCount = 0;
+      let wrongCount = 0;
+      let skippedCount = 0;
+
+      for (let i = 0; i < ArenaState.totalQuestionsTarget; i++) {
+        const q = ArenaState.questions[i];
+        if (!q || q.userSelectedIndex === undefined) {
+          skippedCount++;
+        } else if (q.userSelectedIndex === q.correctAnswerIndex) {
+          correctCount++;
+        } else {
+          wrongCount++;
+        }
+      }
+
+      const netScore = Math.max(0, (correctCount * ArenaState.marksPerQuestion) - (wrongCount * ArenaState.negativeMarking));
+      const totalAttempted = correctCount + wrongCount;
+      const accuracy = totalAttempted > 0 ? Math.round((correctCount / totalAttempted) * 100) : 0;
+      const timeSpentSec = (ArenaState.durationMinutes * 60) - ArenaState.timeRemainingSec;
+      const timeSpentMin = Math.max(1, Math.round(timeSpentSec / 60));
+
+      document.getElementById('scoreFinalValue').textContent = netScore.toFixed(2);
+      document.getElementById('scoreAccuracyValue').textContent = `${accuracy}%`;
+      document.getElementById('scoreTimeElapsed').textContent = `${timeSpentMin}m`;
+
+      document.getElementById('scoreCorrectCount').textContent = correctCount;
+      document.getElementById('scoreCorrectLabel').textContent = `Correct (+${ArenaState.marksPerQuestion.toFixed(1)})`;
+      document.getElementById('scoreWrongCount').textContent = wrongCount;
+      document.getElementById('scoreWrongLabel').textContent = `Wrong (-${ArenaState.negativeMarking.toFixed(2)})`;
+      document.getElementById('scoreSkippedCount').textContent = skippedCount;
+
+      // =========================================================================
+      // PERSISTENT QUIZ HISTORY & AUTOMATIC COMPLETE QUESTION SYNCHRONIZATION
+      // =========================================================================
+      try {
+        const target = ArenaState.target || {};
+        const examId = target.examId || 'rajyaseva';
+        const stageId = target.stageId || 'prelims';
+        const subjectId = (target.subjectId || 'core').toLowerCase();
+        const chIdx = target.selectedQuizChapterIndices && target.selectedQuizChapterIndices.length > 0 
+          ? target.selectedQuizChapterIndices[0] 
+          : (target.chapterIndex ?? 0);
+        const topicTitleMr = target.topicTitleMr || target.chapterName || 'अभ्यास घटक';
+        const isMulti = Boolean(target.isMultiChapter);
+
+        // Format and compile full questions dataset including user choices
+        const formattedQuestions = ArenaState.questions.map((q, idx) => {
+          const userIdx = q.userSelectedIndex;
+          const isSkipped = (userIdx === undefined || userIdx === null);
+          const userAnsText = (!isSkipped && q.options && q.options[userIdx])
+            ? q.options[userIdx]
+            : (!isSkipped ? `पर्याय ${userIdx + 1}` : 'अनुत्तरित (Skipped)');
+          const correctAnsText = (q.correctAnswerIndex !== undefined && q.options && q.options[q.correctAnswerIndex])
+            ? q.options[q.correctAnswerIndex]
+            : (q.correctAnswerIndex !== undefined ? `पर्याय ${q.correctAnswerIndex + 1}` : 'उपलब्ध नाही');
+          const isCorrect = (!isSkipped && userIdx === q.correctAnswerIndex);
+
+          return {
+            id: q.id || `q_${idx}`,
+            question: q.questionTitleMr || q.questionTitle || q.question || `प्रश्न ${idx + 1}`,
+            questionText: q.questionTitleMr || q.questionTitle || q.question || `प्रश्न ${idx + 1}`,
+            options: q.options || [],
+            userSelectedIndex: isSkipped ? null : userIdx,
+            userAnswer: userAnsText,
+            isSkipped: isSkipped,
+            correctAnswerIndex: q.correctAnswerIndex,
+            correctAnswer: correctAnsText,
+            isCorrect: isCorrect,
+            explanation: q.explanation || 'स्पष्टीकरण उपलब्ध नाही.',
+            referenceBook: q.referenceBook || null
+          };
+        });
+
+        const attemptRecord = {
+          examId: examId,
+          stageId: stageId,
+          subjectId: subjectId,
+          chapterIndex: chIdx,
+          isMultiChapter: isMulti,
+          selectedQuizChapterIndices: target.selectedQuizChapterIndices || [chIdx],
+          selectedChapterTitlesList: target.selectedChapterTitlesList || [topicTitleMr],
+          topicTitleMr: topicTitleMr,
+          chapterName: topicTitleMr,
+          score: parseFloat(netScore.toFixed(2)),
+          marks: parseFloat(netScore.toFixed(2)),
+          total: ArenaState.totalQuestionsTarget,
+          totalQuestions: ArenaState.totalQuestionsTarget,
+          correctCount: correctCount,
+          correct: correctCount,
+          wrongCount: wrongCount,
+          skippedCount: skippedCount,
+          percentage: accuracy,
+          completedAt: new Date().toISOString(),
+          attemptNumber: target.attemptNumber || 1,
+          questions: formattedQuestions
+        };
+
+        if (isMulti) {
+          const mixedKey = `quiz_mixed_${examId}_${stageId}_${subjectId}`;
+          let mixedList = [];
+          try {
+            mixedList = JSON.parse(localStorage.getItem(mixedKey) || '[]');
+            if (!Array.isArray(mixedList)) mixedList = [];
+          } catch(e) { mixedList = []; }
+          mixedList.push(attemptRecord);
+          localStorage.setItem(mixedKey, JSON.stringify(mixedList));
+        } else {
+          const directKey = `quiz_history_${examId}_${stageId}_${subjectId}_${chIdx}`;
+          localStorage.setItem(directKey, JSON.stringify(attemptRecord));
+        }
+
+        // =====================================================================
+        // IN-PLACE ATTEMPT CONSOLIDATION IN qq_quiz_history (NO DUPLICATE BOXES)
+        // =====================================================================
+        const historyArrKey = 'qq_quiz_history';
+        let historyList = [];
+        try {
+          historyList = JSON.parse(localStorage.getItem(historyArrKey) || '[]');
+          if (!Array.isArray(historyList)) historyList = [];
+        } catch (e) {
+          historyList = [];
+        }
+
+        // If this is a reattempt, replace the last attempt or append cleanly
+        if (target.isReattempt) {
+          // Find if this exact chapter exists and update in-place
+          const existingIdx = historyList.findIndex(h => 
+            h.examId === examId && 
+            h.stageId === stageId && 
+            h.subjectId === subjectId && 
+            Number(h.chapterIndex) === Number(chIdx)
+          );
+
+          if (existingIdx !== -1) {
+            // Keep previous attempts history array if present, update current attempt record
+            const prev = historyList[existingIdx];
+            if (!prev.historyAttempts) prev.historyAttempts = [];
+            prev.historyAttempts.push({
+              score: prev.score,
+              percentage: prev.percentage,
+              completedAt: prev.completedAt,
+              attemptNumber: prev.attemptNumber || 1
+            });
+            // Update the primary card in-place with latest attempt details
+            historyList[existingIdx] = {
+              ...attemptRecord,
+              historyAttempts: prev.historyAttempts
+            };
+          } else {
+            historyList.push(attemptRecord);
+          }
+        } else {
+          historyList.push(attemptRecord);
+        }
+
+        localStorage.setItem(historyArrKey, JSON.stringify(historyList));
+
+        // Update scores mapping
+        const scoresMapKey = 'qq_quiz_scores';
+        let scoresMap = {};
+        try {
+          scoresMap = JSON.parse(localStorage.getItem(scoresMapKey) || '{}');
+          if (typeof scoresMap !== 'object' || Array.isArray(scoresMap)) scoresMap = {};
+        } catch (e) {
+          scoresMap = {};
+        }
+        scoresMap[`${stageId}_${subjectId}_${chIdx}`] = {
+          score: parseFloat(netScore.toFixed(2)),
+          total: ArenaState.totalQuestionsTarget,
+          percentage: accuracy,
+          completedAt: new Date().toISOString()
+        };
+        localStorage.setItem(scoresMapKey, JSON.stringify(scoresMap));
+
+        // Mark chapter completion
+        const completedChaptersKey = 'qq_completed_chapters';
+        let completedMap = {};
+        try {
+          completedMap = JSON.parse(localStorage.getItem(completedChaptersKey) || '{}');
+        } catch (e) {
+          completedMap = {};
+        }
+        completedMap[`${stageId}_${subjectId}_ch${chIdx}`] = {
+          completedAt: new Date().toISOString(),
+          score: parseFloat(netScore.toFixed(2)),
+          total: ArenaState.totalQuestionsTarget
+        };
+        localStorage.setItem(completedChaptersKey, JSON.stringify(completedMap));
+      } catch (saveErr) {
+        console.warn("[Quiz Save Persistence Error]", saveErr);
+      }
+
+      // Invalidate current active practice target so re-visiting requires a fresh launch
+      try {
+        localStorage.removeItem('qq_active_topic_target');
+      } catch (e) {}
+
+      const resModal = document.getElementById('resultModal');
+      if (resModal) {
+        resModal.classList.remove('hidden');
+        resModal.classList.add('flex');
+      }
+    };
+
+    window.enterReadOnlyReviewMode = function() {
+      ArenaState.isReadOnlyReview = true;
+      closeModal('resultModal');
+      ArenaState.currentIndex = 0;
+      renderActiveQuestion();
+    };
+
+    window.returnToOriginHubSafe = function() {
+      pauseTimer();
+      if (ArenaState.timerInterval) clearInterval(ArenaState.timerInterval);
+      if (ArenaState.recoveryTimeoutHandle) clearTimeout(ArenaState.recoveryTimeoutHandle);
+      if (ArenaState.activeAbortController) {
+        try { ArenaState.activeAbortController.abort(); } catch(e) {}
+      }
+
+      const target = ArenaState.target;
+      if (target && (target.isReattempt || target.sourceHub === './vault.html')) {
+        window.location.href = './vault.html';
+      } else if (target && target.sourceHub) {
+        window.location.href = target.sourceHub;
+      } else {
+        window.location.href = './index.html';
+      }
+    };
+
+    window.toggleQuestionPaletteDrawer = function() {
+      const drawer = document.getElementById('questionPaletteDrawer');
+      if (!drawer) return;
+      const isOpening = drawer.classList.contains('hidden');
+
+      if (isOpening) {
+        renderPaletteGrid();
+        drawer.classList.remove('hidden');
+        drawer.classList.add('flex');
+      } else {
+        drawer.classList.add('hidden');
+        drawer.classList.remove('flex');
+      }
+    };
+
+    function renderPaletteGrid() {
+      const grid = document.getElementById('paletteGridContainer');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      for (let i = 0; i < ArenaState.totalQuestionsTarget; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = "w-10 h-10 rounded-xl font-mono text-xs font-bold flex items-center justify-center transition-all cursor-pointer";
+        btn.textContent = i + 1;
+
+        const q = ArenaState.questions[i];
+        if (i === ArenaState.currentIndex) {
+          btn.className += " bg-amber-500 text-slate-950 font-black ring-2 ring-amber-400";
+        } else if (q && q.userSelectedIndex !== undefined) {
+          btn.className += " bg-emerald-500 text-white font-bold";
+        } else {
+          btn.className += " bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700";
+        }
+
+        btn.onclick = () => {
+          if (i < ArenaState.questions.length) {
+            ArenaState.currentIndex = i;
+            renderActiveQuestion();
+            toggleQuestionPaletteDrawer();
+          } else {
+            showToast("Question not loaded yet.", true);
+          }
+        };
+
+        grid.appendChild(btn);
+      }
+    }
+
+    function loadSavedVaultState() {
+      try {
+        ArenaState.savedVault = JSON.parse(localStorage.getItem('qq_vault_questions') || '{}');
+      } catch (e) {
+        ArenaState.savedVault = {};
+      }
+    }
+
+    window.toggleSaveCurrentQuestion = function() {
+      const q = ArenaState.questions[ArenaState.currentIndex];
+      if (!q) return;
+
+      const qId = q.id || `q_${ArenaState.currentIndex}`;
+      if (ArenaState.savedVault[qId]) {
+        delete ArenaState.savedVault[qId];
+        showToast("Removed question from Vault.");
+      } else {
+        ArenaState.savedVault[qId] = {
+          ...q,
+          savedAt: new Date().toISOString(),
+          exam: ArenaState.target?.examId || 'MPSC',
+          topic: ArenaState.target?.topicTitleMr || 'General Studies'
+        };
+        showToast("Saved question to Vault!");
+      }
+
+      localStorage.setItem('qq_vault_questions', JSON.stringify(ArenaState.savedVault));
+      updateVaultStarIcon();
+    };
+
+    function updateVaultStarIcon() {
+      const q = ArenaState.questions[ArenaState.currentIndex];
+      const icon = document.getElementById('saveVaultIcon');
+      const text = document.getElementById('saveVaultText');
+      if (!q || !icon) return;
+
+      const qId = q.id || `q_${ArenaState.currentIndex}`;
+      const isSaved = Boolean(ArenaState.savedVault[qId]);
+      icon.className = isSaved ? "fa-solid fa-star text-amber-500 text-[11px]" : "fa-regular fa-star text-[11px]";
+      if (text) text.textContent = isSaved ? "Saved" : "Save";
+    }
+
+    window.cycleFontSize = function() {
+      const order = ['S', 'M', 'L'];
+      const nextIdx = (order.indexOf(ArenaState.fontScale) + 1) % order.length;
+      ArenaState.fontScale = order[nextIdx];
+      const label = document.getElementById('fontScaleLabel');
+      if (label) label.textContent = ArenaState.fontScale;
+      applyCurrentFontScale();
+    };
+
+    function applyCurrentFontScale() {
+      document.body.classList.remove('font-scale-S', 'font-scale-M', 'font-scale-L');
+      document.body.classList.add(`font-scale-${ArenaState.fontScale}`);
+    }
+
+    window.triggerQuestionReport = function() {
+      const q = ArenaState.questions[ArenaState.currentIndex];
+      const contextInp = document.getElementById('reportQuestionContext');
+      const detailsInp = document.getElementById('reportIssueDetails');
+
+      if (contextInp && q) {
+        contextInp.value = `[Q#${ArenaState.currentIndex + 1}] ${q.questionTitleMr || 'Question Issue'}`;
+      }
+      if (detailsInp) detailsInp.value = '';
+
+      removeAttachedReportScreenshot();
+      openModal('feedbackModal');
+    };
+
+    window.requestAndCaptureReportScreenshot = async function() {
+      const modal = document.getElementById('feedbackModal');
+      const captureBtn = document.getElementById('btnCaptureReportSnapshot');
+      const previewBox = document.getElementById('reportSnapshotPreviewBox');
+      const snapImg = document.getElementById('reportSnapshotImg');
+      const statusLabel = document.getElementById('reportSnapshotStatus');
+      const card = document.getElementById('quizCard');
+
+      if (!card || typeof html2canvas === 'undefined') {
+        showToast("Screenshot capture unavailable.", true);
+        return;
+      }
+
+      if (captureBtn) {
+        captureBtn.disabled = true;
+        captureBtn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> <span>Capturing...</span>';
+      }
+
+      if (modal) modal.style.visibility = 'hidden';
+
+      try {
+        await new Promise(r => setTimeout(r, 100));
+        const canvas = await html2canvas(card, { scale: 1.5, useCORS: true, logging: false });
+        ArenaState.currentCapturedScreenshot = canvas.toDataURL('image/jpeg', 0.7);
+
+        if (snapImg) snapImg.src = ArenaState.currentCapturedScreenshot;
+        if (previewBox) {
+          previewBox.classList.remove('hidden');
+          previewBox.classList.add('flex');
+        }
+        if (statusLabel) {
+          statusLabel.textContent = "Attached";
+          statusLabel.className = "text-[9px] text-emerald-500 font-bold";
+        }
+        if (captureBtn) captureBtn.parentElement.classList.add('hidden');
+      } catch (err) {
+        console.warn("[Snapshot Capture Error]", err);
+        if (statusLabel) {
+          statusLabel.textContent = "Capture Failed";
+          statusLabel.className = "text-[9px] text-rose-500 font-bold";
+        }
+      } finally {
+        if (modal) modal.style.visibility = 'visible';
+        if (captureBtn) {
+          captureBtn.disabled = false;
+          captureBtn.innerHTML = '<i class="fa-solid fa-camera-retro"></i> <span>Capture Screen Now</span>';
+        }
+      }
+    };
+
+    window.removeAttachedReportScreenshot = function() {
+      ArenaState.currentCapturedScreenshot = null;
+      const previewBox = document.getElementById('reportSnapshotPreviewBox');
+      const snapImg = document.getElementById('reportSnapshotImg');
+      const statusLabel = document.getElementById('reportSnapshotStatus');
+      const actionRow = document.getElementById('reportSnapshotActionRow');
+
+      if (snapImg) snapImg.src = '';
+      if (previewBox) {
+        previewBox.classList.add('hidden');
+        previewBox.classList.remove('flex');
+      }
+      if (actionRow) actionRow.classList.remove('hidden');
+      if (statusLabel) {
+        statusLabel.textContent = "Not Attached";
+        statusLabel.className = "text-[9px] text-slate-400 font-bold";
+      }
+    };
+
+    window.submitQuestionReport = function() {
+      const context = document.getElementById('reportQuestionContext')?.value || '';
+      const details = document.getElementById('reportIssueDetails')?.value?.trim() || '';
+      if (!details) {
+        showToast("Please describe the issue briefly.", true);
+        return;
+      }
+
+      try {
+        const reports = JSON.parse(localStorage.getItem('qq_reported_issues') || '[]');
+        reports.push({
+          context: context,
+          details: details,
+          hasScreenshot: Boolean(ArenaState.currentCapturedScreenshot),
+          screenshot: ArenaState.currentCapturedScreenshot || null,
+          reportedAt: new Date().toISOString()
+        });
+        localStorage.setItem('qq_reported_issues', JSON.stringify(reports));
+      } catch (e) {}
+
+      closeModal('feedbackModal');
+      showToast("Report submitted successfully!");
+    };
+
+    function initTheme() {
+      const saved = localStorage.getItem('qq_theme') || 'light';
+      applyTheme(saved);
+    }
+
+    function applyTheme(theme) {
+      const icon = document.getElementById('themeIcon');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (icon) icon.className = "fa-solid fa-sun text-[10px]";
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (icon) icon.className = "fa-solid fa-moon text-[10px]";
+      }
+    }
+
+    window.toggleQuizTheme = function() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      const newTheme = isDark ? 'dark' : 'light';
+      localStorage.setItem('qq_theme', newTheme);
+      applyTheme(newTheme);
+    };
+
+    window.captureQuestionSnapshot = async function() {
+      const card = document.getElementById('quizCard');
+      if (!card || typeof html2canvas === 'undefined') return;
+
+      showToast("Generating question snapshot...");
+      try {
+        const canvas = await html2canvas(card, { scale: 2, useCORS: true });
+        const imgUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = `MPSC_Question_Q${ArenaState.currentIndex + 1}.png`;
+        link.href = imgUrl;
+        link.click();
+        showToast("Snapshot downloaded successfully!");
+      } catch (e) {
+        showToast("Snapshot failed. Check permissions.", true);
+      }
+    };
+
+    window.handleTriggerExitConfirmation = function() {
+      openModal('confirmExitModal');
+    };
+
+    window.openModal = function(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('hidden');
+        el.classList.add('flex');
+      }
+    };
+
+    window.closeModal = function(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+      }
+    };
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toastNotification');
+      const label = document.getElementById('toastMessage');
+      if (!toast || !label) return;
+
+      label.textContent = msg;
+      toast.classList.remove('translate-y-10', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (isError) {
+        toast.classList.add('bg-rose-900', 'border-rose-700');
+      } else {
+        toast.classList.remove('bg-rose-900', 'border-rose-700');
+      }
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-10', 'opacity-0');
+      }, 2500);
+    }
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function saveProgressLocalSession() {
+      try {
+        sessionStorage.setItem('qq_active_quiz_progress', JSON.stringify({
+          currentIndex: ArenaState.currentIndex,
+          questions: ArenaState.questions
+        }));
+      } catch (e) {}
+    }
+  </script>
+</body>
+</html>

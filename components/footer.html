@@ -1,0 +1,120 @@
+<!-- ========================================================================= -->
+<!-- COMPONENT: FOOTER (CRYSTAL MINIMAL ADAPTIVE)                              -->
+<!-- Path: components/footer.html                                              -->
+<!-- Description: Clean responsive footer, Glass D crystal minimal adaptive    -->
+<!--              styling, accessible policy triggers, community action pills. -->
+<!-- ========================================================================= -->
+
+<footer class="mt-auto w-full crystal-panel border-t border-slate-200/80 dark:border-white/10 py-5 shrink-0 select-none transition-colors">
+  <div class="max-w-3xl mx-auto px-3 sm:px-4 flex flex-col items-center gap-3.5 text-center">
+    
+    <!-- 1. Platform Brand Title: Study (Slate/White) + Sphere (Amber) with Inline SVG Logo -->
+    <a href="./index.html" class="flex items-center gap-2 group no-underline text-inherit btn-spring">
+      <div class="w-7 h-7 flex items-center justify-center shrink-0">
+        <!-- Inline SVG Logo (Universal & 100% Reliable, No border or bg) -->
+        <svg viewBox="0 0 512 512" class="w-7 h-7 object-contain" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="footerAmberGlow" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#fbbf24" />
+              <stop offset="50%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#d97706" />
+            </linearGradient>
+            <linearGradient id="footerEmeraldAccent" x1="128" y1="360" x2="384" y2="460" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#34d399" />
+              <stop offset="100%" stop-color="#059669" />
+            </linearGradient>
+            <linearGradient id="footerCrystalSheen" x1="256" y1="40" x2="256" y2="280" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <circle cx="256" cy="256" r="216" stroke="url(#footerAmberGlow)" stroke-width="20" stroke-linecap="round" stroke-dasharray="880 200" opacity="0.9" />
+          <path d="M 120 376 C 160 424, 206 448, 256 448 C 306 448, 352 424, 392 376" stroke="url(#footerEmeraldAccent)" stroke-width="18" stroke-linecap="round" />
+          <path d="M 256 120 L 416 195 L 256 270 L 96 195 Z" fill="url(#footerAmberGlow)" />
+          <path d="M 256 120 L 416 195 L 256 270 Z" fill="#b45309" opacity="0.22" />
+          <path d="M 256 126 L 400 195 L 256 262 L 112 195 Z" stroke="url(#footerCrystalSheen)" stroke-width="5" fill="none" opacity="0.6" />
+          <path d="M 152 225 L 152 305 C 152 355, 360 355, 360 305 L 360 225 L 256 272 Z" fill="url(#footerAmberGlow)" />
+          <path d="M 256 272 L 360 225 L 360 305 C 360 355, 256 355, 256 355 Z" fill="#b45309" opacity="0.28" />
+          <path d="M 128 208 C 114 235, 110 270, 114 318" stroke="url(#footerAmberGlow)" stroke-width="10" stroke-linecap="round" />
+          <circle cx="114" cy="328" r="12" fill="url(#footerEmeraldAccent)" />
+          <circle cx="256" cy="195" r="9" fill="#ffffff" />
+        </svg>
+      </div>
+      <span class="text-base font-black tracking-tight leading-none font-marathi">
+        <span class="text-slate-900 dark:text-white">Study</span><span class="text-amber-500 dark:text-amber-400">Sphere</span>
+      </span>
+      <span class="text-[9.5px] px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/25 font-bold uppercase tracking-wider">
+        MPSC Portal
+      </span>
+    </a>
+
+    <!-- 2. Accessible Policy & Action Links (Single-line on mobile with zero horizontal scroll) -->
+    <nav class="flex items-center justify-between sm:justify-center w-full max-w-sm sm:max-w-md mx-auto text-[10.5px] sm:text-xs font-bold text-slate-600 dark:text-slate-400 px-1 py-0.5 whitespace-nowrap select-none">
+      <a href="./index.html" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors no-underline text-inherit">Home</a>
+      <span class="text-slate-300 dark:text-slate-700 opacity-60">•</span>
+      <button type="button" onclick="if(window.StudySphereCommon && window.StudySphereCommon.openPolicy){StudySphereCommon.openPolicy('about');}else if(window.openPolicy){openPolicy('about');}else{const m=document.getElementById('policiesModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer">About</button>
+      <span class="text-slate-300 dark:text-slate-700 opacity-60">•</span>
+      <button type="button" onclick="if(window.StudySphereCommon && window.StudySphereCommon.openPolicy){StudySphereCommon.openPolicy('privacy');}else if(window.openPolicy){openPolicy('privacy');}else{const m=document.getElementById('policiesModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer">Privacy</button>
+      <span class="text-slate-300 dark:text-slate-700 opacity-60">•</span>
+      <button type="button" onclick="if(window.StudySphereCommon && window.StudySphereCommon.openPolicy){StudySphereCommon.openPolicy('terms');}else if(window.openPolicy){openPolicy('terms');}else{const m=document.getElementById('policiesModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer">Terms</button>
+      <span class="text-slate-300 dark:text-slate-700 opacity-60">•</span>
+      <button type="button" onclick="if(window.StudySphereCommon && window.StudySphereCommon.openPolicy){StudySphereCommon.openPolicy('storage');}else if(window.openPolicy){openPolicy('storage');}else{const m=document.getElementById('policiesModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer">Storage</button>
+      <span class="text-slate-300 dark:text-slate-700 opacity-60">•</span>
+      <button type="button" onclick="if(window.StudySphereCommon && window.StudySphereCommon.openPolicy){StudySphereCommon.openPolicy('sitemap');}else if(window.openPolicy){openPolicy('sitemap');}else{const m=document.getElementById('policiesModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer">Sitemap</button>
+      <span class="text-slate-300 dark:text-slate-700 opacity-60">•</span>
+      <button type="button" onclick="if(window.StudySphereCommon && window.StudySphereCommon.openFeedbackModal){StudySphereCommon.openFeedbackModal();}else{const m=document.getElementById('feedbackModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer text-amber-600 dark:text-amber-400">Feedback</button>
+    </nav>
+
+    <!-- 3. Primary Community & Utility Action Buttons -->
+    <div class="flex items-center justify-center gap-2 flex-wrap w-full pt-0.5">
+      
+      <!-- Button 1: Telegram Channel -->
+      <a 
+        href="https://t.me/MPSCstudysphere" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="h-8 px-3 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 text-xs font-bold inline-flex items-center gap-1.5 btn-spring no-underline shrink-0 border border-sky-400/30 shadow-2xs"
+      >
+        <i class="fa-brands fa-telegram text-xs"></i> <span>Telegram</span>
+      </a>
+
+      <!-- Button 2: Donate -->
+      <button 
+        onclick="if(window.StudySphereCommon && window.StudySphereCommon.openDonationModal){StudySphereCommon.openDonationModal();}else if(window.openDonationModalSafe){openDonationModalSafe();}else{const m=document.getElementById('donationModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" 
+        type="button" 
+        class="h-8 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 text-xs font-bold inline-flex items-center gap-1.5 btn-spring cursor-pointer shrink-0 border border-amber-500/25 shadow-2xs"
+      >
+        <i class="fa-solid fa-heart text-amber-500 text-xs"></i> <span>Donate</span>
+      </button>
+
+      <!-- Button 3: Share Platform -->
+      <button 
+        onclick="if(window.StudySphereCommon && window.StudySphereCommon.share){StudySphereCommon.share();}else if(window.triggerShareWebsite){triggerShareWebsite();}" 
+        type="button" 
+        class="h-8 px-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold inline-flex items-center gap-1.5 btn-spring cursor-pointer shrink-0 border border-emerald-400/30 shadow-2xs"
+      >
+        <i class="fa-solid fa-share-nodes text-xs"></i> <span>Share</span>
+      </button>
+
+      <!-- Button 4: Install PWA App -->
+      <button 
+        onclick="if(window.StudySphereCommon && window.StudySphereCommon.triggerPWAInstall){StudySphereCommon.triggerPWAInstall();}else{const m=document.getElementById('installModal');if(m){m.classList.remove('hidden');m.classList.add('flex');document.body.classList.add('overflow-hidden');}}" 
+        type="button" 
+        class="h-8 px-3 rounded-xl bg-slate-200/60 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 text-xs font-bold inline-flex items-center gap-1.5 btn-spring cursor-pointer shrink-0 border border-slate-300/60 dark:border-white/15 shadow-2xs"
+      >
+        <i class="fa-solid fa-download text-xs text-slate-500 dark:text-slate-400"></i> <span>Install</span>
+      </button>
+    </div>
+
+    <!-- 4. Official Accreditation & Copyright Line -->
+    <div class="pt-1.5 space-y-0.5">
+      <p class="text-[11px] text-slate-600 dark:text-slate-400 font-bold tracking-tight font-marathi">
+        © २०२६ StudySphere • महाराष्ट्रातील विद्यार्थ्यांच्या सेवेसाठी समर्पित
+      </p>
+      <p class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+        MPSC २०२६-२७ Pattern Aligned • १००% मोफत व जाहिरातमुक्त
+      </p>
+    </div>
+
+  </div>
+</footer>

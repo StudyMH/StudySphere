@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="mr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>StudySphere | MPSC Exam Preparation</title>
+  
+  <meta name="theme-color" content="#f59e0b">
+  <meta name="description" content="StudySphere - Complete MPSC Preparation Platform for Rajyaseva, Group B and Group C.">
+
+  <!-- Favicon References -->
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="alternate icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./icon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans (English/Numbers) & Mukta (Devanagari/Marathi) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN (Strictly SVG icons, Zero Emojis) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Common Utilities & Gatekeeper -->
+  <script type="module" src="./assets/js/common.js"></script>
+  <script type="module" src="./ai-engine/core/gatekeeper-engine.js"></script>
+  <script type="module" src="./assets/js/firebase-sync-engine.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Mukta"', 'system-ui', 'sans-serif'],
+            marathi: ['"Mukta"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       GLASS D: CRYSTAL MINIMAL ADAPTIVE TOKENS (LIGHT & DARK DUAL MODE)
+       ========================================================================== */
+
+    /* Adaptive Canvas Background */
+    .crystal-canvas {
+      background-color: #f8fafc;
+      background-image: radial-gradient(rgba(203, 213, 225, 0.7) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark .crystal-canvas {
+      background-color: #070b14;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Primary Crystal Surface Panels */
+    .crystal-panel {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .dark .crystal-panel {
+      background: rgba(8, 13, 25, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Sub-card Crystal Elements */
+    .crystal-card {
+      background: rgba(248, 250, 252, 0.85);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dark .crystal-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .crystal-card:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+      transform: translateY(-1px);
+    }
+
+    /* Subtle Crystal Section Divider */
+    .crystal-divider {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(203, 213, 225, 0.8) 50%, transparent 100%);
+    }
+    .dark .crystal-divider {
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+    }
+
+    /* Tactile Spring Buttons */
+    .btn-spring {
+      transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-spring:active:not(:disabled) {
+      transform: scale(0.97) translateY(1px);
+    }
+
+    /* Top Tricolor Accent Stripe */
+    .tiranga-stripe {
+      background: linear-gradient(90deg, #ea580c 0%, #ea580c 33.33%, #ffffff 33.33%, #ffffff 66.66%, #15803d 66.66%, #15803d 100%);
+      height: 3.5px;
+      width: 100%;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Pop In Modal Animation */
+    .animate-pop-in {
+      animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.96) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="crystal-canvas text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
+
+  <!-- ========================================================================= -->
+  <!-- 1. DYNAMIC HEADER CONTAINER (Injected from components/header.html)         -->
+  <!-- ========================================================================= -->
+  <div id="headerPlaceholder"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN BODY CONTENT                                                      -->
+  <!-- ========================================================================= -->
+  <main class="max-w-3xl mx-auto w-full px-3 sm:px-4 py-4 flex-1 flex flex-col gap-5">
+
+    <!-- 2.1 HERO WELCOME BANNER (Shown ONLY if NO last attempt is present) -->
+    <section id="heroWelcomeBanner" class="relative crystal-panel p-4 sm:p-5 rounded-3xl overflow-hidden">
+      <!-- Top-Left Subtle Amber Ambient Glow -->
+      <div class="absolute -top-12 -left-12 w-44 h-44 bg-amber-500/15 dark:bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <!-- Bottom-Right Subtle Indigo Ambient Glow -->
+      <div class="absolute -bottom-12 -right-12 w-44 h-44 bg-indigo-500/15 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Hero Content -->
+      <div class="relative z-10 flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 dark:bg-white/5 border border-amber-500/25 dark:border-white/10 text-amber-900 dark:text-amber-300 text-[10.5px] font-bold tracking-wide">
+            <i class="fa-solid fa-graduation-cap text-amber-600 dark:text-amber-400"></i>
+            <span>MPSC २०२६-२७ नवीन पॅटर्न</span>
+          </span>
+          <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-400/40 dark:border-emerald-700/40">
+            १००% मोफत व ओपन
+          </span>
+        </div>
+        <div>
+          <h2 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-tight font-marathi">
+            स्पर्धेच्या युगात, यशाची खात्रीशीर दिशा.
+          </h2>
+          <p class="text-[10.5px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mt-0.5">
+            Learn Today • Lead Tomorrow
+          </p>
+          <p class="text-xs sm:text-[13px] font-medium text-slate-600 dark:text-slate-300/90 mt-1 leading-relaxed">
+            महाराष्ट्र लोकसेवा आयोगाच्या राज्यसेवा, संयुक्त गट-ब व गट-क परीक्षांसाठी परिपूर्ण, जाहिरातमुक्त व विनामूल्य शैक्षणिक व्यासपीठ.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.2 LAST ATTEMPT BANNER SLIDER (Replaces Hero if last attempts exist) -->
+    <section id="lastAttemptSliderContainer" class="hidden relative rounded-3xl crystal-panel p-3.5 shadow-xs overflow-hidden border-amber-300/60 dark:border-amber-500/30">
+      
+      <!-- Grid Stack: Prevents card resizing during transitions by pinning both slides to the exact same cell -->
+      <div id="slidesTrack" class="grid grid-cols-1 grid-rows-1 w-full items-center">
+
+        <!-- Slide 1: Last Quiz Attempt -->
+        <div id="slideQuizAttempt" class="col-start-1 row-start-1 w-full opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-800 dark:text-amber-300 flex items-center justify-center text-sm font-black shrink-0 border border-amber-400/40">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="min-w-0 space-y-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[9.5px] font-black uppercase px-1.5 py-0.5 rounded bg-amber-200 dark:bg-amber-900/80 text-amber-900 dark:text-amber-200">
+                  Last Quiz
+                </span>
+                <span id="quizAttemptStage" class="text-[9.5px] font-bold text-amber-700 dark:text-amber-400 uppercase">
+                  Prelims
+                </span>
+                <span class="text-slate-300 dark:text-slate-700">•</span>
+                <span id="quizAttemptTime" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
+                  Recent Session
+                </span>
+              </div>
+              <h4 id="quizAttemptTitle" class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate">
+                सराव चाचणी सत्र
+              </h4>
+              <!-- Last Selected Filters Row -->
+              <div id="quizAttemptFiltersRow" class="flex items-center gap-1.5 flex-wrap pt-0.5 text-[9.5px] font-bold text-slate-600 dark:text-slate-300">
+                <!-- Dynamically injected badges -->
+              </div>
+            </div>
+          </div>
+          <!-- Practice Button -->
+          <button id="btnResumeQuiz" type="button" onclick="promptResume('quiz')" class="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/25 font-bold text-xs btn-spring shrink-0 self-center flex items-center gap-1.5 shadow-2xs whitespace-nowrap cursor-pointer">
+            <i class="fa-solid fa-bolt text-[10px] text-amber-500"></i>
+            <span>Resume</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- Slide 2: Last Notes Attempt -->
+        <div id="slideNotesAttempt" class="col-start-1 row-start-1 w-full opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center text-sm font-black shrink-0 border border-slate-300 dark:border-slate-700">
+              <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+            <div class="min-w-0 space-y-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[9.5px] font-black uppercase px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+                  Last Notes
+                </span>
+                <span id="notesAttemptStage" class="text-[9.5px] font-bold text-slate-600 dark:text-slate-400 uppercase">
+                  Study Guide
+                </span>
+                <span class="text-slate-300 dark:text-slate-700">•</span>
+                <span id="notesAttemptTime" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">
+                  Reading Session
+                </span>
+              </div>
+              <h4 id="notesAttemptTitle" class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate">
+                अभ्यास नोट्स वाचन
+              </h4>
+              <!-- Last Selected Filters Row -->
+              <div id="notesAttemptFiltersRow" class="flex items-center gap-1.5 flex-wrap pt-0.5 text-[9.5px] font-bold text-slate-600 dark:text-slate-300">
+                <!-- Dynamically injected badges -->
+              </div>
+            </div>
+          </div>
+          <!-- Notes Button -->
+          <button id="btnResumeNotes" type="button" onclick="promptResume('notes')" class="px-3.5 py-2 rounded-xl bg-slate-200/60 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15 font-bold text-xs btn-spring shrink-0 self-center flex items-center gap-1.5 shadow-2xs whitespace-nowrap cursor-pointer">
+            <i class="fa-solid fa-book-open text-[10px] text-slate-500 dark:text-slate-400"></i>
+            <span>Continue reading</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Slider Dots (Only displayed when both Quiz and Notes slides are active) -->
+      <div id="sliderDotsContainer" class="hidden flex items-center justify-center gap-1.5 pt-2">
+        <button type="button" aria-label="Go to Slide 1" onclick="switchActiveSlide(0)" id="sliderDot0" class="w-1.5 h-1.5 rounded-full bg-amber-500 transition-all"></button>
+        <button type="button" aria-label="Go to Slide 2" onclick="switchActiveSlide(1)" id="sliderDot1" class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 transition-all"></button>
+      </div>
+
+    </section>
+
+    <!-- 2.3 UNIVERSAL SYLLABUS SPOTLIGHT SEARCH BAR (Crystal Glass Model) -->
+    <section class="relative">
+      <div class="crystal-panel p-2.5 rounded-2xl flex items-center gap-2.5 shadow-2xs focus-within:border-amber-500/60 transition-colors">
+        <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs ml-2 shrink-0"></i>
+        <input 
+          type="text" 
+          id="globalSyllabusSearchInput" 
+          oninput="handleUniversalSearchInput(this.value)" 
+          placeholder="कोणताही घटक, कायदा किंवा विषय शोधा (उदा. मूलभूत हक्क, RTI, १८५७ चा उठाव)..." 
+          class="w-full bg-transparent text-xs sm:text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 font-medium focus:outline-none p-0.5"
+        />
+        <span class="text-[9.5px] font-mono px-2 py-0.5 rounded-lg bg-slate-200/60 dark:bg-white/5 text-slate-500 dark:text-slate-400 mr-1 hidden sm:inline shrink-0">Spotlight</span>
+        <button 
+          type="button" 
+          id="btnClearSearch" 
+          onclick="clearUniversalSearch()" 
+          class="hidden text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs px-2 py-0.5 rounded-md shrink-0 cursor-pointer"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Live Search Results Dropdown Container -->
+      <div 
+        id="universalSearchResultsBox" 
+        class="hidden absolute top-full left-0 right-0 z-30 mt-1.5 crystal-panel rounded-2xl shadow-xl overflow-hidden max-h-64 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800"
+      >
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.4 THREE COMPACT EXAM CARDS (Crystal Minimal: Neutral Slate, English Hierarchy, Option B Outline Button) -->
+    <section class="space-y-3">
+      <!-- Section Header with Number Badge -->
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[10.5px] font-black font-mono">
+            01
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-sans">
+            EXAMINATION GATEWAYS
+          </h3>
+        </div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">3 Core Hubs</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+        
+        <!-- Card 1: Rajyaseva -->
+        <div class="crystal-card p-4 rounded-2xl flex flex-col justify-between gap-3 shadow-2xs">
+          <div class="space-y-1.5">
+            <!-- Icon and Dual-Language Header -->
+            <div class="flex items-start justify-between">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/25 flex items-center justify-center text-xs font-black shrink-0">
+                <i class="fa-solid fa-landmark"></i>
+              </div>
+              <span class="text-[9.5px] font-bold px-2 py-0.5 rounded bg-slate-200/50 dark:bg-white/5 text-slate-600 dark:text-slate-400 uppercase">GS १-४</span>
+            </div>
+            <div>
+              <h4 class="text-sm sm:text-base font-black text-slate-950 dark:text-white leading-tight font-marathi">
+                राज्यसेवा
+              </h4>
+              <p class="text-[9.5px] font-bold text-slate-400 uppercase tracking-tight">
+                MPSC Rajyaseva
+              </p>
+            </div>
+            
+            <p class="text-[11.5px] text-slate-600 dark:text-slate-300/80 leading-normal font-medium">
+              पूर्व परीक्षा, मुख्य GS १ ते ४ आणि सर्व २६ वैकल्पिक विषय.
+            </p>
+          </div>
+
+          <!-- Bottom: Info | Outline Button -->
+          <div class="pt-2 mt-1 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between gap-2">
+            <span class="text-[10px] font-bold text-slate-400 truncate">
+              २६ Optionals
+            </span>
+            <a href="./rajyaseva.html" class="py-1 px-3 rounded-xl border border-slate-300 dark:border-white/20 hover:border-amber-500 text-slate-800 dark:text-slate-200 text-xs font-bold btn-spring no-underline flex items-center gap-1 bg-white/70 dark:bg-transparent shadow-2xs shrink-0">
+              <span>Explore</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Combined Group B -->
+        <div class="crystal-card p-4 rounded-2xl flex flex-col justify-between gap-3 shadow-2xs">
+          <div class="space-y-1.5">
+            <!-- Icon and Dual-Language Header -->
+            <div class="flex items-start justify-between">
+              <div class="w-9 h-9 rounded-xl bg-slate-200/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-white/10 flex items-center justify-center text-xs font-black shrink-0">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <span class="text-[9.5px] font-bold px-2 py-0.5 rounded bg-slate-200/50 dark:bg-white/5 text-slate-600 dark:text-slate-400 uppercase">PSI • STI</span>
+            </div>
+            <div>
+              <h4 class="text-sm sm:text-base font-black text-slate-950 dark:text-white leading-tight font-marathi">
+                संयुक्त गट-ब
+              </h4>
+              <p class="text-[9.5px] font-bold text-slate-400 uppercase tracking-tight">
+                Combined Group B
+              </p>
+            </div>
+
+            <p class="text-[11.5px] text-slate-600 dark:text-slate-300/80 leading-normal font-medium">
+              PSI, STI, ASO, दुय्यम निबंधक | पूर्व व मुख्य परीक्षा.
+            </p>
+          </div>
+
+          <!-- Bottom: Info | Outline Button -->
+          <div class="pt-2 mt-1 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between gap-2">
+            <span class="text-[10px] font-bold text-slate-400 truncate">
+              Paper १ व २
+            </span>
+            <a href="./groupB.html" class="py-1 px-3 rounded-xl border border-slate-300 dark:border-white/20 hover:border-slate-500 text-slate-800 dark:text-slate-200 text-xs font-bold btn-spring no-underline flex items-center gap-1 bg-white/70 dark:bg-transparent shadow-2xs shrink-0">
+              <span>Explore</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: Combined Group C -->
+        <div class="crystal-card p-4 rounded-2xl flex flex-col justify-between gap-3 shadow-2xs">
+          <div class="space-y-1.5">
+            <!-- Icon and Dual-Language Header -->
+            <div class="flex items-start justify-between">
+              <div class="w-9 h-9 rounded-xl bg-slate-200/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-white/10 flex items-center justify-center text-xs font-black shrink-0">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+              <span class="text-[9.5px] font-bold px-2 py-0.5 rounded bg-slate-200/50 dark:bg-white/5 text-slate-600 dark:text-slate-400 uppercase">Clerk • Tax</span>
+            </div>
+            <div>
+              <h4 class="text-sm sm:text-base font-black text-slate-950 dark:text-white leading-tight font-marathi">
+                संयुक्त गट-क
+              </h4>
+              <p class="text-[9.5px] font-bold text-slate-400 uppercase tracking-tight">
+                Combined Group C
+              </p>
+            </div>
+
+            <p class="text-[11.5px] text-slate-600 dark:text-slate-300/80 leading-normal font-medium">
+              लिपिक-टंकलेखक, कर सहायक, उद्योग निरीक्षक व इतर पदे.
+            </p>
+          </div>
+
+          <!-- Bottom: Info | Outline Button -->
+          <div class="pt-2 mt-1 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between gap-2">
+            <span class="text-[10px] font-bold text-slate-400 truncate">
+              १००% वस्तुनिष्ठ
+            </span>
+            <a href="./groupC.html" class="py-1 px-3 rounded-xl border border-slate-300 dark:border-white/20 hover:border-slate-500 text-slate-800 dark:text-slate-200 text-xs font-bold btn-spring no-underline flex items-center gap-1 bg-white/70 dark:bg-transparent shadow-2xs shrink-0">
+              <span>Explore</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.5 DAILY HOT TOPICS (Exact 2x2 Grid with Soft Tint Buttons) -->
+    <section class="space-y-3">
+      <!-- Section Header with Number Badge -->
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[10.5px] font-black font-mono">
+            02
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-sans">
+            DAILY CORE REVISION
+          </h3>
+        </div>
+        <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 font-mono">
+          <i class="fa-solid fa-rotate text-[9px]"></i>
+          <span>Auto-Rotates Daily</span>
+        </span>
+      </div>
+      
+      <!-- Strictly 2 Side by Side on all screen sizes -->
+      <div id="hotTopicsGrid" class="grid grid-cols-2 gap-2 sm:gap-2.5">
+        <!-- Injected dynamically via master-database.js below -->
+      </div>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.6 QUICK ACCESS: REVISION VAULT SHORTCUT -->
+    <section class="space-y-2">
+      <!-- Section Header with Number Badge -->
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-white/10 border border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-300 text-[10.5px] font-black font-mono">
+            03
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-sans">
+            REVISION VAULT & ARCHIVE
+          </h3>
+        </div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase">Offline Ready</span>
+      </div>
+      <a href="./vault.html" class="crystal-card p-3.5 rounded-2xl flex items-center justify-between no-underline text-inherit shadow-2xs">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/25 flex items-center justify-center text-xs font-black shrink-0">
+            <i class="fa-solid fa-vault"></i>
+          </div>
+          <div class="min-w-0">
+            <h4 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate font-marathi">विद्यार्थी रिव्हिजन व्हॉल्ट (Revision Vault)</h4>
+            <p class="text-[10.5px] text-slate-500 dark:text-slate-400 truncate">तुमचे स्टार केलेले कठीण प्रश्न व जतन केलेल्या उजळणी नोट्स</p>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400 shrink-0 pr-1"></i>
+      </a>
+    </section>
+
+    <!-- 2.7 SIDE-BY-SIDE IN ONE LINE: FEEDBACK & GOOGLE BACKUP -->
+    <section class="grid grid-cols-2 gap-2.5">
+      <!-- Feedback Trigger Card -->
+      <button 
+        type="button" 
+        onclick="if(window.StudySphereCommon && window.StudySphereCommon.openFeedbackModal){StudySphereCommon.openFeedbackModal();}else if(window.openModal){openModal('feedbackModal');}" 
+        class="crystal-card p-3 rounded-2xl flex items-center gap-2.5 text-left cursor-pointer group"
+      >
+        <div class="w-8 h-8 rounded-xl bg-slate-200/60 dark:bg-white/5 border border-slate-300/60 dark:border-white/10 text-slate-700 dark:text-slate-300 flex items-center justify-center text-xs font-black shrink-0">
+          <i class="fa-solid fa-comment-dots"></i>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-black text-slate-900 dark:text-white truncate">Feedback</h4>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Share thoughts</p>
+        </div>
+      </button>
+
+      <!-- Google Backup Sync Card -->
+      <button 
+        type="button" 
+        onclick="if(window.triggerGoogleAuthAction){triggerGoogleAuthAction();}else if(window.connectGoogleAccount){connectGoogleAccount();}" 
+        class="crystal-card p-3 rounded-2xl flex items-center gap-2.5 text-left cursor-pointer group"
+      >
+        <div class="w-8 h-8 rounded-xl bg-slate-200/60 dark:bg-white/5 border border-slate-300/60 dark:border-white/10 flex items-center justify-center shrink-0 p-1.5">
+          <svg viewBox="0 0 24 24" class="w-full h-full object-contain">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <h4 class="text-xs font-black text-slate-900 dark:text-white truncate">Google Backup</h4>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate" id="homeGoogleSyncSubtext">Sync records</p>
+        </div>
+      </button>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.8 AI ENGINE TRANSPARENCY & TOKEN SPEND METER (Compact, High-Density Metric Card) -->
+    <section class="space-y-2">
+      <!-- Section Header with Number Badge -->
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-[10.5px] font-black font-mono">
+            04
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-sans">
+            AI TRANSPARENCY & TOKEN USAGE
+          </h3>
+        </div>
+        <span class="inline-flex items-center gap-1 text-[9.5px] font-black px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>gemini-3.5-flash-lite</span>
+        </span>
+      </div>
+
+      <!-- Compact Quota & Token Spend Meter -->
+      <div class="crystal-card p-3 sm:p-3.5 rounded-2xl space-y-2.5 shadow-2xs border-slate-300/80 dark:border-white/10">
+        
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-7 h-7 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25 flex items-center justify-center text-xs font-black shrink-0">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <div class="min-w-0">
+              <h4 class="text-xs font-black text-slate-900 dark:text-white truncate">Usage & Quota Tracker</h4>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate">100% Free Official Google Tier • 1,500 Requests/Day</p>
+            </div>
+          </div>
+          <span class="text-[9.5px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-400/40 shrink-0">
+            ₹0 Cost
+          </span>
+        </div>
+
+        <!-- 3 Metrics in 1 Compact Grid -->
+        <div class="grid grid-cols-3 gap-1.5 text-center">
+          <!-- Metric 1: Today's Tokens Spent -->
+          <div class="p-2 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10">
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tight block">Today's Tokens</span>
+            <span id="aiTodayTokens" class="text-xs sm:text-sm font-black font-mono text-slate-900 dark:text-white py-0.5 block">0</span>
+            <span class="text-[8.5px] font-bold text-amber-600 dark:text-amber-400">Tokens Spent</span>
+          </div>
+
+          <!-- Metric 2: Total Lifetime Tokens -->
+          <div class="p-2 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10">
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tight block">Total Tokens</span>
+            <span id="aiTotalTokens" class="text-xs sm:text-sm font-black font-mono text-slate-900 dark:text-white py-0.5 block">0</span>
+            <span class="text-[8.5px] font-bold text-emerald-600 dark:text-emerald-400">Lifetime Used</span>
+          </div>
+
+          <!-- Metric 3: Remaining Requests Balance -->
+          <div class="p-2 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10">
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tight block">Daily Limit</span>
+            <span class="text-xs sm:text-sm font-black font-mono text-slate-900 dark:text-white py-0.5 block">1,500</span>
+            <span class="text-[8.5px] font-bold text-sky-600 dark:text-sky-400">Req/Day Max</span>
+          </div>
+        </div>
+
+        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed pt-0.5">
+          <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i>
+          Google Gemini Free Tier provides ample capacity for 100+ full quizzes and 50+ textbook notes daily per student without expiry.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- 2.9 PLATFORM PULSE: ALL INFO IN ONE CLEAN ROW ON MOBILE (UNIFORM BLACK/SLATE COLOR, ZERO WRAP) -->
+    <section class="crystal-card px-2.5 py-2 rounded-2xl shadow-2xs border-slate-300/80 dark:border-white/10 select-none">
+      <div class="flex items-center justify-between w-full max-w-sm sm:max-w-xl mx-auto text-[10.5px] sm:text-xs font-bold text-slate-800 dark:text-slate-200 tracking-tight whitespace-nowrap">
+        <span class="truncate">१००% मोफत</span>
+        <span class="text-slate-400 dark:text-slate-600">•</span>
+        <span class="truncate">१/४ निगेटिव्ह</span>
+        <span class="text-slate-400 dark:text-slate-600">•</span>
+        <span class="truncate">२६ ऑप्शनल्स</span>
+        <span class="text-slate-400 dark:text-slate-600">•</span>
+        <span class="truncate">शून्य जाहिराती</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 3. DYNAMIC FOOTER & MODALS PLACEHOLDERS                                    -->
+  <!-- ========================================================================= -->
+  <div id="footerPlaceholder"></div>
+  <div id="modalsPlaceholder"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. LAUNCH CONFIRMATION MODAL                                              -->
+  <!-- ========================================================================= -->
+  <div 
+    id="launchConfirmModal" 
+    role="dialog" 
+    aria-modal="true" 
+    class="fixed inset-0 z-[120] bg-slate-950/70 backdrop-blur-md hidden items-center justify-center p-4 select-none"
+    onclick="if(event.target === this){closeLaunchConfirmModal();}"
+  >
+    <div class="relative w-full max-w-sm rounded-3xl crystal-panel p-5 text-slate-800 dark:text-slate-100 flex flex-col gap-4 overflow-hidden animate-pop-in box-border shadow-2xl">
+      
+      <!-- Top Dynamic Icon & Heading -->
+      <div class="flex items-center gap-3">
+        <div id="launchConfirmIconBox" class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0">
+           <i id="launchConfirmIcon" class="fa-solid fa-bolt"></i>
+        </div>
+        <div>
+          <h3 id="launchConfirmHeading" class="text-sm font-black text-slate-900 dark:text-white">Start Practice?</h3>
+          <p id="launchConfirmSubtext" class="text-[11px] font-bold text-slate-500 dark:text-slate-400">Confirm your selection</p>
+        </div>
+      </div>
+
+      <!-- Info Box -->
+      <div class="p-3.5 rounded-2xl crystal-card space-y-1.5">
+         <div class="flex items-center gap-1.5 mb-2">
+           <span id="launchConfirmExam" class="px-2 py-0.5 rounded bg-slate-200/60 dark:bg-white/10 text-[9px] font-bold uppercase text-slate-700 dark:text-slate-300">RAJYASEVA</span>
+           <span id="launchConfirmSubject" class="px-2 py-0.5 rounded bg-slate-200/60 dark:bg-white/10 text-[9px] font-bold uppercase text-slate-700 dark:text-slate-300">POLITY</span>
+         </div>
+         <h4 id="launchConfirmTitle" class="text-[13px] sm:text-sm font-black text-slate-900 dark:text-white leading-snug">मूलभूत हक्क (Fundamental Rights)</h4>
+         <div id="launchConfirmMeta" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200/60 dark:border-white/10 mt-2">15 Questions • Medium • Marathi</div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-2 pt-1">
+        <button type="button" onclick="closeLaunchConfirmModal()" class="flex-1 py-2.5 rounded-xl bg-slate-200/60 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-300 font-bold text-xs btn-spring cursor-pointer">Cancel</button>
+        <button type="button" id="btnConfirmLaunch" onclick="executeLaunch()" class="flex-1 py-2.5 rounded-xl font-bold text-xs btn-spring shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer">
+          <span id="btnConfirmLaunchText">Start Now</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. UNIVERSAL FROSTED GLASS TOAST NOTIFICATION                             -->
+  <!-- ========================================================================= -->
+  <div 
+    id="toastNotification" 
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[130] transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 ease-out flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border shadow-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-slate-800 dark:text-slate-100 max-w-sm w-[90vw] sm:w-auto"
+  >
+    <div id="toastIconSlot" class="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <span id="toastMessage" class="text-xs font-semibold leading-snug">
+      Done!
+    </span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 6. INLINE JAVASCRIPT & REAL MASTER DATABASE INTEGRATION                   -->
+  <!-- ========================================================================= -->
+  <script type="module">
+    import { mpscMasterEngine } from './database/master-database.js';
+
+    let activeSlideIndex = 0;
+    let activeSlidesList = [];
+    let sliderIntervalTimer = null;
+
+    let pendingLaunchMode = null;
+    let pendingLaunchPayload = null;
+
+    // In-memory lookup registry for Hot Topics to eliminate string escaping issues
+    const hotTopicsMemoryStore = {};
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadModularComponents();
+      setupHeroAndLastAttemptLogic();
+      renderAiTokenMetrics();
+      renderRealDatabaseDailyHotTopics();
+      syncGoogleProfileStatusUI();
+    });
+
+    // 🛑 BFCache Cleanup & Modal Recovery
+    window.addEventListener('pageshow', () => {
+      closeLaunchConfirmModal();
+      document.body.classList.remove('overflow-hidden');
+    });
+
+    // 🛑 Escape Key Global Guard for Launch Modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLaunchConfirmModal();
+      }
+    });
+
+    /**
+     * Compute and Render Real-Time AI Token Metrics
+     */
+    function renderAiTokenMetrics() {
+      const todayEl = document.getElementById('aiTodayTokens');
+      const totalEl = document.getElementById('aiTotalTokens');
+      if (!todayEl || !totalEl) return;
+
+      try {
+        const history = JSON.parse(localStorage.getItem('qq_quiz_history') || '[]');
+        const todayStr = new Date().toISOString().slice(0, 10);
+
+        let totalTokens = 0;
+        let todayTokens = 0;
+
+        // Approx 1,150 tokens per quiz attempt
+        history.forEach(item => {
+          totalTokens += 1150;
+          if (item.completedAt && item.completedAt.startsWith(todayStr)) {
+            todayTokens += 1150;
+          }
+        });
+
+        // Add tokens from saved notes (approx 2,400 tokens per chapter)
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith('notes_') && k.endsWith('_c1')) {
+            totalTokens += 2400;
+          }
+        }
+
+        const formatTokens = (num) => {
+          if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+          if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+          return String(num);
+        };
+
+        todayEl.textContent = formatTokens(todayTokens);
+        totalEl.textContent = formatTokens(totalTokens);
+      } catch (e) {
+        todayEl.textContent = "0";
+        totalEl.textContent = "0";
+      }
+    }
+
+    /**
+     * 1. REAL DATABASE DAILY HOT TOPICS (Exact 2x2 Grid with Soft Tint Buttons)
+     */
+    function renderRealDatabaseDailyHotTopics() {
+      const grid = document.getElementById('hotTopicsGrid');
+      if (!grid) return;
+
+      try {
+        const d = new Date();
+        const dayOfYear = Math.floor((d - new Date(d.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+
+        const stageBlueprints = [
+          {
+            boxTag: "Rajyaseva Pre",
+            examId: "rajyaseva",
+            stageId: "prelims",
+            paperId: "paper_1"
+          },
+          {
+            boxTag: "Rajyaseva Mains",
+            examId: "rajyaseva",
+            stageId: "mains",
+            paperId: "paper_3"
+          },
+          {
+            boxTag: "Group B Pre",
+            examId: "group_b",
+            stageId: "prelims",
+            paperId: "combined_prelims_p1"
+          },
+          {
+            boxTag: "Group C Pre",
+            examId: "group_c",
+            stageId: "prelims",
+            paperId: "combined_prelims_p1"
+          }
+        ];
+
+        const renderedCards = [];
+
+        stageBlueprints.forEach((bp, index) => {
+          let subjects = mpscMasterEngine.getSubjects(bp.examId, bp.stageId, bp.paperId);
+          if (!subjects || subjects.length === 0) {
+            const papers = mpscMasterEngine.getPapers(bp.examId, bp.stageId);
+            if (papers && papers.length > 0) {
+              bp.paperId = papers[0].id;
+              subjects = mpscMasterEngine.getSubjects(bp.examId, bp.stageId, bp.paperId);
+            }
+          }
+
+          if (subjects && subjects.length > 0) {
+            const subjectIdx = (dayOfYear + index) % subjects.length;
+            const targetSub = subjects[subjectIdx];
+
+            const chapters = mpscMasterEngine.getChapters(bp.examId, bp.stageId, bp.paperId, targetSub.id);
+            if (chapters && chapters.length > 0) {
+              const chIdx = (dayOfYear * 2 + index * 3) % chapters.length;
+              const ch = chapters[chIdx];
+
+              const storeId = `ht_${bp.examId}_${bp.stageId}_${index}`;
+              hotTopicsMemoryStore[storeId] = {
+                examId: bp.examId,
+                stageId: bp.stageId,
+                paperId: bp.paperId,
+                subjectId: targetSub.id,
+                chapterIndex: ch.index,
+                chapterNameMr: ch.nameMr,
+                subjectNameMr: targetSub.nameMr
+              };
+
+              renderedCards.push({
+                storeId: storeId,
+                boxTag: bp.boxTag,
+                subjectNameMr: targetSub.nameMr,
+                chapterNameMr: ch.nameMr
+              });
+            }
+          }
+        });
+
+        grid.innerHTML = renderedCards.map((card) => `
+          <div class="crystal-card p-3 sm:p-3.5 rounded-2xl flex flex-col justify-between gap-2 shadow-2xs">
+            <div class="space-y-1 min-w-0">
+              <div class="flex items-center justify-between gap-1">
+                <span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8.5px] sm:text-[9px] font-bold uppercase tracking-tight bg-slate-200/70 dark:bg-white/10 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-white/10 truncate max-w-full">
+                  <span class="truncate">${card.boxTag}</span>
+                </span>
+              </div>
+              <p class="text-[9px] sm:text-[9.5px] font-bold text-slate-500 dark:text-slate-400 truncate pt-0.5">
+                ${escapeHtml(card.subjectNameMr)}
+              </p>
+              <h4 class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white leading-snug line-clamp-2 min-h-[30px] mt-0.5" title="${escapeHtml(card.chapterNameMr)}">
+                ${escapeHtml(card.chapterNameMr)}
+              </h4>
+            </div>
+
+            <!-- Soft Tint Buttons -->
+            <div class="flex items-center gap-1.5 pt-1.5 border-t border-slate-200/80 dark:border-white/10">
+              <button 
+                type="button" 
+                onclick="launchStoredHotTopic('quiz', '${card.storeId}')" 
+                class="flex-1 py-1.5 px-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/25 text-[10px] sm:text-[11px] font-bold flex items-center justify-center gap-1 transition-all btn-spring cursor-pointer shadow-2xs"
+              >
+                <i class="fa-solid fa-bolt text-[9px] text-amber-500"></i>
+                <span>Practice</span>
+              </button>
+
+              <button 
+                type="button" 
+                onclick="launchStoredHotTopic('notes', '${card.storeId}')" 
+                class="flex-1 py-1.5 px-1.5 rounded-xl bg-slate-200/60 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15 text-[10px] sm:text-[11px] font-bold flex items-center justify-center gap-1 transition-all btn-spring cursor-pointer shadow-2xs"
+              >
+                <i class="fa-solid fa-book-open text-[9px] text-slate-500 dark:text-slate-400"></i>
+                <span>Notes</span>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.warn("[Hot Topics 2x2 Load Error]", err);
+      }
+    }
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    window.launchStoredHotTopic = function(mode, storeId) {
+      const data = hotTopicsMemoryStore[storeId];
+      if (!data) return;
+
+      pendingLaunchMode = mode;
+      pendingLaunchPayload = {
+        examId: data.examId,
+        stageId: data.stageId,
+        paperId: data.paperId,
+        subjectId: data.subjectId,
+        topicTitleMr: data.chapterNameMr,
+        topicTitleEn: data.chapterNameMr,
+        selectedQuizChapterIndices: [data.chapterIndex],
+        selectedNotesChapterIndex: data.chapterIndex,
+        selectedNotesSubtopics: [],
+        difficulty: 'medium',
+        questionsCount: 15,
+        language: 'mr',
+        startedAt: new Date().toISOString()
+      };
+
+      renderAndShowLaunchModal(false);
+    };
+
+    /**
+     * 2. UNIVERSAL SYLLABUS SPOTLIGHT SEARCH
+     */
+    window.handleUniversalSearchInput = function(query) {
+      const box = document.getElementById('universalSearchResultsBox');
+      const clearBtn = document.getElementById('btnClearSearch');
+      if (!box) return;
+
+      const q = (query || '').trim();
+      if (clearBtn) clearBtn.classList.toggle('hidden', q.length === 0);
+
+      if (q.length < 2) {
+        box.classList.add('hidden');
+        box.innerHTML = '';
+        return;
+      }
+
+      const results = mpscMasterEngine.searchSyllabus(q).slice(0, 8);
+
+      if (results.length === 0) {
+        box.innerHTML = `
+          <div class="p-3.5 text-center text-xs text-slate-400 font-bold">
+            '${escapeHtml(q)}' बाबत कोणताही घटक आढळला नाही.
+          </div>
+        `;
+        box.classList.remove('hidden');
+        return;
+      }
+
+      const examNameMap = {
+        'rajyaseva': 'RAJYASEVA',
+        'group_b': 'GROUP B',
+        'group_c': 'GROUP C'
+      };
+
+      box.innerHTML = results.map((item, idx) => {
+        const storeId = `search_${idx}`;
+        hotTopicsMemoryStore[storeId] = item;
+
+        return `
+          <div class="p-2.5 sm:p-3 hover:bg-slate-100/60 dark:hover:bg-white/5 transition-colors flex items-center justify-between gap-2">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 text-[9px] font-black text-slate-400 uppercase">
+                <span>${examNameMap[item.examId] || item.examId.toUpperCase()}</span>
+                <span>•</span>
+                <span class="truncate">${escapeHtml(item.subjectNameMr)}</span>
+              </div>
+              <h5 class="text-xs font-black text-slate-900 dark:text-white truncate mt-0.5">
+                ${escapeHtml(item.chapterNameMr)}
+              </h5>
+            </div>
+
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button 
+                type="button" 
+                onclick="launchStoredHotTopic('quiz', '${storeId}')" 
+                class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/25 text-[10px] font-bold btn-spring cursor-pointer"
+              >
+                Practice
+              </button>
+              <button 
+                type="button" 
+                onclick="launchStoredHotTopic('notes', '${storeId}')" 
+                class="px-2.5 py-1 rounded-lg bg-slate-200/60 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15 text-[10px] font-bold btn-spring cursor-pointer"
+              >
+                Notes
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      box.classList.remove('hidden');
+    };
+
+    window.triggerPresetSearch = function(keyword) {
+      const inp = document.getElementById('globalSyllabusSearchInput');
+      if (inp) {
+        inp.value = keyword;
+        inp.focus();
+        window.handleUniversalSearchInput(keyword);
+      }
+    };
+
+    window.clearUniversalSearch = function() {
+      const inp = document.getElementById('globalSyllabusSearchInput');
+      if (inp) inp.value = '';
+      const box = document.getElementById('universalSearchResultsBox');
+      if (box) {
+        box.classList.add('hidden');
+        box.innerHTML = '';
+      }
+      document.getElementById('btnClearSearch')?.classList.add('hidden');
+    };
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#globalSyllabusSearchInput') && !e.target.closest('#universalSearchResultsBox')) {
+        document.getElementById('universalSearchResultsBox')?.classList.add('hidden');
+      }
+    });
+
+    /**
+     * 3. LAST ATTEMPT CAROUSEL CONTROLLER
+     */
+    function setupHeroAndLastAttemptLogic() {
+      const heroBanner = document.getElementById('heroWelcomeBanner');
+      const sliderContainer = document.getElementById('lastAttemptSliderContainer');
+      const dotsContainer = document.getElementById('sliderDotsContainer');
+
+      let quizTarget = null;
+      let notesTarget = null;
+
+      try {
+        const rawQuiz = localStorage.getItem('qq_active_topic_target');
+        if (rawQuiz) quizTarget = JSON.parse(rawQuiz);
+      } catch (e) {}
+
+      try {
+        const rawNotes = localStorage.getItem('qq_active_notes_target');
+        if (rawNotes) notesTarget = JSON.parse(rawNotes);
+      } catch (e) {}
+
+      activeSlidesList = [];
+
+      if (quizTarget && (quizTarget.topicTitleMr || quizTarget.subjectId)) {
+        document.getElementById('quizAttemptTitle').textContent = quizTarget.topicTitleMr || 'सराव चाचणी सत्र';
+        document.getElementById('quizAttemptStage').textContent = (quizTarget.stageId || 'Prelims').toUpperCase();
+        
+        let timeStr = 'Recent Practice';
+        if (quizTarget.startedAt) {
+          try {
+            const diffMin = Math.round((Date.now() - new Date(quizTarget.startedAt).getTime()) / 60000);
+            timeStr = diffMin < 60 ? `${diffMin}m ago` : `${Math.round(diffMin / 60)}h ago`;
+          } catch (err) {}
+        }
+        document.getElementById('quizAttemptTime').textContent = timeStr;
+
+        const qFiltersRow = document.getElementById('quizAttemptFiltersRow');
+        if (qFiltersRow) {
+          const examBadge = (quizTarget.examId || 'Rajyaseva').replace('_', ' ').toUpperCase();
+          const countBadge = `${quizTarget.questionsCount || 15} Qs`;
+          const diffBadge = (quizTarget.difficulty || 'Medium').toUpperCase();
+          const langBadge = (quizTarget.language === 'en') ? 'English' : 'मराठी';
+
+          qFiltersRow.innerHTML = `
+            <span class="px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-[9px] font-bold">${examBadge}</span>
+            <span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-400/30 text-[9px] font-bold">${countBadge}</span>
+            <span class="px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-[9px] font-bold">${diffBadge}</span>
+            <span class="px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-[9px] font-bold">${langBadge}</span>
+          `;
+        }
+
+        activeSlidesList.push('slideQuizAttempt');
+      }
+
+      if (notesTarget && (notesTarget.topicTitleMr || notesTarget.subjectId)) {
+        document.getElementById('notesAttemptTitle').textContent = notesTarget.topicTitleMr || 'अभ्यास नोट्स वाचन';
+        document.getElementById('notesAttemptStage').textContent = (notesTarget.stageId || 'Study Guide').toUpperCase();
+
+        let timeStr = 'Recent Reading';
+        if (notesTarget.startedAt) {
+          try {
+            const diffMin = Math.round((Date.now() - new Date(notesTarget.startedAt).getTime()) / 60000);
+            timeStr = diffMin < 60 ? `${diffMin}m ago` : `${Math.round(diffMin / 60)}h ago`;
+          } catch (err) {}
+        }
+        document.getElementById('notesAttemptTime').textContent = timeStr;
+
+        const nFiltersRow = document.getElementById('notesAttemptFiltersRow');
+        if (nFiltersRow) {
+          const examBadge = (notesTarget.examId || 'Rajyaseva').replace('_', ' ').toUpperCase();
+          const subBadge = notesTarget.subjectId || 'Core Subject';
+
+          nFiltersRow.innerHTML = `
+            <span class="px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-[9px] font-bold">${examBadge}</span>
+            <span class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-400/30 text-[9px] font-bold">${subBadge}</span>
+          `;
+        }
+
+        activeSlidesList.push('slideNotesAttempt');
+      }
+
+      if (activeSlidesList.length === 0) {
+        if (heroBanner) heroBanner.classList.remove('hidden');
+        if (sliderContainer) sliderContainer.classList.add('hidden');
+        return;
+      }
+
+      if (heroBanner) heroBanner.classList.add('hidden');
+      if (sliderContainer) sliderContainer.classList.remove('hidden');
+
+      if (activeSlidesList.length === 1) {
+        const singleSlideEl = document.getElementById(activeSlidesList[0]);
+        if (singleSlideEl) {
+          singleSlideEl.classList.remove('opacity-0', 'pointer-events-none');
+          singleSlideEl.classList.add('opacity-100', 'pointer-events-auto');
+        }
+        if (dotsContainer) dotsContainer.classList.add('hidden');
+      } else {
+        if (dotsContainer) dotsContainer.classList.remove('hidden');
+        switchActiveSlide(0);
+
+        clearInterval(sliderIntervalTimer);
+        sliderIntervalTimer = setInterval(() => {
+          activeSlideIndex = (activeSlideIndex + 1) % activeSlidesList.length;
+          switchActiveSlide(activeSlideIndex);
+        }, 8000);
+      }
+    }
+
+    window.switchActiveSlide = function(index) {
+      if (activeSlidesList.length < 2) return;
+      activeSlideIndex = index;
+
+      activeSlidesList.forEach((slideId, i) => {
+        const el = document.getElementById(slideId);
+        const dot = document.getElementById(`sliderDot${i}`);
+        if (!el) return;
+
+        if (i === activeSlideIndex) {
+          el.classList.remove('opacity-0', 'pointer-events-none');
+          el.classList.add('opacity-100', 'pointer-events-auto');
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-amber-500 transition-all";
+        } else {
+          el.classList.remove('opacity-100', 'pointer-events-auto');
+          el.classList.add('opacity-0', 'pointer-events-none');
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 transition-all";
+        }
+      });
+    };
+
+    /**
+     * 4. LAUNCH CONFIRMATION MODAL & EXECUTION
+     */
+    window.promptResume = function(mode) {
+      pendingLaunchMode = mode;
+      const key = mode === 'quiz' ? 'qq_active_topic_target' : 'qq_active_notes_target';
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          pendingLaunchPayload = JSON.parse(raw);
+          renderAndShowLaunchModal(true);
+        }
+      } catch (e) {}
+    };
+
+    function renderAndShowLaunchModal(isResume) {
+      if (!pendingLaunchPayload || !pendingLaunchMode) return;
+      
+      const modal = document.getElementById('launchConfirmModal');
+      const iconBox = document.getElementById('launchConfirmIconBox');
+      const icon = document.getElementById('launchConfirmIcon');
+      const heading = document.getElementById('launchConfirmHeading');
+      const subtext = document.getElementById('launchConfirmSubtext');
+      const badgeExam = document.getElementById('launchConfirmExam');
+      const badgeSub = document.getElementById('launchConfirmSubject');
+      const title = document.getElementById('launchConfirmTitle');
+      const meta = document.getElementById('launchConfirmMeta');
+      const btnLaunch = document.getElementById('btnConfirmLaunch');
+      const btnText = document.getElementById('btnConfirmLaunchText');
+
+      badgeExam.textContent = (pendingLaunchPayload.examId || 'Rajyaseva').replace('_', ' ').toUpperCase();
+      badgeSub.textContent = pendingLaunchPayload.subjectId || 'General Studies';
+      title.textContent = pendingLaunchPayload.topicTitleMr || 'अभ्यास सत्र';
+
+      if (pendingLaunchMode === 'quiz') {
+        iconBox.className = "w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25";
+        icon.className = "fa-solid fa-bolt";
+        heading.textContent = isResume ? "Resume Quiz?" : "Start Practice?";
+        subtext.textContent = isResume ? "Continue your previous session" : "MPSC 1/4th Rule (-0.25 Mark)";
+        meta.textContent = `${pendingLaunchPayload.questionsCount || 15} Questions • ${pendingLaunchPayload.difficulty || 'Medium'} • ${pendingLaunchPayload.language === 'en' ? 'English' : 'Marathi'}`;
+        
+        btnLaunch.className = "flex-1 py-2.5 rounded-xl font-bold text-xs btn-spring shadow-2xs flex items-center justify-center gap-1.5 bg-amber-500/15 hover:bg-amber-500/25 text-amber-800 dark:text-amber-200 border border-amber-500/25 cursor-pointer";
+        btnText.textContent = isResume ? "Resume Quiz" : "Start Quiz";
+      } else {
+        iconBox.className = "w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 bg-slate-200/60 dark:bg-white/10 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-white/15";
+        icon.className = "fa-solid fa-book-open-reader";
+        heading.textContent = isResume ? "Resume Reading?" : "Read Notes?";
+        subtext.textContent = isResume ? "Continue your revision" : "Textbook-grade 4-section notes";
+        meta.textContent = "Full Academic Chapter • Verified References";
+        
+        btnLaunch.className = "flex-1 py-2.5 rounded-xl font-bold text-xs btn-spring shadow-2xs flex items-center justify-center gap-1.5 bg-slate-200/60 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 border border-slate-300/60 dark:border-white/15 cursor-pointer";
+        btnText.textContent = isResume ? "Continue Reading" : "Read Notes";
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    window.executeLaunch = function() {
+      if (!pendingLaunchMode || !pendingLaunchPayload) return;
+      
+      // 🛑 API Key Guard: Intercept launch if key is missing or invalid
+      const apiKey = (
+        localStorage.getItem('qq_gemini_key') || 
+        localStorage.getItem('gemini_api_key') || 
+        localStorage.getItem('mpsc_api_key') || 
+        ''
+      ).trim();
+
+      if (!apiKey || apiKey.length < 15) {
+        closeLaunchConfirmModal();
+        if (typeof window.openApiKeyModalDirect === 'function') {
+          window.openApiKeyModalDirect();
+        } else if (typeof window.openApiKeyModal === 'function') {
+          window.openApiKeyModal();
+        } else if (window.openModal) {
+          window.openModal('apiKeyModal');
+        }
+        showToast("सुरू करण्यासाठी आधी तुमची मोफत Gemini API Key जोडा.", "warning");
+        return;
+      }
+      
+      const key = pendingLaunchMode === 'quiz' ? 'qq_active_topic_target' : 'qq_active_notes_target';
+      pendingLaunchPayload.startedAt = new Date().toISOString();
+      
+      localStorage.setItem(key, JSON.stringify(pendingLaunchPayload));
+      window.location.href = pendingLaunchMode === 'quiz' ? './quiz.html' : './notes.html';
+    };
+
+    window.closeLaunchConfirmModal = function() {
+      const modal = document.getElementById('launchConfirmModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+      }
+      pendingLaunchMode = null;
+      pendingLaunchPayload = null;
+    };
+
+    /**
+     * 5. FIREBASE GOOGLE SYNC UI INDICATOR
+     */
+    function syncGoogleProfileStatusUI() {
+      const savedUser = localStorage.getItem('qq_firebase_user');
+      const label = document.getElementById('homeGoogleSyncSubtext');
+      if (savedUser && label) {
+        try {
+          const u = JSON.parse(savedUser);
+          label.textContent = u.displayName || 'Google Synced';
+        } catch (e) {}
+      }
+    }
+
+    /**
+     * 6. UNIVERSAL TOAST ENGINE (Frosted Glass)
+     */
+    let toastTimeout = null;
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      const iconSlot = document.getElementById('toastIconSlot');
+
+      if (!toast || !text || !iconSlot) return;
+
+      text.textContent = msg;
+
+      toast.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-[130] transform transition-all duration-300 ease-out flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border shadow-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-slate-800 dark:text-slate-100 max-w-sm w-[90vw] sm:w-auto";
+
+      if (type === 'error' || type === true) {
+        toast.classList.add('border-rose-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+      } else if (type === 'warning') {
+        toast.classList.add('border-amber-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      } else if (type === 'info') {
+        toast.classList.add('border-blue-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-blue-500/15 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+      } else {
+        toast.classList.add('border-emerald-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      }
+
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+    window.showToast = showToast;
+
+    /**
+     * 7. MODULAR HTML COMPONENT INJECTOR
+     */
+    async function loadModularComponents() {
+      async function injectHtml(url, targetId) {
+        try {
+          const res = await fetch(url + '?v=' + Date.now());
+          if (res.ok) {
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              const htmlContent = await res.text();
+              targetEl.innerHTML = htmlContent;
+
+              // Re-run scripts so Header AI sensor & monitors are properly initialized
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = htmlContent;
+              const scripts = tempDiv.querySelectorAll('script');
+              scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                if (script.src) newScript.src = script.src;
+                else newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+              });
+            }
+          }
+        } catch (e) {
+          console.warn(`[Component Load Warning] ${url}:`, e);
+        }
+      }
+
+      await injectHtml('./components/header.html', 'headerPlaceholder');
+      await injectHtml('./components/footer.html', 'footerPlaceholder');
+
+      // Trigger immediate header evaluation if available
+      if (typeof window.refreshHeaderAiStatus === 'function') {
+        window.refreshHeaderAiStatus();
+      }
+
+      const modalUrls = [
+        './modals/api-key-modal.html',
+        './modals/policies-modal.html',
+        './modals/donation-modal.html',
+        './modals/feedback-modal.html',
+        './modals/install-modal.html'
+      ];
+
+      const modalsContainer = document.getElementById('modalsPlaceholder');
+      if (modalsContainer) {
+        for (const url of modalUrls) {
+          try {
+            const res = await fetch(url);
+            if (res.ok) {
+              const htmlContent = await res.text();
+              modalsContainer.insertAdjacentHTML('beforeend', htmlContent);
+              
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = htmlContent;
+              const scripts = tempDiv.querySelectorAll('script');
+              scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                if (script.src) newScript.src = script.src;
+                else newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+              });
+            }
+          } catch (e) {
+            console.warn(`[Modal Load Warning] ${url}:`, e);
+          }
+        }
+      }
+
+      if (window.GatekeeperEngine && typeof window.GatekeeperEngine.init === 'function') {
+        window.GatekeeperEngine.init();
+      }
+      if (window.StudySphereCommon && typeof window.StudySphereCommon.init === 'function') {
+        window.StudySphereCommon.init();
+      }
+    }
+  </script>
+</body>
+</html>

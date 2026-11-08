@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="mr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>StudySphere | Revision Vault (उजळणी दालन)</title>
+  
+  <meta name="theme-color" content="#f59e0b">
+  <meta name="description" content="StudySphere Revision Vault - Simple and fast access to your completed quizzes and saved study notes.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="alternate icon" href="./favicon.ico">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Mukta -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Utilities -->
+  <script type="module" src="./assets/js/common.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Mukta"', 'system-ui', 'sans-serif'],
+            marathi: ['"Mukta"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .crystal-canvas {
+      background-color: #f8fafc;
+      background-image: radial-gradient(rgba(203, 213, 225, 0.7) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark .crystal-canvas {
+      background-color: #070b14;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .crystal-panel {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+    }
+    .dark .crystal-panel {
+      background: rgba(8, 13, 25, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5);
+    }
+
+    .crystal-card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      transition: all 0.15s ease;
+    }
+    .dark .crystal-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+    .crystal-card:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .btn-spring {
+      transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-spring:active:not(:disabled) {
+      transform: scale(0.97) translateY(1px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+    @keyframes popIn {
+      from { transform: scale(0.96) translateY(8px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="crystal-canvas text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
+
+  <!-- Header Placeholder -->
+  <div id="headerPlaceholder"></div>
+
+  <!-- Main Vault Container -->
+  <main class="max-w-3xl mx-auto w-full px-3 sm:px-4 py-4 flex-1 flex flex-col gap-3.5">
+
+    <!-- Top Banner: Simple Intro & Backup -->
+    <section class="crystal-panel p-3.5 sm:p-4 rounded-3xl flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400 text-lg shrink-0">
+          <i class="fa-solid fa-vault"></i>
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-base sm:text-lg font-black text-slate-900 dark:text-white truncate font-marathi">
+            माझे उजळणी दालन (Revision Vault)
+          </h1>
+          <p class="text-[10.5px] text-slate-500 dark:text-slate-400 truncate">
+            विषयनिहाय सोडवलेल्या चाचण्या व जतन केलेल्या नोट्सचे केंद्र
+          </p>
+        </div>
+      </div>
+
+      <button 
+        type="button" 
+        onclick="exportSimpleVaultBackup()" 
+        class="h-8 px-3 rounded-xl crystal-card border border-slate-300 dark:border-white/10 hover:border-amber-400 text-slate-700 dark:text-slate-200 text-xs font-bold btn-spring flex items-center gap-1.5 shrink-0 cursor-pointer shadow-2xs"
+        title="Backup All Data"
+      >
+        <i class="fa-solid fa-file-arrow-down text-amber-500 text-[11px]"></i>
+        <span class="hidden sm:inline">Export</span>
+      </button>
+    </section>
+
+    <!-- Level 1: Category Switcher (Quizzes vs Notes) -->
+    <section class="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-slate-200/60 dark:bg-slate-950/60 border border-slate-300/80 dark:border-white/10 text-xs font-bold">
+      <button 
+        type="button" 
+        id="tabQuizzes" 
+        onclick="switchVaultTab('quizzes')" 
+        class="py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer btn-spring bg-amber-500 text-slate-950 font-black shadow-sm"
+      >
+        <i class="fa-solid fa-list-check text-xs"></i>
+        <span>सोडवलेल्या चाचण्या (<span id="countQuizzes">0</span>)</span>
+      </button>
+
+      <button 
+        type="button" 
+        id="tabNotes" 
+        onclick="switchVaultTab('notes')" 
+        class="py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer btn-spring text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white"
+      >
+        <i class="fa-solid fa-book-open text-xs"></i>
+        <span>सेव्ह केलेल्या नोट्स (<span id="countNotes">0</span>)</span>
+      </button>
+    </section>
+
+    <!-- Level 2: Exam Selector Pills -->
+    <section class="grid grid-cols-3 gap-1.5 text-xs font-bold">
+      <button type="button" id="pill_rajyaseva" onclick="filterVaultExam('rajyaseva')" class="py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs">
+        <span>🏛️ राज्यसेवा</span>
+      </button>
+      <button type="button" id="pill_group_b" onclick="filterVaultExam('group_b')" class="py-2 px-2.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/10 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1.5 cursor-pointer btn-spring">
+        <span>🛡️ संयुक्त गट-ब</span>
+      </button>
+      <button type="button" id="pill_group_c" onclick="filterVaultExam('group_c')" class="py-2 px-2.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/10 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1.5 cursor-pointer btn-spring">
+        <span>💼 संयुक्त गट-क</span>
+      </button>
+    </section>
+
+    <!-- Level 3: Exam Stage Switcher (Prelims vs Mains) -->
+    <section class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-xs font-bold">
+      <button type="button" id="stageBtn_prelims" onclick="filterVaultStage('prelims')" class="py-1.5 px-3 rounded-xl bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 flex items-center justify-center gap-1.5 cursor-pointer btn-spring">
+        <span>पूर्व परीक्षा (Prelims)</span>
+      </button>
+      <button type="button" id="stageBtn_mains" onclick="filterVaultStage('mains')" class="py-1.5 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-transparent flex items-center justify-center gap-1.5 cursor-pointer btn-spring">
+        <span>मुख्य परीक्षा (Mains)</span>
+      </button>
+    </section>
+
+    <!-- Status Header Bar -->
+    <div class="flex items-center justify-between px-1 text-xs">
+      <span id="vaultSectionHeaderTitle" class="font-black uppercase tracking-wider text-slate-900 dark:text-white">
+        उपलब्ध विषय यादी
+      </span>
+      <span id="vaultItemsCountBadge" class="font-bold text-slate-400">Loading...</span>
+    </div>
+
+    <!-- Level 4: Subject Cards Grid -->
+    <section id="vaultSubjectsGridContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-8">
+      <!-- Injected Dynamically by JavaScript -->
+    </section>
+
+  </main>
+
+  <!-- Level 5: Slide-Over Chapter Drawer -->
+  <div id="vaultChaptersDrawer" class="fixed inset-0 z-[60] bg-slate-950/70 backdrop-blur-sm flex justify-end select-none opacity-0 pointer-events-none transition-all duration-300 translate-x-full" onclick="if(event.target === this){closeVaultDrawer();}">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-md h-full shadow-2xl border-l border-slate-300 dark:border-slate-800 flex flex-col justify-between overflow-hidden">
+      
+      <!-- Drawer Top Bar -->
+      <div class="p-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 shrink-0 bg-white/95 dark:bg-slate-900/95">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <button type="button" onclick="closeVaultDrawer()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center text-xs font-black cursor-pointer btn-spring shrink-0">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <div class="min-w-0">
+            <span id="drawerSubjectExamMeta" class="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 tracking-wider block truncate">Rajyaseva Prelims</span>
+            <h3 id="drawerSubjectHeading" class="text-sm font-black text-slate-900 dark:text-white truncate mt-0.5">Subject Chapters</h3>
+          </div>
+        </div>
+        <button type="button" onclick="closeVaultDrawer()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center text-xs font-black cursor-pointer btn-spring shrink-0">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Content Info Strip -->
+      <div class="px-3.5 py-2 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-500 shrink-0">
+        <span id="drawerSubheaderText">प्रकरणे व उपलब्ध नोंदी</span>
+        <span id="drawerItemsBadge" class="text-amber-600 dark:text-amber-400 font-mono">0 Available</span>
+      </div>
+
+      <!-- Drawer Chapters List -->
+      <div id="drawerChaptersContainer" class="p-3 space-y-2.5 overflow-y-auto flex-1 custom-scrollbar"></div>
+    </div>
+  </div>
+
+  <!-- Complete Quiz Review Modal -->
+  <div id="reviewModal" role="dialog" aria-modal="true" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 select-none">
+    <div class="relative w-full max-w-2xl rounded-3xl crystal-panel p-4 sm:p-5 text-slate-800 dark:text-slate-100 flex flex-col h-[88vh] animate-pop-in">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/10 shrink-0">
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase">
+            <span id="reviewExamBadge">MPSC</span>
+            <span>•</span>
+            <span id="reviewDateBadge">Today</span>
+          </div>
+          <h2 id="reviewModalTitle" class="text-sm sm:text-base font-black text-slate-900 dark:text-white truncate mt-0.5">
+            चाचणी पुनरावलोकन
+          </h2>
+        </div>
+        <button type="button" onclick="closeReviewModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center text-xs btn-spring cursor-pointer shrink-0">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Score Strip with Attempt Selector -->
+      <div class="p-3 my-2 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-between gap-2 shrink-0">
+        <div>
+          <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">निकालाचा तपशील</span>
+          <div class="flex items-baseline gap-1 mt-0.5">
+            <span id="reviewScoreValue" class="text-2xl font-black text-amber-600 font-mono">0</span>
+            <span id="reviewTotalValue" class="text-xs font-bold text-slate-400 font-mono">/ 15</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div id="reviewAttemptSelectBox" class="hidden">
+            <select id="reviewAttemptDropdown" onchange="changeSelectedAttemptView(this.value)" class="text-xs font-bold py-1.5 px-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none">
+            </select>
+          </div>
+
+          <button type="button" id="btnLaunchRetestModal" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring flex items-center gap-1.5 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-rotate-right text-[11px]"></i>
+            <span>पुन्हा सोडवा (Re-attempt)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Questions List -->
+      <div id="reviewQuestionsBody" class="flex-1 overflow-y-auto space-y-3 p-1 custom-scrollbar">
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[140] transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 ease-out flex items-center gap-2 px-4 py-2.5 rounded-2xl border shadow-lg bg-slate-900 text-white text-xs font-bold border-slate-700">
+    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+    <span id="toastMessage">Done!</span>
+  </div>
+
+  <div id="footerPlaceholder"></div>
+
+  <!-- Core JavaScript Controller -->
+  <script type="module">
+    import { mpscMasterEngine } from './database/master-database.js';
+
+    let currentTab = 'quizzes'; // 'quizzes' or 'notes'
+    let currentExam = 'rajyaseva'; // 'rajyaseva', 'group_b', 'group_c'
+    let currentStage = 'prelims'; // 'prelims', 'mains'
+    let activeDrawerSubject = null;
+    let consolidatedQuizzesMap = new Map();
+    let consolidatedNotesMap = new Map();
+    let currentActiveReviewGroup = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTheme();
+      await loadHeaderAndFooter();
+      syncAllStorageData();
+      renderVaultSubjects();
+    });
+
+    function initTheme() {
+      if (localStorage.getItem('qq_theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    }
+
+    async function loadHeaderAndFooter() {
+      try {
+        const headerRes = await fetch('./components/header.html');
+        if (headerRes.ok) {
+          const hp = document.getElementById('headerPlaceholder');
+          if (hp) {
+            hp.innerHTML = await headerRes.text();
+            const scripts = hp.querySelectorAll('script');
+            scripts.forEach(s => {
+              const newScript = document.createElement('script');
+              if (s.src) newScript.src = s.src;
+              else newScript.textContent = s.textContent;
+              document.body.appendChild(newScript);
+            });
+          }
+        }
+      } catch (e) {}
+    }
+
+    // Consolidated Storage Engine
+    function syncAllStorageData() {
+      consolidatedQuizzesMap.clear();
+      consolidatedNotesMap.clear();
+
+      // 1. Ingest Quizzes
+      try {
+        const rawHistory = localStorage.getItem('qq_quiz_history');
+        const list = rawHistory ? JSON.parse(rawHistory) : [];
+        if (Array.isArray(list)) {
+          list.forEach(q => {
+            const exId = (q.examId || 'rajyaseva').toLowerCase();
+            const stId = (q.stageId || 'prelims').toLowerCase();
+            const subId = (q.subjectId || 'core').toLowerCase();
+            const chIdx = q.chapterIndex !== undefined ? q.chapterIndex : (q.selectedQuizChapterIndices ? q.selectedQuizChapterIndices[0] : 0);
+            const chTitle = (q.topicTitleMr || q.chapterName || `प्रकरण ${Number(chIdx) + 1}`).trim();
+
+            const uniqueChapterKey = `${exId}_${stId}_${subId}_ch${chIdx}`;
+            
+            if (!consolidatedQuizzesMap.has(uniqueChapterKey)) {
+              consolidatedQuizzesMap.set(uniqueChapterKey, {
+                uniqueKey: uniqueChapterKey,
+                examId: exId,
+                stageId: stId,
+                subjectId: subId,
+                chapterIndex: chIdx,
+                chapterTitle: chTitle,
+                attempts: [q]
+              });
+            } else {
+              consolidatedQuizzesMap.get(uniqueChapterKey).attempts.push(q);
+            }
+          });
+        }
+      } catch (e) {}
+
+      // 2. Ingest Notes (Strict Single Source per Chapter with Resilient Key Parser)
+      try {
+        // Source A: `qq_vault_notes`
+        const rawVaultNotes = localStorage.getItem('qq_vault_notes');
+        if (rawVaultNotes) {
+          try {
+            const parsedMap = JSON.parse(rawVaultNotes);
+            const items = typeof parsedMap === 'object' && !Array.isArray(parsedMap) ? Object.values(parsedMap) : (Array.isArray(parsedMap) ? parsedMap : []);
+            items.forEach(n => {
+              if (n && (n.title || n.topicTitleMr)) {
+                const exId = (n.examId || 'rajyaseva').toLowerCase();
+                const stId = (n.stageId || 'prelims').toLowerCase();
+                const subId = (n.subjectId || 'core').toLowerCase();
+                const chIdx = n.chapterIndex !== undefined ? n.chapterIndex : 0;
+                const title = (n.title || n.topicTitleMr).trim();
+                const uniqueChapterKey = `${exId}_${stId}_${subId}_ch${chIdx}`;
+
+                consolidatedNotesMap.set(uniqueChapterKey, {
+                  uniqueKey: uniqueChapterKey,
+                  examId: exId,
+                  stageId: stId,
+                  subjectId: subId,
+                  chapterIndex: chIdx,
+                  chapterTitle: title,
+                  savedAt: n.savedAt || new Date().toISOString()
+                });
+              }
+            });
+          } catch(e) {}
+        }
+
+        // Source B: `qq_vault_data`
+        const rawVault = localStorage.getItem('qq_vault_data');
+        if (rawVault) {
+          const v = JSON.parse(rawVault);
+          const nList = Array.isArray(v.notes) ? v.notes : (v.notes ? Object.values(v.notes) : (typeof v === 'object' ? Object.values(v) : []));
+          nList.forEach(n => {
+            if (n && (n.title || n.topicTitleMr)) {
+              const exId = (n.examId || 'rajyaseva').toLowerCase();
+              const stId = (n.stageId || 'prelims').toLowerCase();
+              const subId = (n.subjectId || 'core').toLowerCase();
+              const chIdx = n.chapterIndex !== undefined ? n.chapterIndex : 0;
+              const title = (n.title || n.topicTitleMr).trim();
+              const uniqueChapterKey = `${exId}_${stId}_${subId}_ch${chIdx}`;
+
+              if (!consolidatedNotesMap.has(uniqueChapterKey)) {
+                consolidatedNotesMap.set(uniqueChapterKey, {
+                  uniqueKey: uniqueChapterKey,
+                  examId: exId,
+                  stageId: stId,
+                  subjectId: subId,
+                  chapterIndex: chIdx,
+                  chapterTitle: title,
+                  savedAt: n.savedAt || new Date().toISOString()
+                });
+              }
+            }
+          });
+        }
+
+        // Source C: Offline Cached Generated Notes (`notes_*_c1`)
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith('notes_') && k.endsWith('_c1')) {
+            const base = k.replace('_c1', '');
+            const parts = base.split('_'); // notes, examId, stageId, subjectId, chIdx
+            if (parts.length >= 5) {
+              const exId = parts[1].toLowerCase();
+              const stId = parts[2].toLowerCase();
+              const subId = parts[3].toLowerCase();
+              const chIdx = parseInt(parts[4].replace('ch', ''), 10) || 0;
+              const uniqueChapterKey = `${exId}_${stId}_${subId}_ch${chIdx}`;
+
+              if (!consolidatedNotesMap.has(uniqueChapterKey)) {
+                // Try to resolve chapter title from master database if available
+                let resolvedTitle = `प्रकरण ${chIdx + 1} नोट्स`;
+                try {
+                  const chs = mpscMasterEngine.getChapters(exId, stId, 'paper_1', subId) || [];
+                  if (chs[chIdx]) {
+                    resolvedTitle = chs[chIdx].nameMr || chs[chIdx].name || resolvedTitle;
+                  }
+                } catch(e) {}
+
+                consolidatedNotesMap.set(uniqueChapterKey, {
+                  uniqueKey: uniqueChapterKey,
+                  examId: exId,
+                  stageId: stId,
+                  subjectId: subId,
+                  chapterIndex: chIdx,
+                  chapterTitle: resolvedTitle,
+                  savedAt: new Date().toISOString()
+                });
+              }
+            }
+          }
+        }
+      } catch (e) {}
+
+      // Update Top Counts
+      const qCountEl = document.getElementById('countQuizzes');
+      const nCountEl = document.getElementById('countNotes');
+      if (qCountEl) qCountEl.textContent = consolidatedQuizzesMap.size;
+      if (nCountEl) nCountEl.textContent = consolidatedNotesMap.size;
+    }
+
+    // Tab & Stage Filters
+    window.switchVaultTab = function(tab) {
+      currentTab = tab;
+      const qBtn = document.getElementById('tabQuizzes');
+      const nBtn = document.getElementById('tabNotes');
+
+      if (tab === 'quizzes') {
+        qBtn.className = "py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer btn-spring bg-amber-500 text-slate-950 font-black shadow-sm";
+        nBtn.className = "py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer btn-spring text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white";
+      } else {
+        nBtn.className = "py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer btn-spring bg-amber-500 text-slate-950 font-black shadow-sm";
+        qBtn.className = "py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer btn-spring text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white";
+      }
+      renderVaultSubjects();
+    };
+
+    window.filterVaultExam = function(examId) {
+      currentExam = examId;
+      ['rajyaseva', 'group_b', 'group_c'].forEach(ex => {
+        const p = document.getElementById(`pill_${ex}`);
+        if (!p) return;
+        if (ex === examId) {
+          p.className = "py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer btn-spring bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 shadow-xs";
+        } else {
+          p.className = "py-2 px-2.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/10 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-1.5 cursor-pointer btn-spring";
+        }
+      });
+      renderVaultSubjects();
+    };
+
+    window.filterVaultStage = function(stageId) {
+      currentStage = stageId;
+      const preBtn = document.getElementById('stageBtn_prelims');
+      const mainsBtn = document.getElementById('stageBtn_mains');
+
+      if (stageId === 'prelims') {
+        preBtn.className = "py-1.5 px-3 rounded-xl bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 flex items-center justify-center gap-1.5 cursor-pointer btn-spring";
+        mainsBtn.className = "py-1.5 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-transparent flex items-center justify-center gap-1.5 cursor-pointer btn-spring";
+      } else {
+        mainsBtn.className = "py-1.5 px-3 rounded-xl bg-amber-500/15 text-amber-900 dark:text-amber-300 border border-amber-500/30 flex items-center justify-center gap-1.5 cursor-pointer btn-spring";
+        preBtn.className = "py-1.5 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-transparent flex items-center justify-center gap-1.5 cursor-pointer btn-spring";
+      }
+      renderVaultSubjects();
+    };
+
+    // Render Level 4 Subjects
+    function renderVaultSubjects() {
+      const container = document.getElementById('vaultSubjectsGridContainer');
+      const title = document.getElementById('vaultSectionHeaderTitle');
+      const badge = document.getElementById('vaultItemsCountBadge');
+      if (!container) return;
+
+      const examName = currentExam === 'rajyaseva' ? 'राज्यसेवा' : (currentExam === 'group_b' ? 'गट-ब' : 'गट-क');
+      const stageName = currentStage === 'prelims' ? 'पूर्व परीक्षा' : 'मुख्य परीक्षा';
+      title.textContent = `${examName} • ${stageName} विषय`;
+
+      // Get canonical subjects from master database
+      const papers = mpscMasterEngine.getPapers(currentExam, currentStage) || [];
+      const allSubjects = [];
+      papers.forEach(p => {
+        (mpscMasterEngine.getSubjects(currentExam, currentStage, p.id) || []).forEach(s => {
+          allSubjects.push({ ...s, paperId: p.id, paperNameMr: p.nameMr });
+        });
+      });
+
+      badge.textContent = `${allSubjects.length} Subjects`;
+
+      if (allSubjects.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full crystal-card p-8 rounded-3xl text-center text-xs text-slate-400 font-bold">
+            या टप्प्यासाठी विषय उपलब्ध नाहीत.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = allSubjects.map((sub, idx) => {
+        const subIdClean = (sub.id || sub.code || '').toLowerCase();
+        
+        // Count matches for this subject with fuzzy containment (e.g. polity vs paper_1_polity)
+        let count = 0;
+        if (currentTab === 'quizzes') {
+          for (let item of consolidatedQuizzesMap.values()) {
+            const itemSub = (item.subjectId || '').toLowerCase();
+            const matchesSubject = item.examId === currentExam && 
+                                   item.stageId === currentStage && 
+                                   (itemSub === subIdClean || subIdClean.includes(itemSub) || itemSub.includes(subIdClean));
+            if (matchesSubject) count++;
+          }
+        } else {
+          for (let item of consolidatedNotesMap.values()) {
+            const itemSub = (item.subjectId || '').toLowerCase();
+            const matchesSubject = item.examId === currentExam && 
+                                   item.stageId === currentStage && 
+                                   (itemSub === subIdClean || subIdClean.includes(itemSub) || itemSub.includes(subIdClean));
+            if (matchesSubject) count++;
+          }
+        }
+
+        const countLabel = currentTab === 'quizzes' 
+          ? `${count} चाचण्या उपलब्ध` 
+          : `${count} नोट्स उपलब्ध`;
+
+        return `
+          <div onclick="openSubjectChaptersDrawer('${sub.paperId}', '${sub.id || sub.code}')" class="crystal-panel p-3.5 sm:p-4 rounded-2xl flex items-center justify-between gap-3 hover:border-amber-400 btn-spring cursor-pointer group shadow-2xs">
+            <div class="flex items-center gap-3 min-w-0 flex-1">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black group-hover:scale-105 transition-transform shrink-0 shadow-2xs bg-slate-100 dark:bg-slate-800 text-amber-600 dark:text-amber-400 border border-slate-200 dark:border-slate-700">
+                ${sub.icon || '<i class="fa-solid fa-book"></i>'}
+              </div>
+              <div class="min-w-0">
+                <span class="text-[9.5px] font-bold text-slate-500 dark:text-slate-400 uppercase truncate block">
+                  ${countLabel}
+                </span>
+                <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate mt-0.5">
+                  ${sub.nameMr || sub.name}
+                </h3>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-amber-500 group-hover:text-slate-950 text-slate-400 flex items-center justify-center text-xs transition-colors shrink-0">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Level 5 Drawer Controller
+    window.openSubjectChaptersDrawer = function(paperId, subId) {
+      const subjects = mpscMasterEngine.getSubjects(currentExam, currentStage, paperId) || [];
+      const sub = subjects.find(s => (s.id === subId || s.code === subId)) || { nameMr: 'विषय', id: subId };
+      activeDrawerSubject = { ...sub, paperId: paperId };
+
+      const drawer = document.getElementById('vaultChaptersDrawer');
+      const examMeta = document.getElementById('drawerSubjectExamMeta');
+      const heading = document.getElementById('drawerSubjectHeading');
+      const badge = document.getElementById('drawerItemsBadge');
+      const subheader = document.getElementById('drawerSubheaderText');
+      const container = document.getElementById('drawerChaptersContainer');
+
+      const examLabel = currentExam === 'rajyaseva' ? 'Rajyaseva' : (currentExam === 'group_b' ? 'Group B' : 'Group C');
+      examMeta.textContent = `${examLabel} • ${(currentStage).toUpperCase()}`;
+      heading.textContent = sub.nameMr || sub.name;
+      subheader.textContent = currentTab === 'quizzes' ? 'सोडवलेल्या चाचण्या' : 'जतन केलेल्या नोट्स';
+
+      // Load all chapters for this subject
+      const allChapters = mpscMasterEngine.getChapters(currentExam, currentStage, paperId, subId) || [];
+      const subIdClean = (subId || '').toLowerCase();
+
+      let matchedItemsCount = 0;
+      let html = '';
+
+      if (currentTab === 'quizzes') {
+        html = allChapters.map((ch, idx) => {
+          const uniqueKey = `${currentExam}_${currentStage}_${subIdClean}_ch${idx}`;
+          const quizGroup = consolidatedQuizzesMap.get(uniqueKey);
+
+          if (!quizGroup || quizGroup.attempts.length === 0) {
+            return `
+              <div class="p-3 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02] flex items-center justify-between opacity-50">
+                <span class="text-xs font-bold text-slate-500">${idx + 1}. ${ch.nameMr || ch.name}</span>
+                <span class="text-[10px] font-medium text-slate-400">चाचणी दिलेली नाही</span>
+              </div>
+            `;
+          }
+
+          matchedItemsCount++;
+          const attempts = quizGroup.attempts;
+          const latestAttempt = attempts[attempts.length - 1];
+          const score = latestAttempt.score !== undefined ? latestAttempt.score : (latestAttempt.correctCount || 0);
+          const total = latestAttempt.totalQuestions || latestAttempt.total || 15;
+          const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+
+          return `
+            <div class="p-3.5 rounded-2xl border border-amber-400/40 bg-amber-500/5 space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5 text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase">
+                    <span>प्रकरण ${idx + 1}</span>
+                    <span>•</span>
+                    <span class="px-1.5 py-0.2 rounded bg-amber-500/20 font-mono">${attempts.length} Attempt${attempts.length > 1 ? 's' : ''}</span>
+                  </div>
+                  <h4 class="text-xs font-black text-slate-900 dark:text-white mt-0.5 truncate leading-snug">
+                    ${ch.nameMr || ch.name}
+                  </h4>
+                </div>
+                <span class="font-mono text-xs font-black px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-800 dark:text-amber-300 shrink-0">
+                  ${score}/${total} (${pct}%)
+                </span>
+              </div>
+
+              <div class="flex items-center gap-2 pt-1 border-t border-amber-500/20">
+                <button type="button" onclick="openReviewModalForGroup('${uniqueKey}')" class="flex-1 py-1.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/10 dark:hover:bg-white/15 text-slate-800 dark:text-slate-200 text-xs font-bold btn-spring cursor-pointer text-center">
+                  👁️ Review
+                </button>
+                <button type="button" onclick="triggerInPlaceRetest('${uniqueKey}')" class="flex-1 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring cursor-pointer flex items-center justify-center gap-1 shadow-xs">
+                  <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                  <span>Re-test</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } else {
+        // Notes Mode
+        html = allChapters.map((ch, idx) => {
+          const uniqueKey = `${currentExam}_${currentStage}_${subIdClean}_ch${idx}`;
+          const noteItem = consolidatedNotesMap.get(uniqueKey);
+
+          if (!noteItem) {
+            return `
+              <div class="p-3 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02] flex items-center justify-between opacity-50">
+                <span class="text-xs font-bold text-slate-500">${idx + 1}. ${ch.nameMr || ch.name}</span>
+                <span class="text-[10px] font-medium text-slate-400">नोट्स जतन केलेल्या नाहीत</span>
+              </div>
+            `;
+          }
+
+          matchedItemsCount++;
+
+          return `
+            <div class="p-3.5 rounded-2xl border border-amber-400/40 bg-amber-500/5 flex items-center justify-between gap-2 shadow-2xs">
+              <div class="min-w-0 space-y-0.5">
+                <span class="text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase">प्रकरण ${idx + 1}</span>
+                <h4 class="text-xs font-black text-slate-900 dark:text-white truncate">
+                  ${ch.nameMr || ch.name}
+                </h4>
+              </div>
+
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" onclick="launchSavedNotesReader('${paperId}', '${subIdClean}', ${idx}, '${(ch.nameMr || ch.name).replace(/'/g, "\\'")}')" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring cursor-pointer flex items-center gap-1 shadow-xs">
+                  <i class="fa-solid fa-book-open text-[10px]"></i>
+                  <span>वाचा</span>
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      badge.textContent = `${matchedItemsCount} Available`;
+      container.innerHTML = html;
+
+      drawer.classList.remove('opacity-0', 'pointer-events-none', 'translate-x-full');
+      document.body.classList.add('overflow-hidden');
+    };
+
+    window.closeVaultDrawer = function() {
+      const drawer = document.getElementById('vaultChaptersDrawer');
+      if (drawer) {
+        drawer.classList.add('opacity-0', 'pointer-events-none', 'translate-x-full');
+      }
+      document.body.classList.remove('overflow-hidden');
+    };
+
+    // Review Modal with In-Place Attempts Selector
+    window.openReviewModalForGroup = function(uniqueKey) {
+      const group = consolidatedQuizzesMap.get(uniqueKey);
+      if (!group || group.attempts.length === 0) return;
+
+      currentActiveReviewGroup = group;
+      const modal = document.getElementById('reviewModal');
+      const dropdown = document.getElementById('reviewAttemptDropdown');
+      const selectBox = document.getElementById('reviewAttemptSelectBox');
+      const retestBtn = document.getElementById('btnLaunchRetestModal');
+
+      document.getElementById('reviewExamBadge').textContent = (group.examId).toUpperCase();
+      document.getElementById('reviewModalTitle').textContent = group.chapterTitle;
+
+      if (retestBtn) {
+        retestBtn.onclick = () => triggerInPlaceRetest(uniqueKey);
+      }
+
+      // Populate attempts dropdown
+      if (group.attempts.length > 1 && dropdown && selectBox) {
+        selectBox.classList.remove('hidden');
+        dropdown.innerHTML = group.attempts.map((att, idx) => {
+          const s = att.score !== undefined ? att.score : (att.correctCount || 0);
+          const t = att.totalQuestions || att.total || 15;
+          const dt = att.completedAt ? new Date(att.completedAt).toLocaleDateString() : `Attempt ${idx + 1}`;
+          return `<option value="${idx}">Attempt ${idx + 1}: ${s}/${t} (${dt})</option>`;
+        }).join('');
+        dropdown.value = (group.attempts.length - 1).toString();
+      } else if (selectBox) {
+        selectBox.classList.add('hidden');
+      }
+
+      renderAttemptQuestions(group.attempts[group.attempts.length - 1]);
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+
+    window.changeSelectedAttemptView = function(idx) {
+      if (!currentActiveReviewGroup) return;
+      const att = currentActiveReviewGroup.attempts[parseInt(idx, 10)];
+      if (att) renderAttemptQuestions(att);
+    };
+
+    function renderAttemptQuestions(attempt) {
+      const questionsList = document.getElementById('reviewQuestionsBody');
+      const scoreVal = attempt.score !== undefined ? attempt.score : (attempt.correctCount || 0);
+      const totalVal = attempt.totalQuestions || attempt.total || 15;
+
+      document.getElementById('reviewScoreValue').textContent = scoreVal;
+      document.getElementById('reviewTotalValue').textContent = `/ ${totalVal}`;
+      document.getElementById('reviewDateBadge').textContent = attempt.completedAt ? new Date(attempt.completedAt).toLocaleDateString() : 'Today';
+
+      const qArray = attempt.questions || attempt.items || [];
+      if (qArray.length === 0) {
+        questionsList.innerHTML = `
+          <div class="p-6 text-center text-xs text-slate-400 font-bold">
+            या सत्राचे प्रश्न उपलब्ध नाहीत. नवीन क्विझ सोडवल्यास संपूर्ण उत्तरे येथे नोंदवली जातील.
+          </div>
+        `;
+        return;
+      }
+
+      questionsList.innerHTML = qArray.map((q, idx) => {
+        const userAns = q.userAnswer || q.userSelected || 'अनुत्तरित (Skipped)';
+        const correctAns = q.correctAnswer || q.correct || 'उपलब्ध नाही';
+        const isCorrect = userAns.trim().toLowerCase() === correctAns.trim().toLowerCase();
+
+        return `
+          <div class="p-3.5 rounded-2xl border ${isCorrect ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-rose-500/30 bg-rose-500/5'} space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white leading-snug">
+              ${idx + 1}. ${escapeHtml(q.questionText || q.question || '')}
+            </h4>
+            <div class="text-[11px] space-y-0.5 pt-1">
+              <div>तुमचे उत्तर: <span class="${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'} font-bold">${escapeHtml(userAns)}</span></div>
+              <div>आयोगाचे अचूक उत्तर: <span class="text-emerald-600 dark:text-emerald-400 font-bold">${escapeHtml(correctAns)}</span></div>
+            </div>
+            ${q.explanation ? `<div class="p-2.5 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed font-medium"><strong class="text-amber-600">स्पष्टीकरण:</strong> ${escapeHtml(q.explanation)}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.closeReviewModal = function() {
+      const modal = document.getElementById('reviewModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    };
+
+    // Re-test Handshake with In-Place Update Logic
+    window.triggerInPlaceRetest = function(uniqueKey) {
+      const group = consolidatedQuizzesMap.get(uniqueKey);
+      if (!group || group.attempts.length === 0) return;
+
+      const latest = group.attempts[group.attempts.length - 1];
+      const cleanQuestions = (latest.questions || latest.items || []).map((q, idx) => ({
+        id: q.id || `retest_${idx + 1}`,
+        questionText: q.questionText || q.question || `प्रश्न ${idx + 1}`,
+        questionTitleMr: q.questionText || q.question || `प्रश्न ${idx + 1}`,
+        options: Array.isArray(q.options) ? [...q.options] : [],
+        correctAnswer: q.correctAnswer || q.correct || '',
+        explanation: q.explanation || '',
+        referenceBook: q.referenceBook || null
+      }));
+
+      const payload = {
+        examId: group.examId,
+        stageId: group.stageId,
+        subjectId: group.subjectId,
+        chapterIndex: group.chapterIndex,
+        topicTitleMr: group.chapterTitle,
+        cachedQuestions: cleanQuestions,
+        isReattempt: true,
+        sourceHub: './vault.html',
+        attemptNumber: group.attempts.length + 1,
+        startedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('qq_active_topic_target', JSON.stringify(payload));
+      showToast("Re-Test सुरू होत आहे...");
+      setTimeout(() => window.location.assign('./quiz.html'), 300);
+    };
+
+    // Direct Link to Notes Reader
+    window.launchSavedNotesReader = function(paperId, subId, chIdx, chTitle) {
+      const payload = {
+        examId: currentExam,
+        stageId: currentStage,
+        paperId: paperId,
+        subjectId: subId,
+        selectedNotesChapterIndex: chIdx,
+        topicTitleMr: chTitle,
+        sourceHub: './vault.html',
+        startedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('qq_active_notes_target', JSON.stringify(payload));
+      window.location.assign('./notes.html');
+    };
+
+    window.exportSimpleVaultBackup = function() {
+      try {
+        const backup = {
+          exportedAt: new Date().toISOString(),
+          quizzes: Array.from(consolidatedQuizzesMap.values()),
+          notes: Array.from(consolidatedNotesMap.values())
+        };
+        const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `StudySphere_Vault_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("बॅकअप फाईल डाउनलोड झाली!");
+      } catch (e) {
+        showToast("बॅकअप घेताना अडचण आली.");
+      }
+    };
+
+    function escapeHtml(str) {
+      return (str || '')
+        .toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const t = document.getElementById('toastNotification');
+      const m = document.getElementById('toastMessage');
+      if (!t || !m) return;
+      m.textContent = msg;
+      t.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      t.classList.add('translate-y-0', 'opacity-100');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        t.classList.remove('translate-y-0', 'opacity-100');
+        t.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

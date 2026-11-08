@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="mr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>StudySphere | Performance Dashboard</title>
+  
+  <meta name="theme-color" content="#f59e0b">
+  <meta name="description" content="StudySphere Performance Command Center - Track accuracy, streak, subject-wise strengths, weaknesses, and recent quiz attempts.">
+
+  <!-- Favicon References -->
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="alternate icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./icon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Mukta -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Global Common Utilities & Gatekeeper -->
+  <script type="module" src="./assets/js/common.js"></script>
+  <script type="module" src="./ai-engine/core/gatekeeper-engine.js"></script>
+  <script type="module" src="./assets/js/firebase-sync-engine.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Mukta"', 'system-ui', 'sans-serif'],
+            marathi: ['"Mukta"', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .crystal-canvas {
+      background-color: #f8fafc;
+      background-image: radial-gradient(rgba(203, 213, 225, 0.7) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark .crystal-canvas {
+      background-color: #070b14;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .crystal-panel {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .dark .crystal-panel {
+      background: rgba(8, 13, 25, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .crystal-card {
+      background: rgba(248, 250, 252, 0.85);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dark .crystal-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .crystal-card:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .crystal-divider {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(203, 213, 225, 0.8) 50%, transparent 100%);
+    }
+    .dark .crystal-divider {
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+    }
+
+    .btn-spring {
+      transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-spring:active:not(:disabled) {
+      transform: scale(0.97) translateY(1px);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+    @keyframes popIn {
+      from { transform: scale(0.96) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="crystal-canvas text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 overflow-x-hidden">
+
+  <!-- 1. DYNAMIC HEADER CONTAINER -->
+  <div id="headerPlaceholder"></div>
+
+  <!-- 2. MAIN DASHBOARD CONTENT -->
+  <main class="max-w-3xl mx-auto w-full px-3 sm:px-4 py-4 flex-1 flex flex-col gap-4">
+
+    <!-- 2.1 USER PROFILE, STREAK & GOOGLE / LOCAL BACKUP CONTROL CARD -->
+    <section class="crystal-panel p-4 rounded-3xl space-y-3 shadow-sm">
+      <div class="flex items-center justify-between gap-3">
+        
+        <!-- User Info Slot -->
+        <div class="flex items-center gap-3 min-w-0">
+          <div id="userAvatarContainer" class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-base font-black text-amber-600 dark:text-amber-400 shrink-0 overflow-hidden">
+            <i class="fa-solid fa-user-graduate" id="userAvatarIcon"></i>
+          </div>
+          <div class="min-w-0 space-y-0.5">
+            <div class="flex items-center gap-2">
+              <h2 id="userDisplayName" class="text-sm sm:text-base font-black text-slate-900 dark:text-white truncate">
+                नमस्कार!
+              </h2>
+              <span id="googleSyncBadge" class="hidden text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-400/30 shrink-0">
+                Connected
+              </span>
+            </div>
+            <p id="userEmailOrSubtext" class="text-[10.5px] font-medium text-slate-500 dark:text-slate-400 truncate">
+              स्थानिक प्रगती सुरक्षित (Local Storage Active)
+            </p>
+          </div>
+        </div>
+
+        <!-- Daily Streak Badge -->
+        <div class="flex flex-col items-end shrink-0">
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-800 dark:text-amber-300 text-xs font-black">
+            <i class="fa-solid fa-fire text-amber-500 animate-pulse"></i>
+            <span id="userStreakValue">१ दिवस</span>
+          </div>
+          <span class="text-[9px] font-bold text-slate-400 mt-0.5">Study Streak</span>
+        </div>
+
+      </div>
+
+      <!-- Action Strip: Google Connect & Local Import/Export -->
+      <div class="pt-2 border-t border-slate-200/80 dark:border-white/10 flex flex-wrap items-center justify-between gap-2">
+        
+        <!-- Google State 1: When Unauthenticated -->
+        <div id="googleGuestView" class="flex items-center gap-2">
+          <button 
+            type="button" 
+            onclick="triggerGoogleAuthFlow()" 
+            class="px-3 py-1.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/15 hover:border-slate-400 flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200 btn-spring cursor-pointer shadow-2xs"
+          >
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 shrink-0">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            <span>Connect Google</span>
+          </button>
+        </div>
+
+        <!-- Google State 2: When Authenticated -->
+        <div id="googleConnectedView" class="hidden items-center gap-1.5 flex-wrap">
+          <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 truncate max-w-[150px] sm:max-w-[200px]" id="connectedUserEmail">user@gmail.com</span>
+          <button 
+            type="button" 
+            onclick="triggerGoogleAuthFlow()" 
+            class="px-2.5 py-1.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/15 text-slate-700 dark:text-slate-200 text-xs font-bold btn-spring cursor-pointer"
+            title="Switch Gmail"
+          >
+            Change
+          </button>
+          <button 
+            type="button" 
+            onclick="disconnectGoogleAccount()" 
+            class="px-2.5 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-400/30 text-xs font-bold btn-spring cursor-pointer"
+            title="Disconnect Google Account"
+          >
+            Disconnect
+          </button>
+        </div>
+
+        <!-- Local Backup: Export & Import Buttons -->
+        <div class="flex items-center gap-1.5">
+          <button 
+            type="button" 
+            onclick="exportLocalDataBackup()" 
+            class="px-2.5 py-1.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/15 hover:border-slate-400 text-slate-700 dark:text-slate-200 text-xs font-bold btn-spring flex items-center gap-1.5 cursor-pointer shadow-2xs"
+            title="Download Local JSON Backup"
+          >
+            <i class="fa-solid fa-file-arrow-down text-slate-400 text-[10px]"></i>
+            <span>Export</span>
+          </button>
+
+          <button 
+            type="button" 
+            onclick="triggerImportFileInput()" 
+            class="px-2.5 py-1.5 rounded-xl crystal-card border border-slate-300/80 dark:border-white/15 hover:border-slate-400 text-slate-700 dark:text-slate-200 text-xs font-bold btn-spring flex items-center gap-1.5 cursor-pointer shadow-2xs"
+            title="Restore Local JSON Backup"
+          >
+            <i class="fa-solid fa-file-arrow-up text-slate-400 text-[10px]"></i>
+            <span>Import</span>
+          </button>
+          <input type="file" id="importBackupFileInput" accept=".json" class="hidden" onchange="importLocalDataBackup(event)" />
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2.2 REVISION VAULT HUB SHORTCUT BANNER (NOW ABOVE COUNTDOWN WITH LITE YELLOW BG) -->
+    <section>
+      <a href="./vault.html" class="p-3.5 rounded-2xl flex items-center justify-between no-underline text-inherit shadow-2xs group bg-amber-500/10 dark:bg-amber-500/15 border border-amber-400/40 dark:border-amber-500/30 hover:bg-amber-500/20 transition-all btn-spring">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/50 flex items-center justify-center text-sm font-black shrink-0">
+            <i class="fa-solid fa-vault"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate font-marathi">
+                विद्यार्थी रिव्हिजन व्हॉल्ट (Revision Vault)
+              </h3>
+              <span class="text-[9.5px] font-mono font-bold text-amber-800 dark:text-amber-300 bg-amber-500/20 px-1.5 py-0.5 rounded border border-amber-400/40">
+                Dedicated Hub
+              </span>
+            </div>
+            <p class="text-[10.5px] text-slate-600 dark:text-slate-300 truncate mt-0.5 font-medium">
+              मागील सर्व सोडवलेल्या चाचण्या, सेव्ह केलेल्या नोट्स व स्टार केलेले कठीण प्रश्न
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <div class="text-right hidden sm:block">
+            <div id="vaultQuestionsBadge" class="text-xs font-black text-slate-800 dark:text-slate-100 font-mono">-- प्रश्न</div>
+            <div id="vaultNotesBadge" class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">-- नोट्स</div>
+          </div>
+          <i class="fa-solid fa-arrow-right text-xs text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform pl-1"></i>
+        </div>
+      </a>
+    </section>
+
+    <!-- 2.3 ULTRA-COMPACT MPSC EXAM COUNTDOWN STRIP (VERIFIED COMMISSION TIMELINES) -->
+    <section class="crystal-card p-3 rounded-2xl space-y-2 shadow-2xs">
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-1.5">
+          <i class="fa-solid fa-calendar-check text-amber-500 text-xs"></i>
+          <span class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white font-marathi">
+            MPSC परीक्षा काउंटडाउन (२०२६-२०२७)
+          </span>
+        </div>
+        <span class="text-[9.5px] font-bold text-slate-400 uppercase">Live Timeline</span>
+      </div>
+
+      <!-- Compact 4-Cell Grid with Verified Status -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center">
+        <!-- 1: Rajyaseva Mains -->
+        <div class="p-1.5 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col justify-between">
+          <span class="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate">राज्यसेवा मुख्य</span>
+          <span id="cdRajyasevaMains" class="text-xs sm:text-sm font-black font-mono text-amber-600 dark:text-amber-400 py-0.5">--</span>
+          <span class="text-[8.5px] font-mono text-slate-400 truncate">3,17,18,24 Oct '26</span>
+        </div>
+
+        <!-- 2: Group B Mains -->
+        <div class="p-1.5 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col justify-between">
+          <span class="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate">संयुक्त गट-ब मुख्य</span>
+          <span id="cdGroupBMains" class="text-xs sm:text-sm font-black font-mono text-slate-800 dark:text-slate-200 py-0.5">--</span>
+          <span class="text-[8.5px] font-mono text-slate-400 truncate">5 Dec 2026</span>
+        </div>
+
+        <!-- 3: Talathi / Group C Prelims -->
+        <div class="p-1.5 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col justify-between">
+          <span class="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate">तलाठी/गट-क पूर्व</span>
+          <span id="cdTalathiPrelims" class="text-xs sm:text-sm font-black font-mono text-emerald-600 dark:text-emerald-400 py-0.5">--</span>
+          <span class="text-[8.5px] font-mono text-slate-400 truncate">3 Jan 2027</span>
+        </div>
+
+        <!-- 4: Group C Mains (NOT DECLARED YET - OFFICIAL TBA) -->
+        <div class="p-1.5 rounded-xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col justify-between">
+          <span class="text-[9px] font-bold text-slate-500 dark:text-slate-400 truncate">संयुक्त गट-क मुख्य</span>
+          <span class="text-xs sm:text-sm font-black font-mono text-sky-600 dark:text-sky-400 py-0.5">लवकरच घोषित</span>
+          <span class="text-[8.5px] font-mono text-slate-400 truncate">तारीख TBA</span>
+        </div>
+      </div>
+
+      <p class="text-[9.5px] text-slate-400 dark:text-slate-500 font-medium text-center pt-0.5">
+        <i class="fa-solid fa-circle-info mr-1 text-amber-500"></i>
+        टीप: वरील वेळापत्रक आयोगाच्या अधिकृत प्रसिद्धीपत्रकानुसार आहे. अंतिम व अधिकृत तारखांसाठी कृपया mpsc.gov.in तपासावे.
+      </p>
+    </section>
+
+    <!-- 2.4 SMART RESUME BANNER -->
+    <section id="dashboardResumeContainer" class="hidden crystal-card p-3.5 rounded-2xl items-center justify-between gap-3 shadow-2xs border-amber-400/40 dark:border-amber-500/30">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300 flex items-center justify-center text-sm font-black shrink-0 border border-amber-400/40">
+          <i class="fa-solid fa-clock-rotate-left" id="resumeSessionIcon"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-amber-200 dark:bg-amber-900/80 text-amber-900 dark:text-amber-200" id="resumeBadgeType">
+              Last Session
+            </span>
+            <span class="text-[9.5px] font-bold text-slate-400 uppercase" id="resumeExamName">MPSC</span>
+            <span class="text-slate-300 dark:text-slate-700">•</span>
+            <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate" id="resumeTimestamp">Just now</span>
+          </div>
+          <h3 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white truncate mt-0.5" id="resumeTopicTitle">
+            अभ्यास घटक
+          </h3>
+        </div>
+      </div>
+
+      <button type="button" onclick="executeDashboardResume()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs btn-spring shrink-0 flex items-center gap-1.5 shadow-xs cursor-pointer">
+        <i class="fa-solid fa-bolt text-[10px]"></i>
+        <span>Resume</span>
+        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+      </button>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.5 CORE PULSE PERFORMANCE METRICS -->
+    <section class="space-y-2">
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[10.5px] font-black font-mono">
+            ०१
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-marathi">
+            अभ्यास प्रगती निर्देशक (Performance Pulse)
+          </h3>
+        </div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Real-Time Data</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div class="crystal-card p-3 rounded-2xl space-y-1">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="text-[10px] font-bold uppercase tracking-tight">एकूण प्रश्न</span>
+            <i class="fa-solid fa-list-check text-[11px] text-blue-500"></i>
+          </div>
+          <div id="metricTotalSolved" class="text-base sm:text-lg font-black font-mono text-slate-900 dark:text-white">०</div>
+          <span class="text-[9.5px] text-slate-400 font-medium">सोडवलेले सराव प्रश्न</span>
+        </div>
+
+        <div class="crystal-card p-3 rounded-2xl space-y-1">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="text-[10px] font-bold uppercase tracking-tight">अचूकता (Accuracy)</span>
+            <i class="fa-solid fa-bullseye text-[11px] text-emerald-500"></i>
+          </div>
+          <div id="metricAccuracy" class="text-base sm:text-lg font-black font-mono text-emerald-600 dark:text-emerald-400">०%</div>
+          <span class="text-[9.5px] text-slate-400 font-medium">१/४th नियमानुसार निव्वळ</span>
+        </div>
+
+        <div class="crystal-card p-3 rounded-2xl space-y-1">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="text-[10px] font-bold uppercase tracking-tight">घटक पूर्ण</span>
+            <i class="fa-solid fa-book-bookmark text-[11px] text-indigo-500"></i>
+          </div>
+          <div id="metricChaptersDone" class="text-base sm:text-lg font-black font-mono text-slate-900 dark:text-white">०</div>
+          <span class="text-[9.5px] text-slate-400 font-medium">अभ्यासक्रम व्याप्ती</span>
+        </div>
+
+        <div class="crystal-card p-3 rounded-2xl space-y-1">
+          <div class="flex items-center justify-between text-slate-400 text-xs">
+            <span class="text-[10px] font-bold uppercase tracking-tight">व्हॉल्ट प्रश्न</span>
+            <i class="fa-solid fa-star text-[11px] text-amber-500"></i>
+          </div>
+          <div id="metricVaultCount" class="text-base sm:text-lg font-black font-mono text-amber-600 dark:text-amber-400">०</div>
+          <span class="text-[9.5px] text-slate-400 font-medium">कठीण / स्टार केलेले</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.6 SUBJECT-WISE STRENGTH & WEAKNESS RADAR -->
+    <section class="space-y-2.5">
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[10.5px] font-black font-mono">
+            ०२
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-marathi">
+            विषयनिहाय कच्चे व पक्के दुवे (Strength & Weakness Radar)
+          </h3>
+        </div>
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Accuracy Ratio</span>
+      </div>
+
+      <div id="subjectPerformanceGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
+    <div class="crystal-divider"></div>
+
+    <!-- 2.7 ASPIRANT UTILITY TOOLKIT -->
+    <section class="space-y-2.5">
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[10.5px] font-black font-mono">
+            ०३
+          </span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white font-marathi">
+            विद्यार्थी उपयुक्त टूल्स (Aspirant Utility Toolkit)
+          </h3>
+        </div>
+        <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-tight">Interactive</span>
+      </div>
+
+      <div class="space-y-2">
+        <!-- Tool 1: Negative Marking Calculator -->
+        <div class="crystal-card p-4 rounded-2xl space-y-3 shadow-2xs">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-400/30 flex items-center justify-center text-xs font-black shrink-0">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <div>
+              <h4 class="text-xs sm:text-sm font-black text-slate-900 dark:text-white">
+                MPSC निगेटिव्ह गुण कॅल्क्युलेटर
+              </h4>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                १/४th नियमानुसार अचूक निव्वळ गुण तपासा
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <div class="space-y-1">
+              <label for="calcCorrectInput" class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400">बरोबर उत्तरे (+१ गुण)</label>
+              <input type="number" id="calcCorrectInput" value="65" min="0" max="100" class="w-full p-2 rounded-xl bg-white/70 dark:bg-white/5 border border-slate-300/80 dark:border-white/10 font-mono text-xs font-bold focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div class="space-y-1">
+              <label for="calcWrongInput" class="text-[10px] font-bold text-rose-700 dark:text-rose-400">चुकलेली उत्तरे (-०.२५)</label>
+              <input type="number" id="calcWrongInput" value="20" min="0" max="100" class="w-full p-2 rounded-xl bg-white/70 dark:bg-white/5 border border-slate-300/80 dark:border-white/10 font-mono text-xs font-bold focus:outline-none focus:border-rose-500" />
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 dark:text-slate-300">निव्वळ अंतिम गुण (Net Marks):</span>
+            <span id="calcNetResult" class="text-sm sm:text-base font-black font-mono text-amber-700 dark:text-amber-300">60.00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 3. DYNAMIC FOOTER & MODALS PLACEHOLDERS -->
+  <div id="footerPlaceholder"></div>
+  <div id="modalsPlaceholder"></div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[140] transform translate-y-12 opacity-0 pointer-events-none transition-all duration-300 ease-out flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border shadow-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-slate-800 dark:text-slate-100 max-w-sm w-[90vw] sm:w-auto">
+    <div id="toastIconSlot" class="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <span id="toastMessage" class="text-xs font-semibold leading-snug">Done!</span>
+  </div>
+
+  <!-- 6. JAVASCRIPT LOGIC ENGINE -->
+  <script type="module">
+    let cachedQuizHistory = [];
+    let pendingResumePayload = null;
+    let pendingResumeMode = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initTheme();
+      await loadModularComponents();
+      initExamCountdowns();
+      syncGoogleProfileStatusUI();
+      renderVaultCounts();
+      loadSmartResumeBanner();
+      renderDashboardPulseMetrics();
+      renderStrengthWeaknessRadar();
+      setupNegativeMarksCalculator();
+
+      // Ensure Header API status indicator is synchronized immediately
+      if (typeof window.refreshHeaderAiStatus === 'function') {
+        window.refreshHeaderAiStatus();
+      } else {
+        const key = (localStorage.getItem('qq_gemini_key') || localStorage.getItem('gemini_api_key') || localStorage.getItem('mpsc_api_key') || '').trim();
+        const dot = document.getElementById('headerStatusDot');
+        const ping = document.getElementById('aiEnginePing');
+        const keyIcon = document.getElementById('headerStatusKeyIcon');
+        const label = document.getElementById('headerStatusText');
+        if (key && key.length >= 15 && dot && label) {
+          dot.className = "relative inline-flex rounded-full h-2 w-2 bg-emerald-500";
+          if (ping) ping.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
+          if (keyIcon) keyIcon.className = "fa-solid fa-key text-[11px] text-emerald-500";
+          label.textContent = "AI Ready";
+          label.className = "truncate text-[10.5px] text-emerald-600 dark:text-emerald-400 font-bold hidden xs:inline";
+        }
+      }
+    });
+
+    function initTheme() {
+      if (localStorage.getItem('qq_theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    }
+
+    function initExamCountdowns() {
+      const dates = {
+        rajyasevaMains: new Date('2026-10-03T09:00:00+05:30'),
+        groupBMains: new Date('2026-12-05T09:00:00+05:30'),
+        talathiPrelims: new Date('2027-01-03T09:00:00+05:30')
+      };
+
+      const now = new Date();
+      function getDaysDiff(target) {
+        const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+        if (diff > 0) return `${diff} दिवस`;
+        if (diff === 0) return "आज परीक्षा";
+        return "पूर्ण";
+      }
+
+      const rEl = document.getElementById('cdRajyasevaMains');
+      const bEl = document.getElementById('cdGroupBMains');
+      const tEl = document.getElementById('cdTalathiPrelims');
+
+      if (rEl) rEl.textContent = getDaysDiff(dates.rajyasevaMains);
+      if (bEl) bEl.textContent = getDaysDiff(dates.groupBMains);
+      if (tEl) tEl.textContent = getDaysDiff(dates.talathiPrelims);
+    }
+
+    function syncGoogleProfileStatusUI() {
+      const rawUser = localStorage.getItem('qq_firebase_user');
+      const guestView = document.getElementById('googleGuestView');
+      const connView = document.getElementById('googleConnectedView');
+      const syncBadge = document.getElementById('googleSyncBadge');
+      const nameEl = document.getElementById('userDisplayName');
+      const emailEl = document.getElementById('userEmailOrSubtext');
+      const connEmail = document.getElementById('connectedUserEmail');
+      const avatarBox = document.getElementById('userAvatarContainer');
+
+      if (rawUser) {
+        try {
+          const user = JSON.parse(rawUser);
+          if (guestView) guestView.classList.add('hidden');
+          if (connView) {
+            connView.classList.remove('hidden');
+            connView.classList.add('flex');
+          }
+          if (syncBadge) syncBadge.classList.remove('hidden');
+
+          if (nameEl) nameEl.textContent = user.displayName ? `नमस्कार, ${user.displayName}!` : 'नमस्कार!';
+          if (emailEl) emailEl.textContent = `Google Account Synced • ${user.email || ''}`;
+          if (connEmail) connEmail.textContent = user.email || 'Connected';
+
+          if (user.photoURL && avatarBox) {
+            avatarBox.innerHTML = `<img src="${user.photoURL}" alt="User Avatar" class="w-full h-full object-cover rounded-2xl" />`;
+          }
+          return;
+        } catch (e) {}
+      }
+
+      if (guestView) guestView.classList.remove('hidden');
+      if (connView) {
+        connView.classList.add('hidden');
+        connView.classList.remove('flex');
+      }
+      if (syncBadge) syncBadge.classList.add('hidden');
+      if (nameEl) nameEl.textContent = 'नमस्कार!';
+      if (emailEl) emailEl.textContent = 'स्थानिक प्रगती सुरक्षित (Local Storage Active)';
+    }
+    window.syncGoogleProfileStatusUI = syncGoogleProfileStatusUI;
+
+    window.triggerGoogleAuthFlow = function() {
+      if (window.triggerGoogleAuthAction) {
+        window.triggerGoogleAuthAction();
+      } else if (window.connectGoogleAccount) {
+        window.connectGoogleAccount();
+      } else {
+        showToast("Google Auth Engine सुरू होत आहे...");
+      }
+    };
+
+    window.disconnectGoogleAccount = function() {
+      if (window.logoutGoogleAccount) {
+        window.logoutGoogleAccount();
+      } else {
+        localStorage.removeItem('qq_firebase_user');
+      }
+      syncGoogleProfileStatusUI();
+      showToast("Google Account Disconnected");
+    };
+
+    function renderVaultCounts() {
+      let qCount = 0;
+      let nCount = 0;
+
+      try {
+        const rawVault = localStorage.getItem('qq_vault_data');
+        if (rawVault) {
+          const v = JSON.parse(rawVault);
+          qCount = Array.isArray(v.questions) ? v.questions.length : Object.keys(v.questions || {}).length;
+          nCount = Array.isArray(v.notes) ? v.notes.length : Object.keys(v.notes || {}).length;
+        } else {
+          const rawQ = localStorage.getItem('qq_vault_questions');
+          if (rawQ) qCount = Object.keys(JSON.parse(rawQ)).length;
+        }
+      } catch (e) {}
+
+      const qBadge = document.getElementById('vaultQuestionsBadge');
+      const nBadge = document.getElementById('vaultNotesBadge');
+      const pVault = document.getElementById('metricVaultCount');
+
+      if (qBadge) qBadge.textContent = `${qCount} प्रश्न`;
+      if (nBadge) nBadge.textContent = `${nCount} नोट्स`;
+      if (pVault) pVault.textContent = qCount;
+    }
+
+    function loadSmartResumeBanner() {
+      const container = document.getElementById('dashboardResumeContainer');
+      const rawQuiz = localStorage.getItem('qq_active_topic_target');
+      const rawNotes = localStorage.getItem('qq_active_notes_target');
+
+      let target = null;
+      let mode = 'quiz';
+
+      if (rawQuiz) {
+        try { target = JSON.parse(rawQuiz); mode = 'quiz'; } catch (e) {}
+      } else if (rawNotes) {
+        try { target = JSON.parse(rawNotes); mode = 'notes'; } catch (e) {}
+      }
+
+      if (!target || !container) return;
+
+      pendingResumeMode = mode;
+      pendingResumePayload = target;
+
+      const titleEl = document.getElementById('resumeTopicTitle');
+      const examEl = document.getElementById('resumeExamName');
+      const badgeType = document.getElementById('resumeBadgeType');
+      const iconEl = document.getElementById('resumeSessionIcon');
+
+      if (titleEl) titleEl.textContent = target.topicTitleMr || target.chapterName || 'अभ्यास घटक';
+      if (examEl) examEl.textContent = (target.examId || 'MPSC').replace('_', ' ').toUpperCase();
+      if (badgeType) badgeType.textContent = mode === 'quiz' ? 'Last Quiz' : 'Last Notes';
+      if (iconEl) iconEl.className = mode === 'quiz' ? 'fa-solid fa-bolt' : 'fa-solid fa-book-open';
+
+      container.classList.remove('hidden');
+      container.classList.add('flex');
+    }
+
+    window.executeDashboardResume = function() {
+      if (!pendingResumePayload || !pendingResumeMode) return;
+
+      const key = (
+        localStorage.getItem('qq_gemini_key') || 
+        localStorage.getItem('gemini_api_key') || 
+        localStorage.getItem('mpsc_api_key') || 
+        ''
+      ).trim();
+
+      if (!key || key.length < 15) {
+        if (typeof window.openApiKeyModalDirect === 'function') {
+          window.openApiKeyModalDirect();
+        } else if (typeof window.openApiKeyModal === 'function') {
+          window.openApiKeyModal();
+        } else if (window.openModal) {
+          window.openModal('apiKeyModal');
+        }
+        showToast("सुरू करण्यासाठी आधी तुमची मोफत Gemini API Key जोडा.", "warning");
+        return;
+      }
+
+      const storageKey = pendingResumeMode === 'quiz' ? 'qq_active_topic_target' : 'qq_active_notes_target';
+      pendingResumePayload.startedAt = new Date().toISOString();
+      localStorage.setItem(storageKey, JSON.stringify(pendingResumePayload));
+      window.location.assign(pendingResumeMode === 'quiz' ? './quiz.html' : './notes.html');
+    };
+
+    function renderDashboardPulseMetrics() {
+      try {
+        const rawHistory = localStorage.getItem('qq_quiz_history');
+        if (rawHistory) cachedQuizHistory = JSON.parse(rawHistory);
+      } catch (e) {
+        cachedQuizHistory = [];
+      }
+
+      let totalSolved = 0;
+      let totalCorrect = 0;
+      let totalWrong = 0;
+
+      if (Array.isArray(cachedQuizHistory)) {
+        cachedQuizHistory.forEach(h => {
+          const c = Number(h.correctCount ?? h.correct ?? h.score ?? 0);
+          const w = Number(h.wrongCount ?? h.wrong ?? 0);
+          totalCorrect += c;
+          totalWrong += w;
+          totalSolved += Number(h.totalQuestions ?? h.total ?? (c + w));
+        });
+      }
+
+      const totalAttempted = totalCorrect + totalWrong;
+      const accuracy = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
+
+      let completedChCount = 0;
+      try {
+        const rawCh = localStorage.getItem('qq_completed_chapters');
+        if (rawCh) {
+          const chObj = JSON.parse(rawCh);
+          completedChCount = Array.isArray(chObj) ? chObj.length : Object.keys(chObj).length;
+        }
+      } catch (e) {}
+
+      const qEl = document.getElementById('metricTotalSolved');
+      const aEl = document.getElementById('metricAccuracy');
+      const cEl = document.getElementById('metricChaptersDone');
+
+      if (qEl) qEl.textContent = totalSolved;
+      if (aEl) aEl.textContent = `${accuracy}%`;
+      if (cEl) cEl.textContent = completedChCount;
+    }
+
+    function renderStrengthWeaknessRadar() {
+      const container = document.getElementById('subjectPerformanceGrid');
+      if (!container) return;
+
+      const subjectStats = {};
+      if (Array.isArray(cachedQuizHistory)) {
+        cachedQuizHistory.forEach(q => {
+          const subId = (q.subjectId || 'core').toLowerCase();
+          const subTitle = q.subjectNameMr || q.subjectId || 'सामान्य अध्ययन';
+          if (!subjectStats[subId]) {
+            subjectStats[subId] = { title: subTitle, correct: 0, total: 0 };
+          }
+          const c = Number(q.correctCount ?? q.correct ?? q.score ?? 0);
+          const t = Number(q.totalQuestions ?? q.total ?? 15);
+          subjectStats[subId].correct += c;
+          subjectStats[subId].total += t;
+        });
+      }
+
+      const subjects = Object.keys(subjectStats);
+      if (subjects.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full crystal-card p-6 rounded-2xl text-center text-xs text-slate-400 font-bold">
+            <i class="fa-solid fa-chart-pie text-xl text-amber-500 mb-2 block"></i>
+            चाचण्या सोडवल्यानंतर विषयनिहाय अचूकता व कच्चे दुवे येथे दिसतील.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = subjects.map(key => {
+        const data = subjectStats[key];
+        const acc = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+
+        let badge = '<span class="text-rose-600 dark:text-rose-400">कच्चा दुवा (Weak)</span>';
+        let barColor = 'bg-rose-500';
+        if (acc >= 75) {
+          badge = '<span class="text-emerald-600 dark:text-emerald-400">पक्का दुवा (Strong)</span>';
+          barColor = 'bg-emerald-500';
+        } else if (acc >= 50) {
+          badge = '<span class="text-amber-600 dark:text-amber-400">मध्यम (Moderate)</span>';
+          barColor = 'bg-amber-500';
+        }
+
+        return `
+          <div class="crystal-card p-3 rounded-2xl space-y-1.5 shadow-2xs">
+            <div class="flex items-center justify-between text-xs font-black">
+              <span class="truncate text-slate-800 dark:text-slate-200">${escapeHtml(data.title)}</span>
+              <span class="font-mono">${acc}%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+              <div class="h-full rounded-full ${barColor}" style="width: ${acc}%"></div>
+            </div>
+            <div class="flex items-center justify-between text-[9px] font-bold text-slate-400 pt-0.5">
+              <span>${badge}</span>
+              <span>${data.correct}/${data.total} Qs</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setupNegativeMarksCalculator() {
+      const correctInp = document.getElementById('calcCorrectInput');
+      const wrongInp = document.getElementById('calcWrongInput');
+      const netMarksEl = document.getElementById('calcNetResult');
+
+      function calculate() {
+        if (!correctInp || !wrongInp || !netMarksEl) return;
+        const correct = parseFloat(correctInp.value) || 0;
+        const wrong = parseFloat(wrongInp.value) || 0;
+        const penalty = wrong * 0.25;
+        const net = Math.max(0, correct - penalty);
+        netMarksEl.textContent = net.toFixed(2);
+      }
+
+      if (correctInp) correctInp.addEventListener('input', calculate);
+      if (wrongInp) wrongInp.addEventListener('input', calculate);
+    }
+
+    window.exportLocalDataBackup = function() {
+      try {
+        const backupData = {
+          version: '1.0',
+          exportedAt: new Date().toISOString(),
+          qq_quiz_history: JSON.parse(localStorage.getItem('qq_quiz_history') || '[]'),
+          qq_completed_chapters: JSON.parse(localStorage.getItem('qq_completed_chapters') || '{}'),
+          qq_quiz_scores: JSON.parse(localStorage.getItem('qq_quiz_scores') || '{}'),
+          qq_vault_questions: JSON.parse(localStorage.getItem('qq_vault_questions') || '{}'),
+          qq_vault_data: JSON.parse(localStorage.getItem('qq_vault_data') || '{}'),
+          qq_active_topic_target: JSON.parse(localStorage.getItem('qq_active_topic_target') || 'null'),
+          qq_active_notes_target: JSON.parse(localStorage.getItem('qq_active_notes_target') || 'null')
+        };
+
+        const jsonStr = JSON.stringify(backupData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const dateTag = new Date().toISOString().split('T')[0];
+        a.href = url;
+        a.download = `StudySphere_Backup_${dateTag}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast("स्थानिक बॅकअप फाईल डाउनलोड झाली!");
+      } catch (err) {
+        showToast("बॅकअप डाउनलोड करताना त्रुटी आली.", "error");
+      }
+    };
+
+    window.triggerImportFileInput = function() {
+      const fileInput = document.getElementById('importBackupFileInput');
+      if (fileInput) fileInput.click();
+    };
+
+    window.importLocalDataBackup = function(event) {
+      const file = (event && event.target && event.target.files) ? event.target.files[0] : null;
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!imported || typeof imported !== 'object') {
+            throw new Error("Invalid file structure");
+          }
+
+          if (imported.qq_quiz_history) localStorage.setItem('qq_quiz_history', JSON.stringify(imported.qq_quiz_history));
+          if (imported.qq_completed_chapters) localStorage.setItem('qq_completed_chapters', JSON.stringify(imported.qq_completed_chapters));
+          if (imported.qq_quiz_scores) localStorage.setItem('qq_quiz_scores', JSON.stringify(imported.qq_quiz_scores));
+          if (imported.qq_vault_questions) localStorage.setItem('qq_vault_questions', JSON.stringify(imported.qq_vault_questions));
+          if (imported.qq_vault_data) localStorage.setItem('qq_vault_data', JSON.stringify(imported.qq_vault_data));
+
+          showToast("डेटा यशस्वीरीत्या रिस्टोअर झाला!");
+          setTimeout(() => window.location.reload(), 600);
+        } catch (err) {
+          showToast("अवैध बॅकअप फाईल! कृपया योग्य JSON निवडा.", true);
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    function escapeHtml(str) {
+      return (str || '')
+        .toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    let toastTimeout = null;
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      const iconSlot = document.getElementById('toastIconSlot');
+      if (!toast || !text || !iconSlot) return;
+
+      text.textContent = msg;
+      toast.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-[140] transform transition-all duration-300 ease-out flex items-center gap-2.5 px-4 py-2.5 rounded-2xl border shadow-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-slate-800 dark:text-slate-100 max-w-sm w-[90vw] sm:w-auto";
+
+      if (type === 'error' || type === true) {
+        toast.classList.add('border-rose-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-rose-500/15 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+      } else if (type === 'warning') {
+        toast.classList.add('border-amber-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      } else {
+        toast.classList.add('border-emerald-500/30');
+        iconSlot.className = "w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs shrink-0";
+        iconSlot.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      }
+
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+    window.showToast = showToast;
+
+    async function loadModularComponents() {
+      async function injectHtml(url, targetId) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              const htmlContent = await res.text();
+              targetEl.innerHTML = htmlContent;
+
+              // Re-run script tags so window.refreshHeaderAiStatus is registered
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = htmlContent;
+              const scripts = tempDiv.querySelectorAll('script');
+              scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                if (script.src) newScript.src = script.src;
+                else newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+              });
+            }
+          }
+        } catch (e) {}
+      }
+
+      await injectHtml('./components/header.html', 'headerPlaceholder');
+      await injectHtml('./components/footer.html', 'footerPlaceholder');
+
+      // Trigger immediate header AI health evaluation now that the header script is loaded
+      if (typeof window.refreshHeaderAiStatus === 'function') {
+        window.refreshHeaderAiStatus();
+      }
+
+      const modalUrls = [
+        './modals/api-key-modal.html',
+        './modals/policies-modal.html',
+        './modals/donation-modal.html',
+        './modals/feedback-modal.html',
+        './modals/install-modal.html'
+      ];
+
+      const modalsContainer = document.getElementById('modalsPlaceholder');
+      if (modalsContainer) {
+        for (const url of modalUrls) {
+          try {
+            const res = await fetch(url);
+            if (res.ok) {
+              const htmlContent = await res.text();
+              modalsContainer.insertAdjacentHTML('beforeend', htmlContent);
+              
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = htmlContent;
+              const scripts = tempDiv.querySelectorAll('script');
+              scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                if (script.src) newScript.src = script.src;
+                else newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+              });
+            }
+          } catch (e) {}
+        }
+      }
+    }
+  </script>
+</body>
+</html>
